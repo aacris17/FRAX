@@ -1,0 +1,34 @@
+#FRAX paper charts
+
+#load FRAX paper charts
+FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX_paper.csv", header = TRUE, stringsAsFactors = FALSE)
+FRAX <- data.frame(FRAX)
+names(FRAX)<- c("Sex", "Race", Age","CRF","BMI","Risk", "Range")
+convert <- c(1, 2, 7)
+FRAX[convert] <- lapply(FRAX[convert], factor)
+
+#load sample patient data
+pts <-  read.csv("C:\\Users\\acriscit\\Documents\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
+pts <- data.frame(pts)
+names(pts)<- c("Patient.ID", "Sex", "Race", "Age","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "BMI", "Weight", "Height", "Risk", "Range")
+
+library(tidyverse)
+
+#Function to find risk
+find_risk <- function(y){
+#pt <- pts %>% filter(Patient.ID == y)
+pt <- pts[y,]
+as.character(pt[,"Sex"]) -> sex
+as.character(pt[,"Race"]) -> race
+as.character(pt[,"Age"]) -> age
+as.character(pt[,"CRF"]) -> crf
+as.integer(pt[,"BMI"]) -> bmi
+
+result <- FRAX %>% filter(Sex == sex, Race == race, Age == age, CRF == crf, BMI == (round(bmi/5)*5))
+pt <- cbind(pt,result$Risk, result$Range)
+return(pt)
+}
+#lapply
+df_list <- lapply(1:nrow(pts), find_risk)
+df_out_lapply <- do.call(rbind, df_list)
+df_out_lapply
