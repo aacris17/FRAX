@@ -1,14 +1,14 @@
 #FRAX paper charts
 
 #load FRAX paper charts
-FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX_paper.csv", header = TRUE, stringsAsFactors = FALSE)
+FRAX <-  read.csv("C:\\FRAX_paper.csv", header = TRUE, stringsAsFactors = FALSE)
 FRAX <- data.frame(FRAX)
 names(FRAX)<- c("Sex", "Race", Age","CRF","BMI","Risk", "Range")
 convert <- c(1, 2, 7)
 FRAX[convert] <- lapply(FRAX[convert], factor)
 
 #load sample patient data
-pts <-  read.csv("C:\\Users\\acriscit\\Documents\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
+pts <-  read.csv("C:\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
 pts <- data.frame(pts)
 names(pts)<- c("Patient.ID", "Sex", "Race", "Age","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "BMI", "Weight", "Height", "Risk", "Range")
 
