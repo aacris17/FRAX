@@ -10,9 +10,39 @@ FRAX[convert] <- lapply(FRAX[convert], factor)
 #load sample patient data
 pts <-  read.csv("C:\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
 pts <- data.frame(pts)
-names(pts)<- c("Patient.ID", "Sex", "Race", "Age","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "BMI", "Weight", "Height", "Risk", "Range")
+
+names(FRAX)<- c("Sex", "Race", Age","CRF","BMI","Risk", "Range")
+convert <- c(1, 2, 7)
+FRAX[convert] <- lapply(FRAX[convert], factor)
+
+#load sample patient data
+pts <-  read.csv("C:\\Users\\acriscit\\Documents\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
+pts <- data.frame(pts)
+names(pts)<- c("Patient.ID", "Sex", "Race", "rAge","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "rBMI", "Weight", "Height")
+#rAge and rBMI are column names for 'raw' values as opposed to rounded values which are called Age and BMI
 
 library(tidyverse)
+
+#Round BMI to the nearest multiple of 5
+roundfive <- function(x) {round(x/5)*5}
+px <- pts %>% mutate(BMI = ifelse((rBMI<45)&(rBMI>15),roundfive(rBMI), ifelse (rBMI>45,45,15)))
+
+#Round age down to the nearest 5
+floorfive <- function(x) {floor(x/5)*5}
+px <- px %>% mutate (Age = ifelse((rAge<90)&(rAge>50),floorfive(rAge), ifelse (rAge<50,50,90)))
+
+#Join risk to patients
+pl <- semi_join(px, FRAX, by= c("Sex", "Race", "Age", "CRF", "BMI"))
+
+fx <- semi_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
+
+fl <- left_join(fx, pl, by = c("Sex","Race","Age","CRF","BMI"))
+
+fl%>% select(Patient.ID, Risk, Range)
+#Returns patients ID, risk and range
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+names(pts)<- c("Patient.ID", "Sex", "Race", "Age","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "BMI", "Weight", "Height", "Risk", "Range")
 
 #Function to find risk
 find_risk <- function(y){
