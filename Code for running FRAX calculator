@@ -8,14 +8,6 @@ convert <- c(1, 2, 7)
 FRAX[convert] <- lapply(FRAX[convert], factor)
 
 #load sample patient data
-pts <-  read.csv("C:\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
-pts <- data.frame(pts)
-
-names(FRAX)<- c("Sex", "Race", Age","CRF","BMI","Risk", "Range")
-convert <- c(1, 2, 7)
-FRAX[convert] <- lapply(FRAX[convert], factor)
-
-#load sample patient data
 pts <-  read.csv("C:\\Users\\acriscit\\Documents\\Sample FRAX patients.csv", header = TRUE, stringsAsFactors = TRUE)
 pts <- data.frame(pts)
 names(pts)<- c("Patient.ID", "Sex", "Race", "rAge","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "rBMI", "Weight", "Height")
