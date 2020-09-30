@@ -25,10 +25,14 @@ px <- px %>% mutate (Age = ifelse((rAge<90)&(rAge>50),floorfive(rAge), ifelse (r
 
 #Join risk to patients
 fx <- semi_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
-#Would inner_join work better here?
 fl <- left_join(fx, px, by = c("Sex","Race","Age","CRF","BMI"))
 fl%>% select(Patient.ID, Risk, Range)
 #Returns patients ID, risk and range
+
+#Alternatively
+fx <- inner_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
+fx%>% select(Patient.ID, Risk, Range)
+#The difference from above is that inner_join returns all columns of FRAX and pts while semi_join only returns columns from FRAX, requring the left_join. Also semi_join will only return 1 row of FRAX if patient data matches mutliple rows, while inner_join will return all the rows of FRAX that a patient matches, however, a patient should only match 1 row of FRAX unless patient data is missing
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 names(pts)<- c("Patient.ID", "Sex", "Race", "Age","CRF", "Fracture", "Parent.fracture", "Smoking", "Glucocorticoids", "RA", "Alcohol", "Osteoporosis", "BMI", "Weight", "Height", "Risk", "Range")
