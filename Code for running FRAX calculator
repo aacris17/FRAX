@@ -32,12 +32,9 @@ floorfive <- function(x) {floor(x/5)*5}
 px <- px %>% mutate (Age = ifelse((rAge<90)&(rAge>50),floorfive(rAge), ifelse (rAge<50,50,90)))
 
 #Join risk to patients
-pl <- semi_join(px, FRAX, by= c("Sex", "Race", "Age", "CRF", "BMI"))
-
 fx <- semi_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
-
-fl <- left_join(fx, pl, by = c("Sex","Race","Age","CRF","BMI"))
-
+#Would inner_join work better here?
+fl <- left_join(fx, px, by = c("Sex","Race","Age","CRF","BMI"))
 fl%>% select(Patient.ID, Risk, Range)
 #Returns patients ID, risk and range
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
