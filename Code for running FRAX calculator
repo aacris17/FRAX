@@ -23,6 +23,11 @@ px <- pts %>% mutate(BMI = ifelse((rBMI<45)&(rBMI>15),roundfive(rBMI), ifelse (r
 floorfive <- function(x) {floor(x/5)*5}
 px <- px %>% mutate (Age = ifelse((rAge<90)&(rAge>50),floorfive(rAge), ifelse (rAge<50,50,90)))
 
+#Change race to other if not caucasian, black, hispanic or asian
+px$Race <- as.character(px$Race)
+Races <- c("Caucasian","Black","Hispanic","Asian")
+px <- px %>% mutate(Race = ifelse((Race %in% Races), Race, "Other"))
+
 #Join risk to patients
 fx <- semi_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
 fl <- left_join(fx, px, by = c("Sex","Race","Age","CRF","BMI"))
