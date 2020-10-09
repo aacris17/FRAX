@@ -1,0 +1,19 @@
+#book1 is the name of the csv copy-pasted data from frax paper charts
+book1 <- read.csv("C:\\Users\\acriscit\\Downloads\\Book1.csv", header = TRUE, stringsAsFactors = TRUE)
+names(book1) <- c("1",2:ncol(book1))
+
+Risk <- select(book1, seq(1,ncol(book1),2))
+names(Risk) <- c("1",2:ncol(Risk))
+Risk <- stack(Risk)
+names(Risk) <- c("Risk", "time")
+Risk <- select(Risk, Risk)
+
+Range <- select(book1, seq(2,ncol(book1),2))
+names(Range) <- c("1",2:ncol(Range))
+Range <- reshape(Range, varying = list(1:ncol(Range)), v.names = "Range", direction = "long")
+Range <- select(Range,Range)
+
+f <- cbind(Risk, Range)
+f <- select(f, "Risk","Range")
+write.csv(f, "C:\\Users\\acriscit\\Documents\\f.csv")
+#The name of the output file is 'f' in document
