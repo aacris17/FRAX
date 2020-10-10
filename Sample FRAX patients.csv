@@ -1,0 +1,6 @@
+Patient ID,Sex,Race,Age,CRF,Fracture,Parent fracture,Smoking,Glucocorticoids,RA,Alcohol use,Secodary osteoporosis,BMI,Weight (kg),Height (m)
+2,Female,Black,55,5,1,1,1,1,1,,,50,75,1.75
+1,Male,Caucasian,72,3,,1,,1,1,,,26.31578947,95,1.9
+3,Male,Hispanic,72,3,,1,,1,1,,,26.31578947,95,1.9
+4,Female,Native American,56,2,1,,,1,,,,26.6,50,1.25
+5,Female,Caucasian,93,4,1,,1,1,,1,,13,82,1.89
