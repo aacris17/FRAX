@@ -17,6 +17,7 @@ Range <- select(Range,Range)
 Range <- mutate(Range,Range = gsub("[()]", "", Range))
 Range <- separate(Range, Range, c("Range_upper","Range_lower"),sep = "-")
 Range[is.na(Range)]<-0
+Range$Range_upper <- ifelse(nchar(Range$Range_upper)==0,"0",Range$Range_upper)
 
 #Recombine Risk and Range
 f <- cbind(Risk, Range)
