@@ -1,7 +1,8 @@
 #FRAX paper charts
 
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", header = TRUE, stringsAsFactors = FALSE)
+#Be sure that the name of the FRAX chart you download and the name in the 'read' command below match
+FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX_paper_10yr_mjr_Fract_Risk_BMI.csv", header = TRUE, stringsAsFactors = FALSE)
 FRAX <- data.frame(FRAX)
 FRAX <- select(FRAX,-c(1))
 names(FRAX)<- c("Sex", "Race", "Age","CRF","BMI","Risk", "Range_upper", "Range_lower")
