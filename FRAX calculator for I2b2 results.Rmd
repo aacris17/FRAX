@@ -6,6 +6,7 @@ library(tidyverse)
 library(dplyr)
 library(readxl)
 library(lubridate)
+library(tibble)
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
 FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", header = TRUE, stringsAsFactors = FALSE)
 FRAX <- FRAX %>% data.frame()
@@ -86,7 +87,8 @@ CRF = numeric(),
 BMI = numeric(),
 Risk = numeric(),
 Range_upper = numeric(),
-Range_lower = numeric())
+Range_lower = numeric()
+)
 
 #Isolate patients with pathologic fracture by ID
 all_fracs <- x %>% filter((grepl('M80', CODE))) %>% filter((grepl('fracture', DESC))) %>% select(ID)
@@ -104,6 +106,8 @@ z <- (x %>% filter(ID == id) %>% filter((grepl('M80', CODE))) %>% filter((grepl(
 date <- (z %>% select(DATE))[1,1]
 
 #Height and weight closest to the time of fracture
+#Add an ifelse statement to collect HT and WT for pts without measurements prior to fracture
+#HTWT <- (x %>% filter(CODE == "HT"|CODE == "WT", ID == id) %>% ifelse(filter(DATE <= date), ) %>% arrange(desc(DATE))
 HT <- (x %>% filter(CODE == "HT", ID == id, DATE <= date) %>% arrange(desc(DATE)) %>% select(NUMERIC_VALUE))[1,1]
 WT <- (x %>% filter(CODE == "WT", ID == id, DATE <= date) %>% arrange(desc(DATE)) %>% select(NUMERIC_VALUE))[1,1]
 
@@ -169,14 +173,15 @@ Fracture_Dates = Fracture_Dates %>% add_row(
 ID = id,
 DATE = z$DATE,
 CODE = z$CODE,
-DESC = z$DESC),
-HT.in = HT, 
-WT.in = WT, 
-AGE = ageatfracture, 
-GENDER = Gender, 
-RACE = Race, 
-CRF = CRF_score,
-BMI = BMI
+DESC = z$DESC,
+HT.in = as.double(HT), 
+WT.in = as.double(WT), 
+AGE = as.double(ageatfracture), 
+GENDER = as.character(Gender), 
+RACE = as.character(Race), 
+CRF = as.double(CRF_score),
+BMI = as.double(BMI)
+)
 }
 #end of loop
 #For some reason using filter with dates creates an error, however, these functions appear to work as expected
