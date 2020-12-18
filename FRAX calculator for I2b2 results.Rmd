@@ -7,77 +7,118 @@ library(dplyr)
 library(readxl)
 library(lubridate)
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", header = TRUE, stringsAsFactors = FALSE, col_types = "cffdddddd")
-FRAX <- FRAX %>% data.frame() %>% select(-c(1))
-names(FRAX)<- c("Sex", "Race", "Age","CRF","BMI","Risk", "Range_upper", "Range_lower")
+FRAX <-  read.csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", header = TRUE, stringsAsFactors = FALSE)
+FRAX <- FRAX %>% data.frame()
+names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_upper", "Range_lower")
 
 #Load I2b2 data
-#xl_data <- "C:\\Users\\acriscit\\Documents\\20201020180719000_acriscit.xlsx"
+xl_data <- "C:\\Users\\acriscit\\Documents\\20201020180719000_acriscit.xlsx"
 
 #load sample patient data
-xl_data <-  "C:\\Users\\acriscit\\Documents\\Sample FRAX patients.xlsx"
+#xl_data <-  "C:\\Users\\acriscit\\Documents\\Sample FRAX patients.xlsx"
 
 #Label data by excel tab
 tab_names <- excel_sheets(path = xl_data)
+#The below line is very slow
 pts <- lapply(tab_names, function(x) read_excel(path = xl_data, sheet = x))
 pts <- pts %>% set_names(tab_names)
-#rename columns so that excel tabs can be combined into one tibble in a tidy fashion and to remove spaces
-names(pts$Diagnoses)<- c("ID", "VISIT#","DATE", "CODE", "DESC", "MODIFIER")
-names(pts$Meds)<-c("ID",    "VISIT#", "DATE","CODE", "DESC", "MODIFIER", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
-names(pts$Smoking)<-c("ID",    "VISIT#", "DATE","CODE", "DESC", "TEXT_VALUE")
-names(pts$Vitals)<-c("ID","VISIT#","DATE","CODE", "DESC", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
+
+#Combine tabs that contain the same type of information
+#Look at the excel sheet to see which data is stored across multiple tabs and double check that the code covers these
+
+#Create a tibble of tab names and numbers
+tab_names2 <- tibble(
+Row = (1:length(tab_names)),
+tab_names = tab_names
+)
+  #Meds
+#Select all tabs that contain meds
+Med_tabs <- tab_names2 %>% filter((grepl('Meds', tab_names)))
+#Combine these tabs into one
+pts$Meds <- bind_rows(pts[Med_tabs$Row])
+
+#Repeat with all other tabs that contain the same type of info
+  #Labs
+Lab_tabs <- tab_names2 %>% filter((grepl('Labs', tab_names)))
+pts$Labs <- bind_rows(pts[Lab_tabs$Row])
+
+  #Vitals
+Vital_tabs <- tab_names2 %>% filter((grepl('Vital', tab_names)))
+pts$Vitals <- bind_rows(pts[Vital_tabs$Row])
+
+#Remove the tabs that were merged
+tabs_to_remove <- tab_names2 %>% filter((grepl('_p', tab_names)))
+pts <- pts[-c(tabs_to_remove$Row)]
+
+#rename columns so that all tabs can be combined in a tidy fashion and to remove spaces from column names
+names(pts$Diagnoses)<- c("ID", "VISIT","DATE", "CODE", "DESC", "MODIFIER")
+names(pts$Meds)<-c("ID",    "VISIT", "DATE","CODE", "DESC", "MODIFIER", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
+names(pts$Smoking)<-c("ID",    "VISIT", "DATE","CODE", "DESC", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
+names(pts$Vitals)<-c("ID","VISIT","DATE","CODE", "DESC", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
 names(pts$Patients)<-c("ID", "AGE_NOW", "AGE_AT_DEATH", "GENDER", "RACE", "MIXED RACE", "ETHNICITY")
+names(pts$Labs)<- c("ID", "VISIT", "DATE", "CODE", "DESC", "TEXT_VALUE", "NUMERIC_VALUE", "UNITS")
+names(pts$Visits)<- c("ID", "VISIT", "DATE", "END_DATE", "CODE")
 
 #Tidy the data: Create one tibble from the list 'pts', Exclude the 'Patients' and 'Cover' tabs
-x <- bind_rows(pts[3:6])
+x <- bind_rows(pts[4:length(pts)])
+  #Note that the visits tab (tab 3) is excluded because it does not contain useful information
 #Create another tibble with patient demographics from the 'Patients' tab
-y <- bind_rows(pts[2])
+y <- pts$Patients
 
 #Convert dates to date form
 x$DATE <- mdy_hms(x$DATE)
 
-#Create a tibble with the date of the most recent fracture for each patiet
-Fracture_Dates <- x %>% filter(CODE == "M80" | DESC == "fracture") %>% select(ID,'VISIT_#',DATE,CODE,DESC,MODIFIER) %>% mutate(
-HT.in = 1, 
-days8 = 1, 
-WT.in = 1, 
-days10 = 1, 
-FractureAge = 1, 
-GENDER = 1, 
-RACE = 1, 
-CRF = 1)
+#Create a tibble ('Fracture_Dates') with the date of the most recent fracture for each patiet and associated FRAX characteristics
+Fracture_Dates <- tibble(
+ID = numeric(),
+DATE = mdy_hms(),
+CODE = character(),
+DESC = character(),
+HT.in = numeric(), 
+HTDaysBeforeFrac = numeric(), 
+WT.in = numeric(), 
+WTDaysBeforeFrac = numeric(), 
+AGE = numeric(), 
+GENDER = character(), 
+RACE = character(), 
+CRF = numeric(),
+#CRF is Combined Risk Factors
+BMI = numeric(),
+Risk = numeric(),
+Range_upper = numeric(),
+Range_lower = numeric())
 
-#Create a loop for each fracture event in x tibble, such that all info pertinent to FRAX can be drawn for that fracture event
-#HTWT <- filter(x,CODE == "HT"｜CODE == "WT")
-#HTWT <- HTWT %>% mutate(ID = gsub(" ", "",HTWT$ID))
-for(i in 1:length(Fracture_Dates$ID)){
-id <- as.character(select(Fracture_Dates, ID)[i,1])
-date <- select(Fracture_Dates, DATE)[i,1]
-#Select height and weight nearest time of fracture
-HT <- filter(x,CODE == "HT", ID == id, DATE <= date) %>% arrange(desc(DATE))
-WT <- filter(x,CODE == "WT", ID == id, DATE <= date) %>% arrange(desc(DATE))
-#Add height to Fracture_Dates
-Fracture_Dates[i,7] <- HT[1,] %>% select(NUMERIC_VALUE) %>% as.double()
-#The days between the fracture and height measurement
-#In lubridate, days are calculated from 1970-01-01
-Fracture_Dates[i,8] <- as.double(date - HT[1,3])
-#Add weight to Fracture_Dates
-Fracture_Dates[i,9] <- WT[1,] %>% select(NUMERIC_VALUE) %>% as.double()
-#The days between the fracture and weight measurement
-Fracture_Dates[i,10] <- as.double(date - WT[1,3])
+#Isolate patients with pathologic fracture by ID
+all_fracs <- x %>% filter((grepl('M80', CODE))) %>% filter((grepl('fracture', DESC))) %>% select(ID)
+all_IDs <- tibble(y['ID'])
+ID_fracs <- right_join(all_IDs, all_fracs, by = NULL) %>% distinct()
 
-#Select age at time of fracture
-b <- y %>% filter(ID == id) %>% select(AGE_NOW)
-ageatfracture = as.double(b) - (as.double(year(today())) - as.double(year(Fracture_Dates$DATE[i])))
-Fracture_Dates$DATE[i] <- ageatfracture
+#loop that will create a tibble with info about patient fractures
+  #Use patient IDs to run the loop
+for (i in 1:nrow(ID_fracs)){
+id <- as.double(ID_fracs[i,])
+
+#Filtering by ICD-10 code 'M80' (pathologic fracture) and diagnosis described as 'fracture' to select the first fracture a patient had
+#For patients with multiple fractures you'll need to add another line that selects 2nd fractures
+z <- (x %>% filter(ID == id) %>% filter((grepl('M80', CODE))) %>% filter((grepl('fracture', DESC))) %>% arrange(DATE))[1,]
+date <- (z %>% select(DATE))[1,1]
+
+#Height and weight closest to the time of fracture
+HT <- (x %>% filter(CODE == "HT", ID == id, DATE <= date) %>% arrange(desc(DATE)) %>% select(NUMERIC_VALUE))[1,1]
+WT <- (x %>% filter(CODE == "WT", ID == id, DATE <= date) %>% arrange(desc(DATE)) %>% select(NUMERIC_VALUE))[1,1]
+
+#Calculate BMI
+BMI <- (703*as.double(WT)/as.double(HT)^2)
+
+#Calcuate age at time of fracture
+ageatfracture <- as.double(y %>% filter(ID == id) %>% select(AGE_NOW)) - (as.double(year(today())) - as.double(year(Fracture_Dates$DATE[i])))
 
 #Select gender
-Fracture_Dates$GENDER[i] <- y %>% filter(ID == id) %>% select(GENDER)
+Gender <- y %>% filter(ID == id) %>% select(GENDER)
 
 #Select race
-Fracture_Dates$RACE[i] <- y %>% filter(ID == id) %>% select(RACE)
+Race <- y %>% filter(ID == id) %>% select(RACE)
 
-#Combined Risk Factors (CRFs)
 #Tibble where CRFs will be compiled
 CRF <- tibble(
 Fracture = character(),
@@ -92,60 +133,79 @@ Glucocorticoid = character()
 #Select CRFs (Fracture	Parent fracture	Smoking	Glucocorticoids	RA	Alcohol use	Secodary osteoporosis)
 e <- x %>% filter(ID == id, DATE < date)
 
-Fracture1 <- as.character((e %>% filter(grepl('Fracture|fracture', DESC)) %>% select(DESC))[1,1])
+Fracture <- as.character((e %>% filter(grepl('Fracture|fracture', DESC)) %>% select(DESC))[1,1])
 
-Smoker1 <- as.character((e %>% filter(grepl('Smoker|smoker', DESC)) %>% select(DESC))[1,1])
+Smoker <- as.character((e %>% filter(grepl('Smoker|smoker', DESC)) %>% select(DESC))[1,1])
 
-EToH1 <- as.character((e %>% filter(grepl('Alcoholism|alcoholism', DESC)) %>% select(DESC))[1,1])
+EToH <- as.character((e %>% filter(grepl('Alcoholism|alcoholism', DESC)) %>% select(DESC))[1,1])
 
-RA1 <- as.character((e %>% filter(grepl('Rheumatoid|rheumatoid', DESC),grepl('M05|M06|714', CODE)) %>% select(DESC))[1,1])
+RA <- as.character((e %>% filter(grepl('Rheumatoid|rheumatoid', DESC),grepl('M05|M06|714', CODE)) %>% select(DESC))[1,1])
 
-Osteoporosis1 <- as.character((e %>% filter(grepl('Osteoporosis|osteoporosis', DESC), grepl('M80|733', CODE)) %>% select(DESC))[1,1])
+Osteoporosis <- as.character((e %>% filter(grepl('Osteoporosis|osteoporosis', DESC), grepl('M80|733', CODE)) %>% select(DESC))[1,1])
 
-Parent_Osteoporosis1 <- as.character((e %>% filter(grepl('Z82.62|V17.81', CODE)) %>% select(CODE))[1,1])
+Parent_Osteoporosis <- as.character((e %>% filter(grepl('Z82.62|V17.81', CODE)) %>% select(CODE))[1,1])
 
-Glucocorticoid1 <- as.character((e %>% filter(DATE < date, grepl('sone', DESC)) %>% select(DESC))[1,1])
-#Work on glucs filter criteria and find out whether the need to be taking it at the time of fracture for it to count
+Glucocorticoid <- as.character((e %>% filter(DATE < date, grepl('sone|solone', DESC)) %>% select(DESC))[1,1])
+#Work on glucs filter criteria and find out whether they need to be taking it at the time of fracture for it to count
 
 CRF <- CRF %>% add_row(
-Fracture = Fracture1,
-Smoker = Smoker1,
-EToH = EToH1,
-RA = RA1,
-Osteoporosis = Osteoporosis1,
-Parent_Osteoporosis = Parent_Osteoporosis1,
-Glucocorticoid = Glucocorticoid1
+Fracture = Fracture,
+Smoker = Smoker,
+EToH = EToH,
+RA = RA,
+Osteoporosis = Osteoporosis,
+Parent_Osteoporosis = Parent_Osteoporosis,
+Glucocorticoid = Glucocorticoid
 )
 #Convert risk factors to 0 (not present) or 1 (present)
+CRF[!is.na(CRF)] <- '1'
 CRF[is.na(CRF)] <- '0'
-for(j in 1:ncol(CRF)){
-CRF[1,j] <- ifelse(CRF[1,j] == "0","0","1")
-}
-#Calculate CRF score and add it to Fracture_Dates
+
+#Calculate CRF
 CRF_score <- sum(as.double(CRF))
-Fracture_Dates$CRF[i] <- CRF_score
+
+#Put all the data you collected into 'Fracture_Dates'
+Fracture_Dates = Fracture_Dates %>% add_row(
+ID = id,
+DATE = z$DATE,
+CODE = z$CODE,
+DESC = z$DESC),
+HT.in = HT, 
+WT.in = WT, 
+AGE = ageatfracture, 
+GENDER = Gender, 
+RACE = Race, 
+CRF = CRF_score,
+BMI = BMI
 }
+#end of loop
+#For some reason using filter with dates creates an error, however, these functions appear to work as expected
+
+#px will sustain alterations in order to calculate FRAX score
 px <- Fracture_Dates
 
 #Do they have DMII at the time of fracture? How long before?
 
-#Calculate BMI
-BMI_calc <- (703*WT)/(HT^2)
-px <- px %>% mutate(BMI = BMI_calc)
-#Round BMI to the nearest multiple of 5
-roundfive <- function(x) {round(x/5)*5}
-px <- px %>% mutate(rBMI = ifelse((BMI<45)&(BMI>15),roundfive(BMI), ifelse (BMI>45,45,15)))
-#Round age down to the nearest 5
+#Calculate FRAX score below
+
+#Round BMI down to the nearest 5
 floorfive <- function(x) {floor(x/5)*5}
-px <- px %>% mutate (rAge = ifelse((Age<90)&(Age>50),floorfive(Age), ifelse (Age<50,50,90)))
+px <- px %>% mutate(BMI = ifelse((BMI<45)&(BMI>15),floorfive(BMI), ifelse (BMI>45,45,15)))
+#Round age down to the nearest 5
+px <- px %>% mutate (AGE = ifelse((AGE<90)&(AGE>50),floorfive(AGE), ifelse (AGE<50,50,90)))
 #Change race to caucasian if not caucasian, black, hispanic or asian
-px$Race <- as.character(px$Race)
+px$RACE <- as.character(px$RACE)
 Races <- c("W","B","H","A")
-px <- px %>% mutate(Race = ifelse((Race %in% Races), Race, "W"))
-#Join risk to patients
-fx <- semi_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
-fl <- left_join(fx, px, by = c("Sex","Race","Age","CRF","BMI"))
-arrange(select(fl,Patient.ID, Risk, Range_upper, Range_lower), Patient.ID)
-#Alternatively
-fx <- inner_join(FRAX, px, by= c("Sex","Race","Age","CRF","BMI"))
-arrange(select(fx, Patient.ID, Risk, Range_upper, Range_lower),Patient.ID)
+px <- px %>% mutate(RACE = ifelse((RACE %in% Races), RACE, "W"))
+
+#Join FRAX and px to calculate 10 year risk of major osteporotic fracture
+fx <- FRAX %>% semi_join(px, by= c("GENDER","RACE","AGE","CRF","BMI")) %>% left_join(px, by = c("GENDER","RACE","AGE","CRF","BMI")) %>% select(ID, Risk, Range_upper, Range_lower)  %>% arrange(ID)
+
+#Add FRAX score to 'Fracture_Dates'
+Fracture_Dates = Fracture_Dates %>% add_row(
+Risk = fx$Risk,
+Range_upper = fx$Range_upper,
+Range_lower = fx$Range_lower)
+
+#or
+write.csv(fx, "C:\\Users\\acriscit\\Documents\\fx.csv")
