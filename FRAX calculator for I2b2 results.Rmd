@@ -33,7 +33,8 @@ FRAX <-  read_csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", col_types = "ccddd
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_upper", "Range_lower")
 #Load I2b2 data
 #xl_data <- "E:/Dropbox/Students/Anthony/20201020180719000_acriscit.xlsx"
-FRAX_data <- "C:\\Users\\acriscit\\Documents\\20201020180719000_acriscit.xlsx"
+#FRAX_data <- "C:\\Users\\acriscit\\Documents\\20201020180719000_acriscit.xlsx"
+FRAX_data <- "C:\\Users\\acriscit\\Documents\\practice 20210109112736029_acriscit.xlsx"
 
 #Label each list element with it's associated tab from the excel sheet
 tab_names <- excel_sheets(path = FRAX_data)
@@ -60,6 +61,25 @@ Frax_tabs <- tab_names2 %>%
   )
 FRAX_pts <- FRAX_data[c(Frax_tabs$Row)]
 
+#Remove extraneous columns from the med tabs by selecting specific tabs
+for (i in 1:length(FRAX_pts)){
+ FRAX_pts[[i]] <- FRAX_pts[[i]] %>% select(
+  contains(
+    c(
+      'PATIENT',
+      'VISIT',
+      'DATE',
+      'CODE',
+      'DESC', 
+      'TEXT', 
+      'NUMERIC', 
+      'UNITS',
+      'MODIFIER'
+      )
+    )
+  )
+}
+
 #rename columns and remove spaces from column names
 col_names <- c(
   "ID", 
@@ -67,10 +87,10 @@ col_names <- c(
   "DATE",
   "CODE",
   "DESC", 
-  "MODIFIER", 
   "TEXT_VALUE", 
   "NUMERIC_VALUE", 
-  "UNITS"
+  "UNITS",
+  "MODIFIER"
 )
 for (i in 1:length(FRAX_pts)){
   names(FRAX_pts[[i]]) <- col_names[1:ncol(FRAX_pts[[i]])]
@@ -80,8 +100,7 @@ for (i in 1:length(FRAX_pts)){
 #IS THIS JUST A SUBSET/FILTER CALL? IT DOESN'T SEEM LIKE YOU ARE BINDING ROWS
 #BEWARE USING X AND Y OR SIMILARLY NON-DESCRIPT VARIABLES FOR OBJECTS YOU NEED TO USE OVER A LONG PERIOD. MORE DESCRIPTIVE NAMES HELP YOU REMEMBER WHAT YOU WERE DOING DOWN THE LINE
 x <- bind_rows(FRAX_pts)
-x$DATE <- mdy_hms(x$DATE, quiet = TRUE,
-  tz = "America/New_York"
+x$DATE <- mdy_hm(x$DATE, quiet = TRUE
 )
 
 #Collect the tabs containing demographic info used to calculate FRAX score from 'FRAX_data'
@@ -90,7 +109,10 @@ FRAX_info <- FRAX_data[c(info_tabs$Row)]
 col_names <- c(
   "ID", 
   "AGE_NOW", 
-  "AGE_AT_DEATH", 
+  "AGE_AT_DEATH",
+  "BIRTH_DATE",
+  "DEATH_DATE",
+  "MATCH",
   "GENDER", 
   "RACE", 
   "MIXED RACE", 
@@ -100,6 +122,8 @@ for (i in 1:length(FRAX_info)){
   names(FRAX_info[[i]]) <- col_names[1:ncol(FRAX_info[[i]])]
 }
 y <- bind_rows(FRAX_info)
+y$BIRTH_DATE <- mdy_hm(y$BIRTH_DATE, quiet = TRUE
+)
 ```
 Now that the patient data is more readable, we will create a tibble that contains data needed to calculate a FRAX score for each patient. This will primarily be accomplished with the use of a loop.
 ```{r calc_frax}
@@ -132,22 +156,25 @@ all_fracs <- x %>%
   filter((grepl('fracture', DESC))) %>% 
   select(ID)
 all_IDs <- tibble(y['ID'])
-ID_fracs <- right_join(all_IDs, all_fracs, by = NULL) %>% distinct()
+ID_fracs <- right_join(all_IDs, all_fracs, by = 'ID') %>% distinct()
+```
+The below loop is will collect and distill information relevant to calculating FRAX score. Each cycle of this loop will collect data for 1 patient
+```{calc_frax_loop}
 
-#The below loop is will collect and distill information relevant to calculating FRAX score
-#Each cycle of this loop will collect data for 1 patient
 for (i in 1:nrow(ID_fracs)){
   id <- as.double(ID_fracs[i,])
 #Filtering by ICD-10 code 'M80' (pathologic fracture) and diagnosis described as 'fracture' to select the first fracture a patient had
+#By adding a filter for 'Admission' it will select only patients admitted to Wake for fractures
 pt_fractures <- (x %>% 
     filter(ID == id) %>% 
     filter((grepl('M80', CODE))) %>% 
     filter((grepl('fracture', DESC))) %>% 
-    arrange(DATE))[1,]
+    filter((grepl('Admission', TEXT_VALUE))) %>%
+    arrange(DATE))
 date <- pt_fractures$DATE[1]
 
 #Number of fractures the patient has experienced since the first
-Number_of_fractures <- nrow(pt_fractures)
+Number_of_fractures <- pt_fractures %>% filter((grepl('Primary', TEXT_VALUE))) %>% nrow()
 
 #Height and weight closest to the time of fracture
 HT <- (x %>% 
@@ -178,8 +205,7 @@ BMI <- (703*as.double(WT)/as.double(HT)^2)
 
 #Calcuate age at time of fracture
 #Rewrite this using birth dates
-ageatfracture <- as.double(y %>% filter(ID == id) %>% select(AGE_NOW)) - (as.double(year(today())) - as.double(year(Fracture_Dates$DATE[i])))
-#try this: ageatfracture <- as.Date(Fracture_Dates$DATE[i]) - as.Date(Birth_Date)
+ageatfracture <- as.double.difftime(date - (y %>% filter(ID == id) %>% select(BIRTH_DATE))[[1]])/365.25
 
 #Select gender
 Gender <- y %>% filter(ID == id) %>% select(GENDER)
