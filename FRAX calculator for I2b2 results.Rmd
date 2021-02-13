@@ -145,9 +145,6 @@ Fracture_Dates <- tibble(
   #CRF is Combined Risk Factors
   BMI = numeric(),
   Number_of_fractures= numeric(),
-  Risk = numeric(),
-  Range_upper = numeric(),
-  Range_lower = numeric()
 )
 
 #Create a tibble with all the IDs of patients who have had a fracture
@@ -258,7 +255,6 @@ Glucocorticoid <- as.character(
 #  steriod = c("cortisone", "hydrocortisone", "Methylprednisone", "Prednisolone", "Prednisone", "Triamcinolone", "Betamethasone", "Dexamethasone"),
 #  Dose = c(5, 4, 0.8, 1, 1, 0.8, 0.12, 0.15)
 #)
-#Divide by the above number (bc the reference is 5mg prednisolone)
 #To parse this out use ifelse statements. If it is injection/iv count it (ifelse(filter(grepl('IV or injection'))), 1, 0
 #separate this column into multiple columns using tidy data to pivot
 #These lines are held because they slow down the loop
@@ -304,13 +300,13 @@ What is the duration of disease prior to fracture?
 Were they well controlled?
 ```{Diabetes calculator}
 DM_dates <- tibble (
-  ID = id,
-Dx_DATE = date,
-Duration = time_from_fracture
+  ID = numeric(),
+  Dx_DATE = mdy_hm(),
+  Duration = numeric()
 )
 
 all_DM <- x %>% 
-  filter((grepl('E11', CODE))) %>% 
+  filter((grepl('E11|250.00', CODE))) %>% 
   filter((grepl('diabetes', DESC))) %>% 
   select(ID)
 all_IDs <- tibble(y['ID'])
@@ -326,7 +322,13 @@ for(i in 1:nrow(ID_DM)) {
       arrange(DATE))
   DM_Dx_date <- pt_DM$DATE[1]
   
-  time_from_fracture <- as.Date(Fracture_dates %>% filter(ID == id) %>% select(DATE)) - as.Date(DM_Dx_date)
+time_from_fracture <- as.double.difftime(
+  (
+    (
+      Fracture_Dates %>% filter(ID == id) %>% select(DATE)
+      )[[1]]
+    ) - DM_Dx_date
+  )/365.25
 
   DM_dates <- DM_dates %>% add_row(
    ID = id,
@@ -365,15 +367,12 @@ px <- px %>% mutate(RACE = ifelse(
   )
 
 #Join FRAX and px to calculate 10 year risk of major osteoporotic fracture
-fx <- px %>% left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy = FALSE, keep = FALSE)%>%
+Fracture_Dates <- px %>% left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy = FALSE, keep = FALSE)%>%
+  
+fx <- Fracture_Dates %>%
   select(ID, Risk, Range_upper, Range_lower) %>% 
   arrange(ID)
-#Add FRAX score to 'Fracture_Dates'
-Fracture_Dates = Fracture_Dates %>% add_row(
-  Risk = fx$Risk,
-  Range_upper = fx$Range_upper,
-  Range_lower = fx$Range_lower
-)
+
 #or
 write.csv(fx, "E:/Dropbox/Students/Anthony/fx.csv")
 ```
