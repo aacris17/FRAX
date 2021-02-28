@@ -140,9 +140,7 @@ Fracture_Dates <- tibble(
   CODE = character(),
   DESC = character(),
   HT.in = numeric(), 
-  HTDaysBeforeFrac = numeric(), 
-  WT.in = numeric(), 
-  WTDaysBeforeFrac = numeric(), 
+  WT.in = numeric(),
   AGE = numeric(), 
   GENDER = character(), 
   Og_RACE = character(), 
@@ -153,9 +151,8 @@ Fracture_Dates <- tibble(
 )
 
 #Create a tibble with all the IDs of patients who have had a fracture
-all_fracs <- x %>% 
-  filter((grepl('M80', CODE))) %>% 
-  filter((grepl('fracture', DESC))) %>% 
+all_fracs <- x %>%
+  filter((grepl('[Ff]racture', DESC))) %>% 
   select(ID)
 all_IDs <- tibble(y['ID'])
 ID_fracs <- right_join(all_IDs, all_fracs, by = 'ID') %>% distinct()
@@ -169,13 +166,13 @@ for (i in 1:nrow(ID_fracs)){
 #By adding a filter for 'Admission' it will select only patients admitted to Wake for fractures
 pt_fractures <- (x %>% 
     filter(ID == id) %>% 
-    filter((grepl('M80', CODE))) %>% 
-    filter((grepl('fracture', DESC))) %>% 
-    filter((grepl('Admission', TEXT_VALUE))) %>%
+    filter((grepl('[Ff]racture', DESC))) %>% 
+    filter((grepl('Admission|Primary', TEXT_VALUE))) %>%
     arrange(DATE))
 date <- pt_fractures$DATE[1]
 
 #Number of fractures the patient has experienced since the first
+#Unreliable bc it is unclear whether the this is actually a new fracture
 Number_of_fractures <- pt_fractures %>% filter((grepl('Primary', TEXT_VALUE))) %>% nrow()
 
 #Height and weight closest to the time of fracture
@@ -280,6 +277,7 @@ CRF[!is.na(CRF)] <- '1'
 CRF[is.na(CRF)] <- '0'
 #Calculate CRF
 CRF_score <- sum(as.double(CRF))
+
 #Put all the data you collected into 'Fracture_Dates'
 Fracture_Dates = Fracture_Dates %>% add_row(
 ID = id,
@@ -303,42 +301,75 @@ The tibble 'Fracture_Dates' now contains a row for each patient and associated i
 Discern whether the patients with fracture have diabetes.
 What is the duration of disease prior to fracture?
 Were they well controlled?
-```{Diabetes calculator}
+```{r Diabetes calculator}
 DM_dates <- tibble (
-  ID = numeric(),
-  Dx_DATE = mdy_hm(),
-  Duration = numeric()
+  ID = character(),
+  Dx_DATE = mdy_hms(),
+  Duration = duration(),
+  HBA1C_max = numeric(),
+  HBA1C_max_date = character(),
+  HBA1C_avg = numeric()
 )
 
-all_DM <- x %>% 
-  filter((grepl('E11|250.00', CODE))) %>% 
-  filter((grepl('diabetes', DESC))) %>% 
-  select(ID)
-all_IDs <- tibble(y['ID'])
-ID_DM <- right_join(all_IDs, all_fracs, by = NULL) %>% distinct()
+#Select patients with DM
+ID_DM <- x %>% 
+  filter((grepl('[Dd]iabetes', DESC))) %>% 
+  select(ID) %>% distinct() %>% as.numeric()
+#Select patients with DM for whom we have a Frax score
+Fracture_dates_final <- na.omit(Fracture_Dates)
+ID_DM <- inner_join(ID_DM, Fracture_dates_final, by = 'ID') %>% select(ID)
+```
 
+```{r loopDM}
 for(i in 1:nrow(ID_DM)) {
-  id <- as.double(ID_DM[i,])
+  id <- as.character(ID_DM[i,])
+  #Date of patients first fracture
+  fracture_date <- Fracture_Dates %>% filter(ID == id) %>%
+                      select(DATE)
+
+  if (as.character(fracture_date) == 'NA') {next}
   
   pt_DM <- (x %>% 
      filter(ID == id) %>% 
-     filter((grepl('E11|250.00', CODE))) %>% 
-     filter((grepl('diabetes', DESC))) %>% 
+     filter((grepl('[Dd]iabetes', DESC))) %>% 
       arrange(DATE))
   DM_Dx_date <- pt_DM$DATE[1]
   
-time_from_fracture <- as.double.difftime(
+days_before_fracture <- (
   (
-    (
-      Fracture_Dates %>% filter(ID == id) %>% select(DATE)
-      )[[1]]
+    fracture_date[[1]]
     ) - DM_Dx_date
-  )/365.25
+  )
+
+#HBA1C's prior to fracture and date of measurement
+HBA1C <- x %>% 
+  filter(ID == id) %>%
+  filter(grepl('HBA1C', CODE)) %>%
+  filter(UNITS == '%') %>%
+  filter(DATE <= fracture_date)
+
+HBA1C_max <- as.double(max(HBA1C$NUMERIC_VALUE))
+HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
+
+HBA1C_max_date <- (ifelse(HBA1C_max == 0, 'NA',
+                         (HBA1C %>%
+                            filter(NUMERIC_VALUE == HBA1C_max) %>%
+                            select(DATE)
+                          )[[1]]
+                         )
+                   )
+
+#Average HBA1C in the year before fracture
+HBA1C_avg <- HBA1C$NUMERIC_VALUE %>% as.double() %>% mean()
+HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
 
   DM_dates <- DM_dates %>% add_row(
    ID = id,
    Dx_DATE = DM_Dx_date,
-   Duration = time_from_fracture
+   Duration = days_before_fracture,
+   HBA1C_max = as.double(HBA1C_max),
+   HBA1C_max_date = as.character(HBA1C_max_date),
+   HBA1C_avg = as.double(HBA1C_avg)
 )
 }
 #If you have more time use blood glucose labs to determine level of control by HbA1c. Maybe average the number every year, then every 3 months the year before the fracture. Taking into account the number of measurements.
@@ -376,7 +407,13 @@ fx <- px %>% left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy = FA
 select(ID, Risk, Range_upper, Range_lower) %>% 
   arrange(ID)
 
-write.csv(fx, "C:\\Users\\acriscit\\Documents\\fx.csv")
+percent_complete_cases <- (sum(complete.cases(fx))/nrow(fx))*100
+
+#Remove incomplete cases
+fxfinal <- na.omit(fx)
+
+write.csv(fxfinal, "C:\\Users\\acriscit\\Documents\\fxfinal.csv")
+write.csv(Fracture_Dates, "C:\\Users\\acriscit\\Documents\\Fracture_Dates.csv")
 
 ```
 Other questions to ask by modifying this script
