@@ -153,7 +153,8 @@ Fracture_Dates <- tibble(
   num_visits_after_frac = numeric(),
   osteo_med_start_date = mdy_hms(),
   osteo_med_start_dose = numeric(),
-  osteo_med_last_date = mdy_hms()
+  osteo_med_last_date = mdy_hms(),
+  osteo_med_name = as.character()
 )
 
 #The below lines will select patients with fracture then remove instances with traumatic fracture or fractures of the hands, feet, face or skull. It is assumed that all other fractures in this >50 y/o population are major osteoporotic fractures. Like the below lines it will then group fracture events by patient ID and arrange them by date, allowing us to select the first fracture if there are multiple using 'distinct ()'
@@ -332,6 +333,7 @@ osteo_med <- x %>%
   filter(
   grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab', DESC)
   )
+osteo_med_name <- as.character(osteo_med$DESC[1])
 osteo_med_start_date <- (osteo_med %>% 
                            arrange(DATE) %>% 
                            select(DATE))[[1,1]]
@@ -361,7 +363,8 @@ num_visits_before_frac = num_visits_before_frac,
 num_visits_after_frac = num_visits_after_frac,
 osteo_med_start_date = osteo_med_start_date,
 osteo_med_start_dose = osteo_med_start_dose,
-osteo_med_last_date = osteo_med_last_date
+osteo_med_last_date = osteo_med_last_date,
+osteo_med_name = osteo_med_name
 )
 }
 #end of loop
@@ -380,7 +383,10 @@ DM_dates_fx <- tibble (
   Duration = duration(),
   HBA1C_max = numeric(),
   HBA1C_max_date = character(),
-  HBA1C_avg = numeric()
+  HBA1C_avg = numeric(),
+  Insulin_start = mdy_hms(),
+  BG = numeric(),
+  BG_date = mdy_hms()
 )
 
 #Written because I imported Fracture date from an excel file
@@ -431,14 +437,34 @@ HBA1C_max_date <- (HBA1C %>%
 HBA1C_avg <- HBA1C$NUMERIC_VALUE %>% as.double() %>% mean()
 HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
 
+#Insulin and BG
+DMgen <- x %>% 
+  filter(ID == id)
+  
+Insulin_start <- DMgen %>%
+  filter(grepl('[Ii]sulin', CODE)) %>%
+  filter(DATE <= fracture_date) %>%
+  arragnge(DATE)
+  $DATE[[1]]
+  
+BGgen <- DMgen %>%
+  filter(grepl('Glucose', CODE)) %>%
+  filter(DATE <= fracture_date) %>%
+  arragnge(DATE)
+
+BG_date <- BGgen$DATE[[1]]
+BG <- as.double(BGgen$NUMERIC_VALUE[1])
+
   DM_dates_fx <- DM_dates_fx %>% add_row(
    ID = id,
    Dx_DATE = pt_DM,
    Duration = days_before_fracture,
    HBA1C_max = as.double(HBA1C_max),
    HBA1C_max_date = as.character(HBA1C_max_date),
-   HBA1C_avg = as.double(HBA1C_avg)
-   #Add inslin to this loop
+   HBA1C_avg = as.double(HBA1C_avg),
+   Insulin_start = Insulin_start,
+   BG = BG,
+   BG_date = BG_date
 )
 }
 DM_dates_fx_HBA1C <- na.omit(DM_dates_fx)
