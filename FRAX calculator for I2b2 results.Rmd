@@ -451,7 +451,6 @@ BGgen <- DMgen %>%
   filter(grepl('Glucose', CODE)) %>%
   filter(DATE <= fracture_date) %>%
   arragnge(DATE)
-
 BG_date <- BGgen$DATE[[1]]
 BG <- as.double(BGgen$NUMERIC_VALUE[1])
 
