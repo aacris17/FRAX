@@ -27,27 +27,34 @@ library(stringr)
 ##Introduction
 ```{r load FRAX ppr charts and patient data}
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read_csv("C:\\Users\\acriscit\\Documents\\FRAX.csv", col_types = "ccdddddd")
+FRAX <-  read_csv("~/GitHub/FRAX/FRAX.csv", col_types = "dccdddddd")
+FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 
-Data_Request_1501_dem_01_06_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_dem_01_06_2021.csv")
-Data_Request_1501_dx_01_06_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_dx_01_06_2021.csv")
-Data_Request_1501_fam_hx_01_06_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_fam_hx_01_06_2021.csv")
-Data_Request_1501_img_01_06_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_img_01_06_2021.csv")
-Data_Request_1501_Labs_01_07_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_Labs_01_07_2021.csv")
-Data_Request_1501_meds_01_06_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_meds_01_06_2021.csv")
-Data_Request_1501_vitals_01_11_2021 <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_vitals_01_11_2021.csv")
+Diagnosis <- ("H:/Hip fracture/Diagnosis_acriscit.xlsx")
+History <- ("H:/Hip fracture/History_acriscit.xlsx")
+Lab <- ("H:/Hip fracture/Lab_acriscit.xlsx")
+Meds <- ("H:/Hip fracture/Meds_acriscit.xlsx")
+Patients <- ("H:/Hip fracture/Patients_acriscit.xlsx")
+Procedures <- ("H:/Hip fracture/Procedures_acriscit.xlsx")
+Visits <- ("H:/Hip fracture/Visits_acriscit.xlsx")
+Vitals <- ("H:/Hip fracture/Vitals_acriscit.xlsx")
 
-Demographics <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_dem_01_06_2021.csv")[1:100,]
-Diagnoses <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_dx_01_06_2021.csv")[1:100,]
-History <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_fam_hx_01_06_2021.csv")[1:100,]
-Imaging <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_img_01_06_2021.csv")[1:100,]
-Labs <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_Labs_01_07_2021.csv")[1:100,]
-Meds <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_meds_01_06_2021.csv")[1:100,]
-Vitals <- read_csv("~/Data_Request_1501_01_06_2021/Data_Request_1501_vitals_01_11_2021.csv")[1:100,]
+#read_excel_allsheets <- function(filename, tibble = TRUE) {
+ # sheets <- readxl::excel_sheets(filename)
+  #x <- lapply(sheets, function(X) readxl::read_excel(filename, sheet = X))
+  #names(x) <- sheets
+#}
 
+read_excel_allsheets <- function(filename, tibble = TRUE) {
+  tab_names <- excel_sheets(path = filename)
+  #Below is the slow line
+  filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
+  filename <- filename %>% set_names(tab_names)
+}
 
-FRAX_data <- "C:\\Users\\acriscit\\Documents\\practice 20210109112736029_acriscit.xlsx"
+filename <- Diagnosis
+Diagnosis <- read_excel_allsheets(Diagnosis)
 
 ```
 For data in xls with multiple tabs substitute the name of your document for 'Frax_data' in the below chunk. It will create a list with each tab as a list element and will preserve the names of your tabs
