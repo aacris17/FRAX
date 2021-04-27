@@ -97,18 +97,18 @@ Now that the data is loaded into R we will start to process it into a more reada
 tibble_names <- list(
   Vitals, 
   Meds, 
-  Labs, 
+  Lab, 
   Procedures, 
-  Diagnoses,
+  Diagnosis,
   History
   )
 #Title each list element appropriately
 tibble_titles <- c(
   "Vitals", 
   "Meds", 
-  "Labs", 
+  "Lab", 
   "Procedures",
-  "Diagnoses",
+  "Diagnosis",
   "History"
   )
 names(tibble_names) <- tibble_titles
