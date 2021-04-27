@@ -40,21 +40,37 @@ Procedures <- ("H:/Hip fracture/Procedures_acriscit.xlsx")
 Visits <- ("H:/Hip fracture/Visits_acriscit.xlsx")
 Vitals <- ("H:/Hip fracture/Vitals_acriscit.xlsx")
 
-#read_excel_allsheets <- function(filename, tibble = TRUE) {
- # sheets <- readxl::excel_sheets(filename)
-  #x <- lapply(sheets, function(X) readxl::read_excel(filename, sheet = X))
-  #names(x) <- sheets
-#}
-
+#Function to import excel data with multiple tabs as a list
 read_excel_allsheets <- function(filename, tibble = TRUE) {
   tab_names <- excel_sheets(path = filename)
   #Below is the slow line
   filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
-  filename <- filename %>% set_names(tab_names)
+  filename <- filename %>% set_names(tab_names) %>% bind_
 }
 
 filename <- Diagnosis
-Diagnosis <- read_excel_allsheets(Diagnosis)
+Diagnosis <- read_excel_allsheets(filename)
+
+filename <- History
+History <- read_excel_allsheets(filename)
+
+filename <- Lab
+Lab <- read_excel_allsheets(filename)
+
+filename <- Meds
+Meds <- read_excel_allsheets(filename)
+
+filename <- Patients
+Patients <- read_excel_allsheets(filename)
+
+filename <- Procedures
+Procedures <- read_excel_allsheets(filename)
+
+#filename <- Visits
+#Visits <- read_excel_allsheets(filename)
+
+filename <- Vitals
+Vitals <- read_excel_allsheets(filename)
 
 ```
 For data in xls with multiple tabs substitute the name of your document for 'Frax_data' in the below chunk. It will create a list with each tab as a list element and will preserve the names of your tabs
