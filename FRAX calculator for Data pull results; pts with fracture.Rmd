@@ -448,7 +448,7 @@ All_DM <- x %>%
   filter((grepl('E11|250', CODE))) %>% 
   select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
 #Select patients with DM for whom we have a Frax score
-Fracture_dates_final <- transform(Fracture_Dates, ID = as.character(ID))
+Fracture_dates_final <- transform(na.omit(Fracture_Dates), ID = as.character(ID))
 ID_DM <- inner_join(All_DM, Fracture_dates_final, by = 'ID')
 
 #Remove patients diagnosed with DM after the first fracture
@@ -548,17 +548,11 @@ px <- px %>% mutate(RACE = ifelse(
 
 #Join FRAX and px to calculate 10 year risk of major osteoporotic fracture
 fx <- px %>% 
-  left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE) %>%
+  left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE)%>%
   select(ID, Risk, Range_upper, Range_lower) %>% 
   arrange(ID)
 
 percent_complete_cases <- (sum(complete.cases(fx))/nrow(fx))*100
-Height <- Fracture_Dates[5]
-Percent_w/_HT <- (sum(complete.cases(Fracture_Dates$HT.in))/nrow(Fracture_Dates))*100
-Percent_w/_WT <- (sum(complete.cases(Fracture_Dates$WT.in))/nrow(Fracture_Dates))*100
-(sum(complete.cases(Fracture_Dates$Og_RACE))/nrow(Fracture_Dates))*100
-(sum(complete.cases(Fracture_Dates$AGE))/nrow(Fracture_Dates))*100
-(sum(complete.cases(Fracture_Dates$GENDER))/nrow(Fracture_Dates))*100
 
 #Remove incomplete cases
 fxfinal <- na.omit(fx)
@@ -566,4 +560,16 @@ fxfinal <- na.omit(fx)
 write.csv(fxfinal, "C:\\Users\\acriscit\\Documents\\fxfinal.csv")
 write.csv(Fracture_Dates, "C:\\Users\\acriscit\\Documents\\Fracture_Dates.csv")
 
+```
+DXA info and death info
+``` {r DXA}
+Fracture_Dates$ID <- as.character(Fracture_Dates$ID)
+DXA <- tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(ID, DESC, DATE) %>% left_join(Fracture_Dates, by = 'ID')
+
+write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA.csv")
+
+Fx_to_death <- y %>% filter(DEATH_DATE != 'NA')
+Fx_to_death$DEATH_DATE <- mdy_hm(Fx_to_death$DEATH_DATE, quiet = TRUE)
+
+Fx_to_death <- Fx_to_death %>% select(ID, DEATH_DATE) %>% left_join(Fracture_Dates, by = 'ID') %>% mutate(TIME_TO_DEATH = DEATH_DATE - DATE)
 
