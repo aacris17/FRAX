@@ -388,7 +388,10 @@ BMI = as.double(BMI)
 ```
 #Calculate FRAX score below
 ```{r FRAX calculator}
-px <- Fracture_Dates
+#add death date to Fracture_Dates and change the name of the tibble to 'px'
+px <- y %>%
+  select(ID, DEATH_DATE) %>%
+  right_join(Fracture_Dates, by = ID)
 
 #Round BMI down to the nearest 5
 floorfive <- function(x) {floor(x/5)*5}
