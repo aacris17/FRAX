@@ -62,9 +62,6 @@ Patients <- read_excel_allsheets(filename)
 filename <- Procedures
 Procedures <- read_excel_allsheets(filename)
 
-filename <- Visits
-Visits <- read_excel_allsheets(filename)
-
 filename <- Vitals
 Vitals <- read_excel_allsheets(filename)
   
@@ -72,6 +69,7 @@ filename <- Lab
 Lab <- read_excel_allsheets(filename)
 
 ```
+
 ```{r run}
 #Accumulate data tibbles as a list
 tibble_names <- list(
@@ -132,14 +130,11 @@ col_names <- c(
 )
 names(Patients) <- col_names[1:ncol(Patients)]
 
-Patients$BIRTH_DATE <- mdy_hm(
-  Patients$BIRTH_DATE, 
-  quiet = TRUE
-  )
-Patients$DEATH_DATE <- mdy_hm(
-  Patients$DEATH_DATE, 
-  quiet = TRUE
-  )
+  Patients <- Patients %>%
+    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
+  
+ Patients <- Patients %>%
+    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
 y <- Patients
 
 
@@ -454,13 +449,20 @@ All_DM <- x %>%
   filter((grepl('E11|250', CODE))) %>% 
   select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
 #Select patients with DM for whom we have a Frax score
-Fracture_dates_final <- transform(na.omit(Fracture_Dates), ID = as.character(ID))
+Fracture_dates_final <- transform((Fracture_Dates), ID = as.character(ID))
 ID_DM <- inner_join(All_DM, Fracture_dates_final, by = 'ID')
 
 #Remove patients diagnosed with DM after the first fracture
 ID_DM <- ID_DM %>% mutate(
   days_before_fracture = DATE.y - DATE.x)
 ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
+
+#Pre-loop
+Insulin <- x %>%
+  filter(grepl('[Ii]sulin', DESC)) %>%
+  filter(UNITS == 'Units')
+BG <- x %>%
+  filter(grepl('GLU', CODE))
 ```
 Diabetes loop
 ```{r DM loop}
@@ -493,21 +495,17 @@ HBA1C_avg <- HBA1C$NUMERIC_VALUE %>% as.double() %>% mean()
 HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
 
 #Insulin and BG
-DMgen <- x %>% 
-  filter(ID == id)
-  
-Insulin_start <- (DMgen %>%
-  filter(grepl('[Ii]sulin', DESC)) %>%
-  filter(UNITS == 'Units') %>%
+Insulin_start <- (Insulin %>%
+  filter(ID == id) %>%
   filter(DATE <= fracture_date) %>%
   arrange(DATE))$DATE[1]
   
-BGgen <- DMgen %>%
-  filter(grepl('GLU', CODE)) %>%
+BGgen <- BG %>%
+  filter(ID == id) %>%
   filter(DATE == fracture_date) %>%
   arrange(DATE)
 BG_date <- BGgen$DATE[1]
-BG <- as.double(BGgen$NUMERIC_VALUE)[1]
+BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
 
   DM_dates_fx <- DM_dates_fx %>% add_row(
    ID = id,
@@ -517,13 +515,13 @@ BG <- as.double(BGgen$NUMERIC_VALUE)[1]
    HBA1C_max_date = as.character(HBA1C_max_date),
    HBA1C_avg = as.double(HBA1C_avg),
    Insulin_start = as.character(Insulin_start),
-   BG = BG,
+   BG = BGnow,
    BG_date = as.character(BG_date)
 )
 }
 DM_dates_fx_HBA1C <- na.omit(DM_dates_fx)
 
-write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+#write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
 
 ```
 DXA info and death info
@@ -533,16 +531,12 @@ DXA <- tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(ID, DES
 
 write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA.csv")
 
-Fx_to_death <- y %>% filter(DEATH_DATE != 'NA')
-Fx_to_death$DEATH_DATE <- mdy_hm(Fx_to_death$DEATH_DATE, quiet = TRUE)
-
-Fx_to_death <- Fx_to_death %>% select(ID, DEATH_DATE) %>% left_join(Fracture_Dates, by = 'ID') %>% mutate(TIME_TO_DEATH = DEATH_DATE - DATE) %>% select(ID, TIME_TO_DEATH, DEATH_DATE, DATE)
+Fx_to_death <- y %>% select(ID, DEATH_DATE) %>% left_join(Fracture_Dates, by = 'ID') %>% mutate(TIME_TO_DEATH = DEATH_DATE - DATE) %>% select(ID, TIME_TO_DEATH, DEATH_DATE, DATE)
 
 write.csv(Fx_to_death, "C:\\Users\\acriscit\\Documents\\Fx_to_death.csv")
 
 ```
 Visit info
-This loop is not populating the tibble
 ```{r Visits}
 Visits <- ("H:/Hip fracture/Visits_acriscit.xlsx")
 
@@ -573,6 +567,7 @@ col_names <- c(
 
 #Information about number of visits and date of visits relative to fracture date
 Visit_Dates <-  tibble(
+  ID = numeric(),
   first_visit_date = mdy_hms(),
   last_visit_date = mdy_hms(),
   num_visits_before_frac = numeric(),
@@ -596,22 +591,31 @@ last_visit_date <- (
   visit %>% 
     arrange(desc(START_DATE))
   )$START_DATE[1]
+
 num_visits_before_frac <- visit %>% 
-  filter(START_DATE < date) %>% 
+  filter(START_DATE < date) %>%
+  mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  group_by(START_DATE) %>% 
+  distinct(START_DATE, .keep_all = TRUE) %>%
   nrow()
 num_visits_after_frac <- visit %>% 
   filter(START_DATE > date) %>% 
+  mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  group_by(START_DATE) %>% 
+  distinct(START_DATE, .keep_all = TRUE) %>%
   nrow()
-LOS_fx <- visit %>% filter(TYPE == 'I|S') %>% 
-  filter(START_DATE <= date & END_DATE >= date) %>%
-  select(LOS) %>% as.double()
+#LOS_fx <- visit %>% 
+  #filter(TYPE == 'I|S') %>% 
+ # filter(START_DATE <= date & END_DATE >= date) %>%
+ # select(LOS) %>% as.double()[[1]]
 
 Visit_Dates <- Visit_Dates %>% add_row(
-  first_visit_date = mdy_hms(),
-  last_visit_date = mdy_hms(),
-  num_visits_before_frac = numeric(),
-  num_visits_after_frac = numeric(),
-  LOS_fx = as.double()
+  ID = id,
+  first_visit_date = first_visit_date,
+  last_visit_date = last_visit_date,
+  num_visits_before_frac = num_visits_before_frac,
+  num_visits_after_frac = num_visits_after_frac,
+  LOS_fx = as.double(LOS_fx)
 )
 }
 
