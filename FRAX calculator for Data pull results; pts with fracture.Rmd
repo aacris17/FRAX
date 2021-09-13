@@ -47,6 +47,7 @@ read_excel_allsheets <- function(filename, tibble = TRUE) {
   filename <- filename %>% set_names(tab_names) %>% bind_rows ()
 }
 
+#The function above will convert each file below into a list that is easy to work with
 filename <- Diagnosis
 Diagnosis <- read_excel_allsheets(filename)
 
@@ -69,7 +70,9 @@ filename <- Lab
 Lab <- read_excel_allsheets(filename)
 
 ```
-
+In this chunk we are organizing data so that relevant information can be more easily collected
+- All the documents we imported above will be combined into one large tibble
+- We will create an empty tibble that will be filled with info to calculate FRAX score at the time of fracture for each patient
 ```{r run}
 #Accumulate data tibbles as a list
 tibble_names <- list(
@@ -192,8 +195,9 @@ Hip_fracs <- ID_fracs %>%
   distinct(ID, .keep_all = TRUE)
 #Calculate the number of patients excluded by this step
 number_excluded_hip <- nrow(y) - nrow(Hip_fracs)
-
+```
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
+```{r risk_factors}
 
 # alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
 
@@ -241,11 +245,8 @@ Glucocorticoid <- x %>%
      ) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
-
-
-#The below loop is will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient
 ```
-
+The below loop will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient and will populate the tibble 'Fracture_Dates'
 ```{r loop}
 for (i in 1:nrow(ID_fracs)){
   id <- as.double(ID_fracs$ID[i])
@@ -525,6 +526,7 @@ DM_dates_fx_HBA1C <- na.omit(DM_dates_fx)
 
 ```
 DXA info and death info
+Output is in hours for death
 ``` {r DXA}
 Fracture_Dates$ID <- as.character(Fracture_Dates$ID)
 DXA <- tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(ID, DESC, DATE) %>% left_join(Fracture_Dates, by = 'ID')
