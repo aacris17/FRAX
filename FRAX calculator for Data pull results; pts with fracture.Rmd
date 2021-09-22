@@ -208,9 +208,9 @@ Fracture <- x %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
-#Any smoking history
+#Smoker at the time of the fracture
 Smoker <- x %>% 
-     filter(grepl('[Ss]moker', DESC) & !grepl('Never', DESC)) %>%
+     filter(grepl('[Ss]moker', DESC) & grepl('[Cc]urrent', DESC)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
@@ -328,28 +328,28 @@ Race <- yID %>% select(RACE)
 # alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
 
 Fracture_loop <- as.character(
-  (filter(Fracture, id == ID) %>%
+  (filter(Fracture, id == ID & DATE <= date) %>%
   select(DESC))[1,2]
   )
-#Any smoking history
+#Smoking within the last 2 years
 Smoker_loop <- as.character(
-  (filter(Smoker, id == ID) %>% 
+  (filter(Smoker, id == ID & DATE <= date & DATE >= date-years(2)) %>% 
      select(DESC))[1,2]
   )
 #A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
 EToH_loop <- as.character(
-  (filter(EToH, id == ID) %>%
+  (filter(EToH, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
   )
 #A diagnosis of Rheumatoid Arthritis 
 RA_loop <- as.character(
-  (filter(RA, id == ID) %>%
+  (filter(RA, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
   )
 #According to FRAX this includes osteoporosis (M81, 7330) and diseases strongly associated with osteoporosis including type I (insulin dependent) diabetes (E10, 250), osteogenesis imperfecta in adults (Q78.0, 75651), untreated long-standing hyperthyroidism E05, 242)(these are the codes for hyperthyroidism irrespective of treatment), hypogonadism (E29.1, 2572 (male), E28.3, 25631, 25639 (female) including) premature menopause (<45 years), chronic malnutrition (intestinal malabsorption K90, 579, nutritional malabsorption E41-46, 261-263), or malabsorption and chronic liver disease
 #An alternative to malabsorption could be to consider BMI <15
 Osteoporosis_loop <- as.character(
-  (filter(Osteoporosis, id == ID) %>% 
+  (filter(Osteoporosis, id == ID & DATE <= date) %>% 
      select(CODE))[1,2]
   )
 #FRAX considers parental hip fracture a risk. We have substituted parental osteoporosis for this risk factor because there is a searchable diagnostic code
@@ -359,7 +359,7 @@ Parent_Osteoporosis_loop <- as.character(
   )
 #Current exposure to oral glucocorticoids or exposure to oral glucocorticoids for more than 3 months at a dose eqivalent to prednisolone > 5mg daily
 Glucocorticoid_data <- (
-  filter(Glucocorticoid, id == ID)
+  filter(Glucocorticoid, id == ID & DATE <= date)
   )
 Glucocorticoid_rf <- ifelse(Glucocorticoid_data[1,1] == 'NA', 'NA', Glucocorticoid_data[1,1])
 #Exclude glucocorticoids taken for less than 3 months
@@ -403,11 +403,13 @@ BMI = as.double(BMI)
 )
 }
 
-#add time from fracture to death via mutate()
-Fracture_Dates <- Fracture_Dates %>% mutate(time_to_death = ageatdeath - ageatfracture)
-
 #Save the original Fracture_Dates because the below chunks will make changes to it
 Fracture_Dates_Og <- Fracture_Dates
+
+#add time from fracture to death via mutate()
+Fracture_Dates <- Fracture_Dates %>% mutate(time_to_death = ageatdeath - ageatfracture)
+#remove anyone < 50 years old at the first fracture. This should not include anyone in the cohort, but will catch anyone extra
+Fracture_Dates <- Fracture_Dates %>% filter(ageatfracture >= 50)
 ```
 Calculate FRAX score below
 ```{r FRAX calculator}
@@ -588,26 +590,28 @@ col_names <- c(
 #Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
   names(Visits) <- col_names[1:ncol(Visits)]
   
-  Visits <- Visits %>%
-    mutate(START_DATE = mdy_hm(START_DATE))
-  
-  Visits <- Visits %>%
-    mutate(END_DATE = mdy_hm(END_DATE))
+  #Convert visits dates to dates and use as.Date to remove the time element
+  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
+  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
+
+  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
+  Visits <- Visits %>% distinct(ID, START_DATE, .keep_all = TRUE)
 
 #Information about number of visits and date of visits relative to fracture date
 Visit_Dates <-  tibble(
   ID = numeric(),
-  first_visit_date = mdy_hms(),
-  last_visit_date = mdy_hms(),
+  first_visit_date = mdy(),
+  last_visit_date = mdy(),
   num_visits_before_frac = numeric(),
   num_visits_after_frac = numeric(),
-  LOS_fx = numeric ()
+  LOS_fx = numeric (),
+  CCI = numeric ()
 )
 
-for (i in 1:nrow(ID_fracs)){
-  id <- as.double(ID_fracs$ID[i])
+for (i in 1:nrow(Fracture_Dates)){
+  id <- as.double(Fracture_Dates$ID[i])
 
-date <- (ID_fracs %>% 
+date <- (Fracture_Dates %>% 
     filter(ID == id) %>%
     select(ID, DATE))[[1,2]]
 
@@ -623,20 +627,29 @@ last_visit_date <- (
 
 num_visits_before_frac <- visit %>% 
   filter(START_DATE < date) %>%
-  mutate(START_DATE = floor_date(START_DATE, "day")) %>%
-  group_by(START_DATE) %>% 
-  distinct(START_DATE, .keep_all = TRUE) %>%
+  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  #group_by(START_DATE) %>% 
+  #distinct(START_DATE, .keep_all = TRUE) %>%
   nrow()
 num_visits_after_frac <- visit %>% 
   filter(START_DATE > date) %>% 
-  mutate(START_DATE = floor_date(START_DATE, "day")) %>%
-  group_by(START_DATE) %>% 
-  distinct(START_DATE, .keep_all = TRUE) %>%
+  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  #group_by(START_DATE) %>% 
+  #distinct(START_DATE, .keep_all = TRUE) %>%
   nrow()
 #LOS_fx <- visit %>% 
   #filter(TYPE == 'I|S') %>% 
  # filter(START_DATE <= date & END_DATE >= date) %>%
  # select(LOS) %>% as.double()[[1]]
+
+#Finds the most recent CCI prior to the fracture date
+CCI <- visit %>%
+  filter(!is.na(CCI)) %>%
+  filter(START_DATE <= date) %>%
+  arrange(desc(START_DATE)) %>%
+  distinct(ID, .keep_all = TRUE) %>%
+  select(CCI) %>%
+  as.double()
 
 Visit_Dates <- Visit_Dates %>% add_row(
   ID = id,
@@ -644,7 +657,8 @@ Visit_Dates <- Visit_Dates %>% add_row(
   last_visit_date = last_visit_date,
   num_visits_before_frac = num_visits_before_frac,
   num_visits_after_frac = num_visits_after_frac,
-  LOS_fx = as.double(LOS_fx)
+  LOS_fx = as.double(LOS_fx),
+  CCI = as.double(CCI)
 )
 }
 
@@ -655,8 +669,9 @@ This loop has not been tested
 #FDA approved osteoporosis medication usage
 osteo_med_all <- x %>% 
   filter(
-  grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab|[Ee]strogen|[Rr]aloxifene|[Bb]azodoxifene|[Rr]omosozumab|[Tt]eriparatide|[Aa]baloparatide', DESC)
-  ) %>%
+    grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab|[Ee]strogen|[Rr]aloxifene|[Bb]azodoxifene|[Rr]omosozumab|[Tt]eriparatide|[Aa]baloparatide', DESC) &
+    !grepl('[Rr]eceptor', DESC)
+         ) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
