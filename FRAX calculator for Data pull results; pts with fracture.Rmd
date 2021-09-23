@@ -7,7 +7,7 @@ runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ---
@@ -22,12 +22,11 @@ library(lubridate)
 library(tibble)
 library(purrr)
 library(stringr)
-```
-^I find it helpful to set everything up at the beggining and you can also make some modifications to how this Rmd turns into an html. Here is cheatsheet on options for R markdown: https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf
+
+#I find it helpful to set everything up at the beggining and you can also make some modifications to how this Rmd turns into an html. Here is cheatsheet on options for R markdown: https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf
 ##Introduction
-```{r load FRAX ppr charts and patient data}
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read_csv("~/GitHub/FRAX/FRAX.csv", col_types = "dccdddddd")
+FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 
@@ -69,11 +68,11 @@ Vitals <- read_excel_allsheets(filename)
 filename <- Lab
 Lab <- read_excel_allsheets(filename)
 
-```
-In this chunk we are organizing data so that relevant information can be more easily collected
-- All the documents we imported above will be combined into one large tibble
-- We will create an empty tibble that will be filled with info to calculate FRAX score at the time of fracture for each patient
-```{r run}
+
+#In this chunk we are organizing data so that relevant information can be more easily collected
+#- All the documents we imported above will be combined into one large tibble
+#- We will create an empty tibble that will be filled with info to calculate FRAX score at the time of fracture for each patient
+
 #Accumulate data tibbles as a list
 tibble_names <- list(
   Vitals, 
@@ -175,13 +174,16 @@ CRF <- tibble(
 )
 #Collect risk factors into above tibble. If there is no observation prior to DATE, it is assumed that the risk factor was not present. For example, if there is no prior fracture documented, it is assumed that there was no prior fracture
 
-```
+
 #The below lines will select patients with fracture then remove instances with traumatic fracture or fractures of the hands, feet, face or skull (non major osteoporotic fractures). It is assumed that all other fractures in this >50 y/o population are major osteoporotic fractures. Like the below lines it will then group fracture events by patient ID, arrange them by date and exclude all but the first fracture event using 'distinct ()'
-```{r filtering}
+#Note that this does not exclude patients who have had a non-MOF but excludes that diagnosis from analysis
+
 ID_fracs <- tibble_names$Diagnosis %>%
   filter(grepl('[Ff]racture', DESC)) %>%
   #Exclude S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
   filter(!grepl('S62|S92|S99|M88|S02|V|Y04|C79.5', CODE)) %>%
+  #Remove diagnoses from the problem list
+  filter(!grepl('PROBLEM:ACTIVE', TEXT_VALUE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE) %>% 
   distinct(ID, .keep_all = TRUE)
@@ -197,9 +199,9 @@ Hip_fracs <- ID_fracs %>%
   distinct(ID, .keep_all = TRUE)
 #Calculate the number of patients excluded by this step
 number_excluded_hip <- nrow(y) - nrow(Hip_fracs)
-```
+
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
-```{r risk_factors}
+
 
 # alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
 
@@ -410,13 +412,15 @@ Fracture_Dates_Og <- Fracture_Dates
 Fracture_Dates <- Fracture_Dates %>% mutate(time_to_death = ageatdeath - ageatfracture)
 #remove anyone < 50 years old at the first fracture. This should not include anyone in the cohort, but will catch anyone extra
 Fracture_Dates <- Fracture_Dates %>% filter(ageatfracture >= 50)
-```
-Calculate FRAX score below
-```{r FRAX calculator}
+Fracture_Dates$ID <- as.double(Fracture_Dates$ID)
+
+#Calculate FRAX score below
+
 #add death date to Fracture_Dates and change the name of the tibble to 'px'
+y$ID <- as.double(y$ID)
 px <- y %>%
-  select(ID, DEATH_DATE) %>%
-  right_join(Fracture_Dates, by = ID)
+  select(ID, DEATH_DATE, AGE_AT_DEATH) %>%
+  right_join(Fracture_Dates, by = 'ID')
 
 #Round BMI down to the nearest 5
 floorfive <- function(x) {floor(x/5)*5}
@@ -445,15 +449,34 @@ px <- px %>% mutate(RACE = ifelse(
 fx <- px %>% 
   left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE)%>%
   select(ID, Risk, Range_upper, Range_lower) %>% 
-  arrange(ID)
+  arrange(ID) %>%
+  na.omit()
 
 percent_complete_cases <- (sum(complete.cases(fx))/nrow(fx))*100
 
-#Remove incomplete cases
-fxfinal <- na.omit(fx)
+Fracture_Dates_fx <- Fracture_Dates %>% left_join(fx, by = 'ID')
 
-write.csv(fxfinal, "C:\\Users\\acriscit\\Documents\\fxfinal.csv")
-write.csv(Fracture_Dates, "C:\\Users\\acriscit\\Documents\\Fracture_Dates.csv")
+percent_missing_FRAX <- (nrow(fx)/nrow(Fracture_Dates_fx))*100
+percent_missing_HT <- (nrow(is.na(Fracture_Dates_fx$HT.in))/nrow(Fracture_Dates_fx))*100
+percent_missing_WT <- (nrow(is.na(Fracture_Dates_fx$WT.in))/nrow(Fracture_Dates_fx))*100
+
+write.csv(Fracture_Dates_fx, "C:\\Users\\acriscit\\Documents\\Fracture_Dates_fx.csv")
+
+Flow <- tibble()
+
+Flow <- Flow %>% add_row(
+  percent_complete_cases = as.double(percent_complete_cases),
+  number_excluded_frac = as.double(number_excluded_frac),
+  number_excluded_hip = as.double(number_excluded_hip),
+  percent_missing_FRAX = as.double(percent_missing_FRAX),
+  percent_missing_WT = as.double(percent_missing_WT),
+  percent_missing_HT = as.double(percent_missing_HT)
+)
+
+rm(fx)
+rm(px)
+rm(fxfinal)
+rm(CRF_calc)
 
 ```
 The tibble 'Fracture_Dates' now contains a row for each patient and associated information necessary to calculate FRAX score. Below we will use the 'FRAX' tibble create from publicly available FRAX paper charts (https://www.sheffield.ac.uk/FRAX/charts.aspx) to calculate the FRAX score for each patient.
@@ -479,7 +502,7 @@ All_DM <- x %>%
   filter((grepl('E11|250', CODE))) %>% 
   select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
 #Select patients with DM for whom we have a Frax score
-Fracture_dates_final <- transform((Fracture_Dates), ID = as.character(ID))
+Fracture_dates_final <- transform((Fracture_Dates_fx), ID = as.character(ID))
 ID_DM <- inner_join(All_DM, Fracture_dates_final, by = 'ID')
 
 #Remove patients diagnosed with DM after the first fracture
@@ -489,8 +512,7 @@ ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
 
 #Pre-loop
 Insulin <- x %>%
-  filter(grepl('[Ii]sulin', DESC)) %>%
-  filter(UNITS == 'Units')
+  filter(grepl('[Ii]nsulin', DESC))
 BG <- x %>%
   filter(grepl('GLU', CODE))
 ```
@@ -532,7 +554,7 @@ Insulin_start <- (Insulin %>%
   
 BGgen <- BG %>%
   filter(ID == id) %>%
-  filter(DATE == fracture_date) %>%
+  filter(DATE <= fracture_date) %>%
   arrange(DATE)
 BG_date <- BGgen$DATE[1]
 BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
