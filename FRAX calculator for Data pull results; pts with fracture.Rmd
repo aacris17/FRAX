@@ -685,7 +685,7 @@ num_visits_after_frac <- visit %>%
 
 #Finds the most recent CCI prior to the fracture date
 CCI <- visit %>%
-  filter(!is.na(CCI)) %>%
+  filter(!is.na(CCI) & START_DATE < date) %>%
  # filter(START_DATE <= date) %>%
   arrange(desc(START_DATE)) %>%
   distinct(ID, .keep_all = TRUE) %>%
@@ -703,8 +703,8 @@ Visit_Dates <- Visit_Dates %>% add_row(
 rm(visit)
 }
 
-write.csv(Visits, "C:\\Users\\acriscit\\Documents\\Visits.csv")
-rm(Visits)
+write.csv(Visit_Dates, "C:\\Users\\acriscit\\Documents\\Visit_Dates.csv")
+rm(Visit_Dates)
 ```
 Osteo meds
 ```{r osteo meds}
