@@ -452,15 +452,14 @@ fx <- px %>%
   arrange(ID) %>%
   na.omit()
 
-percent_complete_cases <- (sum(complete.cases(fx))/nrow(fx))*100
-
 Fracture_Dates_fx <- Fracture_Dates %>% left_join(fx, by = 'ID')
 
+write.csv(Fracture_Dates_fx, "C:\\Users\\acriscit\\Documents\\Fracture_Dates_fx.csv")
+
+percent_complete_cases <- (nrow(fx)/nrow(Fracture_Dates))*100
 percent_missing_FRAX <- (nrow(fx)/nrow(Fracture_Dates_fx))*100
 percent_missing_HT <- (nrow(is.na(Fracture_Dates_fx$HT.in))/nrow(Fracture_Dates_fx))*100
 percent_missing_WT <- (nrow(is.na(Fracture_Dates_fx$WT.in))/nrow(Fracture_Dates_fx))*100
-
-write.csv(Fracture_Dates_fx, "C:\\Users\\acriscit\\Documents\\Fracture_Dates_fx.csv")
 
 Flow <- tibble()
 
@@ -472,11 +471,12 @@ Flow <- Flow %>% add_row(
   percent_missing_WT = as.double(percent_missing_WT),
   percent_missing_HT = as.double(percent_missing_HT)
 )
+write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
 
 rm(fx)
 rm(px)
-rm(fxfinal)
 rm(CRF_calc)
+rm(Fracture_Dates)
 
 ```
 The tibble 'Fracture_Dates' now contains a row for each patient and associated information necessary to calculate FRAX score. Below we will use the 'FRAX' tibble create from publicly available FRAX paper charts (https://www.sheffield.ac.uk/FRAX/charts.aspx) to calculate the FRAX score for each patient.
@@ -485,25 +485,19 @@ Discern whether the patients with fracture have diabetes.
 What is the duration of disease prior to fracture?
 Were they well controlled?
 ```{r Diabetes calculator}
-DM_dates_fx <- tibble (
-  ID = numeric(),
-  Dx_DATE = mdy_hms(),
-  Duration = duration(),
-  HBA1C_max = numeric(),
-  HBA1C_max_date = character(),
-  HBA1C_avg = numeric(),
-  Insulin_start = character(),
-  BG = numeric(),
-  BG_date = character()
-)
-
 #Select patients with type 2 DM using ICD-10/9 code 'E11' or '250'
 All_DM <- x %>% 
   filter((grepl('E11|250', CODE))) %>% 
-  select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
+  #Select the ID and Date of first DM diagnosis in the record
+  select(ID, DATE) %>% group_by(ID) %>%
+  arrange(DATE, .by_group = TRUE) %>%
+  distinct(ID, .keep_all = TRUE) %>%
+  transform(ID = as.double(ID))
 #Select patients with DM for whom we have a Frax score
-Fracture_dates_final <- transform((Fracture_Dates_fx), ID = as.character(ID))
-ID_DM <- inner_join(All_DM, Fracture_dates_final, by = 'ID')
+fx <- Fracture_Dates_fx %>% filter(!is.na(Risk))
+ID_DM <- inner_join(All_DM, fx, by = 'ID')
+rm(fx)
+rm(All_DM)
 
 #Remove patients diagnosed with DM after the first fracture
 ID_DM <- ID_DM %>% mutate(
@@ -512,57 +506,66 @@ ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
 
 #Pre-loop
 Insulin <- x %>%
-  filter(grepl('[Ii]nsulin', DESC))
+  filter(grepl('[Ii]nsulin', DESC)) %>%
+  arrange(desc(DATE))
 BG <- x %>%
-  filter(grepl('GLU', CODE))
+  filter(grepl('GLU', CODE)) %>%
+  arrange(desc(DATE))
+HBA1C <- x %>%
+  filter(grepl('HBA1C', CODE)) %>%
+  filter(UNITS == '%') %>%
+  arrange(desc(DATE))
 ```
 Diabetes loop
 ```{r DM loop}
+#Tibble to be filled by loop
+DM_dates_fx <- tibble (
+  ID = numeric(),
+  HBA1C_max = numeric(),
+  HBA1C_max_date = character(),
+  HBA1C_avg = numeric(),
+  Insulin_start = character(),
+  BG = numeric(),
+  BG_date = character()
+)
+
 for(i in 1:nrow(ID_DM)) {
   id <- as.double(ID_DM$ID[i])
   
   #Date of patients first fracture
   fracture_date <- ID_DM$DATE.y[i]
 
- #if (as.character(fracture_date) == 'NA') {next}
-  pt_DM <- ID_DM$DATE.x[i]
-  
-days_before_fracture <- (fracture_date[[1]]) - pt_DM
+ # pt_DM <- ID_DM$DATE.x[i]
 
 #HBA1C's prior to fracture and date of measurement
-HBA1C <- x %>% 
+HBA1C_loop <- HBA1C %>% 
   filter(ID == id) %>%
-  filter(grepl('HBA1C', CODE)) %>%
-  filter(UNITS == '%') %>%
   filter(DATE <= fracture_date)
 
-HBA1C_max <- as.double(max(HBA1C$NUMERIC_VALUE))
-HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
+HBA1C_max <- as.double(max(HBA1C_loop$NUMERIC_VALUE))
+#HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
 
-HBA1C_max_date <- (HBA1C %>%
+HBA1C_max_date <- (HBA1C_loop %>%
                      filter(NUMERIC_VALUE == HBA1C_max))$DATE[1]
 
 #Average HBA1C in the year before fracture
-HBA1C_avg <- HBA1C$NUMERIC_VALUE %>% as.double() %>% mean()
-HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
+HBA1C_avg <- HBA1C_loop$NUMERIC_VALUE %>% as.double() %>% mean()
+#HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
 
 #Insulin and BG
-Insulin_start <- (Insulin %>%
-  filter(ID == id) %>%
-  filter(DATE <= fracture_date) %>%
-  arrange(DATE))$DATE[1]
+Insulin_start <- Insulin %>%
+  filter(id == ID) %>%
+  filter(DATE <= fracture_date)
+Insulin_start <- Insulin_start$DATE[1]
   
 BGgen <- BG %>%
   filter(ID == id) %>%
-  filter(DATE <= fracture_date) %>%
-  arrange(DATE)
+  filter(DATE < fracture_date)
 BG_date <- BGgen$DATE[1]
 BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
 
   DM_dates_fx <- DM_dates_fx %>% add_row(
    ID = id,
-   Dx_DATE = pt_DM,
-   Duration = days_before_fracture,
    HBA1C_max = as.double(HBA1C_max),
    HBA1C_max_date = as.character(HBA1C_max_date),
    HBA1C_avg = as.double(HBA1C_avg),
@@ -570,11 +573,25 @@ BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
    BG = BGnow,
    BG_date = as.character(BG_date)
 )
+  rm(HBA1C_loop)
+  rm(Insulin_start)
+  rm(BGgen)
 }
-DM_dates_fx_HBA1C <- na.omit(DM_dates_fx)
 
-#write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+#replace 'NaN' with NA
+DM_dates_fx$HBA1C_avg[DM_dates_fx$HBA1C_avg == "NaN"] <- NA
 
+DM_dates_fx <- DM_dates_fx %>%
+  left_join(ID_DM, by='ID')
+
+DM_dates_fx <- DM_dates_fx %>% rename(fx_DATE = DATE.y, DM_DATE = DATE.x)
+
+write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+
+rm(ID_DM)
+rm(BG)
+rm(Insulin)
+rm(HBA1C)
 ```
 DXA info and death info
 Output is in hours for death
