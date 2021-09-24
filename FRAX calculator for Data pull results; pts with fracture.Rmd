@@ -501,7 +501,7 @@ rm(All_DM)
 
 #Remove patients diagnosed with DM after the first fracture
 ID_DM <- ID_DM %>% mutate(
-  days_before_fracture = DATE.y - DATE.x)
+  days_before_fracture = difftime(DATE.y, DATE.x, units = "days"))
 ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
 
 #Pre-loop
@@ -593,18 +593,16 @@ rm(BG)
 rm(Insulin)
 rm(HBA1C)
 ```
-DXA info and death info
-Output is in hours for death
+DXA info
 ``` {r DXA}
-Fracture_Dates$ID <- as.character(Fracture_Dates$ID)
-DXA <- tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(ID, DESC, DATE) %>% left_join(Fracture_Dates, by = 'ID')
+Fracture_Dates_fx$ID <- as.character(Fracture_Dates_fx$ID)
+
+DXA <- tibble_names$Procedures %>%
+  filter(grepl('DXA', DESC)) %>%
+  select(ID, DESC, DATE) %>%
+  mutate(DXA = "TRUE")
 
 write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA.csv")
-
-Fx_to_death <- y %>% select(ID, DEATH_DATE) %>% left_join(Fracture_Dates, by = 'ID') %>% mutate(TIME_TO_DEATH = DEATH_DATE - DATE) %>% select(ID, TIME_TO_DEATH, DEATH_DATE, DATE)
-
-write.csv(Fx_to_death, "C:\\Users\\acriscit\\Documents\\Fx_to_death.csv")
-
 ```
 Visit info
 ```{r Visits}
@@ -634,7 +632,12 @@ col_names <- c(
   Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
 
   #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
-  Visits <- Visits %>% distinct(ID, START_DATE, .keep_all = TRUE)
+  Visits <- Visits %>%
+    distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
+  
+```
+run the loop below
+```{r visit_loop}
 
 #Information about number of visits and date of visits relative to fracture date
 Visit_Dates <-  tibble(
@@ -643,14 +646,13 @@ Visit_Dates <-  tibble(
   last_visit_date = mdy(),
   num_visits_before_frac = numeric(),
   num_visits_after_frac = numeric(),
-  LOS_fx = numeric (),
   CCI = numeric ()
 )
 
-for (i in 1:nrow(Fracture_Dates)){
-  id <- as.double(Fracture_Dates$ID[i])
+for (i in 1:nrow(Fracture_Dates_fx)){
+  id <- as.double(Fracture_Dates_fx$ID[i])
 
-date <- (Fracture_Dates %>% 
+date <- (Fracture_Dates_fx %>% 
     filter(ID == id) %>%
     select(ID, DATE))[[1,2]]
 
@@ -684,11 +686,11 @@ num_visits_after_frac <- visit %>%
 #Finds the most recent CCI prior to the fracture date
 CCI <- visit %>%
   filter(!is.na(CCI)) %>%
-  filter(START_DATE <= date) %>%
+ # filter(START_DATE <= date) %>%
   arrange(desc(START_DATE)) %>%
   distinct(ID, .keep_all = TRUE) %>%
-  select(CCI) %>%
-  as.double()
+  select(CCI)
+CCI <- as.double(CCI[1,2])
 
 Visit_Dates <- Visit_Dates %>% add_row(
   ID = id,
@@ -696,14 +698,15 @@ Visit_Dates <- Visit_Dates %>% add_row(
   last_visit_date = last_visit_date,
   num_visits_before_frac = num_visits_before_frac,
   num_visits_after_frac = num_visits_after_frac,
-  LOS_fx = as.double(LOS_fx),
   CCI = as.double(CCI)
 )
+rm(visit)
 }
 
+write.csv(Visits, "C:\\Users\\acriscit\\Documents\\Visits.csv")
+rm(Visits)
 ```
 Osteo meds
-This loop has not been tested
 ```{r osteo meds}
 #FDA approved osteoporosis medication usage
 osteo_med_all <- x %>% 
@@ -711,62 +714,47 @@ osteo_med_all <- x %>%
     grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab|[Ee]strogen|[Rr]aloxifene|[Bb]azodoxifene|[Rr]omosozumab|[Tt]eriparatide|[Aa]baloparatide', DESC) &
     !grepl('[Rr]eceptor', DESC)
          ) %>%
+  filter(MODIFIER == "mg") %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
-
+```
+Osteo loop
+```{r osteo_loop}
 Osteo_Meds <- tibble(
-  osteo_med_start_date = mdy_hms(),
-  osteo_med_start_dose = numeric(),
-  osteo_med_last_date = mdy_hms(),
-  osteo_med_name = as.character()
+  ID = numeric(),
+  osteo_med_start_date = character(),
+  osteo_med_start_dose_mg = numeric(),
+  osteo_med_last_date = character(),
+  osteo_med_name = character()
 )
 
-for (i in 1:nrow(ID_fracs)){
-  id <- as.double(ID_fracs$ID[i])
+for (i in 1:nrow(Fracture_Dates_fx)){
+  id <- as.double(Fracture_Dates_fx$ID[i])
 
-date <- (ID_fracs %>% 
+date <- (Fracture_Dates_fx %>% 
     filter(ID == id) %>%
     select(ID, DATE))[[1,2]]
   
   #FDA approved osteoporosis medication usage
-osteo_med <- (filter(osteo_med_all, id == ID)) %>% 
-                           arrange(DATE)
+osteo_med <- (filter(osteo_med_all, id == ID))
 osteo_med_name <- as.character(osteo_med$DESC[1])
+osteo_med_start_date <- osteo_med$DATE[1]
+osteo_med_start_dose <- osteo_med$UNITS[1]
+osteo_med_last_date <- (osteo_med %>%
+  arrange(desc(DATE)))$DATE[1]
 
 Osteo_Meds <- Osteo_Meds %>% add_row(
-osteo_med_start_date = as.Date(osteo_med_start_date),
-osteo_med_start_dose = as.double(osteo_med_start_dose),
-osteo_med_last_date = as.Date(osteo_med_last_date),
-osteo_med_name = as.character(osteo_med_name)
+  ID = id,
+  osteo_med_start_date = as.character(osteo_med_start_date),
+  osteo_med_start_dose_mg = as.double(osteo_med_start_dose),
+  osteo_med_last_date = as.character(osteo_med_last_date),
+  osteo_med_name = as.character(osteo_med_name)
 )
+rm(osteo_med)
 }
+
+Osteo_Meds <- na.omit(Osteo_Meds)
+write.csv(Osteo_Meds, "C:\\Users\\acriscit\\Documents\\Osteo_Meds.csv")
+rm(Osteo_Meds)
 ```
-Adding CCI to facture visit. CCI pulled from I2b2 and given for every patient visit
-```{r CCI}
-#Import the 'Fracture_Dates' and 'CCI_acriscit'
-Fracture_Dates <- Fracture_Dates[-1]
-
-col_names <- c(
-  "ID", 
-  "VISIT", 
-  "START_DATE",
-  "END_DATE",
-  "CCI"
-)
-names(CCI_acriscit) <- col_names
-
-CCI_acriscit <- transform(CCI_acriscit, ID = as.numeric(ID), VISIT = as.numeric(VISIT), CCI = as.numeric(CCI))
-
-
-#Need to join by ID and date or try to add visit number
-Fracture_Dates_CCI <- Fracture_Dates %>%
-  inner_join(CCI_acriscit, 
-  by = 'ID',
-  copy = FALSE,
-  keep = FALSE)
-
-tibble_names[[i]]$DATE <- mdy_hm(
-    tibble_names[[i]]$DATE, 
-    quiet = TRUE
-    )
 
