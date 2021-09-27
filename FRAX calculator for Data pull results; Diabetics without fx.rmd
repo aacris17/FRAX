@@ -27,7 +27,7 @@ library(stringr)
 ##Introduction
 ```{r load FRAX ppr charts and patient data}
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read_csv("~/GitHub/FRAX/FRAX.csv", col_types = "dccdddddd")
+FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 Diagnosis <- ("H:/DM non fx control/Diagnosis_acriscit.xlsx")
@@ -107,6 +107,15 @@ for (i in 1:length(tibble_names)){
 #Flatten list into a tibble
 x <- tibble_names %>%
   bind_rows()
+
+#remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
+rm(Diagnosis)
+rm(Lab)
+rm(Meds)
+rm(Patients)
+rm(Vitals)
+rm(History)
+
 #Do the same process for demographic data
 col_names <- c(
   "ID", 
@@ -157,20 +166,6 @@ CRF <- tibble(
   Glucocorticoid_rf = character()
 )
 #Collect risk factors into above tibble. If there is no observation prior to DATE, it is assumed that the risk factor was not present. For example, if there is no prior fracture documented, it is assumed that there was no prior fracture
-```
-#The below lines will remove patients with a history of fracture. It is assumed that all other fractures in this >50 y/o population are major osteoporotic fractures. Like the below lines it will then group fracture events by patient ID, arrange them by date and exclude all but the first fracture event using 'distinct ()'
-```{r filtering}
-#Exclude S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone, hip fracture code M84.359, M84.459, M84.659, - Vertebral: 805|806|733.13|S12|M48.50|M80.08 - Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A - Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
-ID_fracs <- tibble_names$Diagnosis %>%
-  filter(grepl('[Ff]racture', DESC)) %>%
-  filter(grepl('S62|S92|S99|M88|S02|V|Y04|C79.5|M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE) %>% 
-  distinct(ID, .keep_all = TRUE)
-ID_fracs <- y %>% anti_join(ID_fracs, by = 'ID')
-
-#patients in control group with fracture history and removed
-removed <- nrow(y) - nrow(ID_fracs)
 
 ```
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
@@ -214,19 +209,7 @@ Glucocorticoid <- x %>%
      ) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
-```
-#FOR HIP FRACTURE ONLY
-#remove patients with a history of major osteoporotic fracture prior to the hip fracture
-- Vertebral: 805|806|733.13|S12|M48.50|M80.08
-- Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A
-- Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
-```{r hip}
-#Collect the ID's of patients with MOF. MOF_ID contains the date of MOF, Dx code and patient ID
-MOF_ID <- x %>% 
-     filter(grepl('805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
-  group_by(ID) %>%
-  arrange(DATE, .by_group = TRUE) %>%
-  select(ID, DATE, CODE)
+
 ```
 The below loop will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient and will populate the tibble 'EM_Dates'
 ```{r loop}
@@ -385,27 +368,97 @@ Races <- c("W","B","H","A")
 px <- px %>% mutate(RACE = ifelse(
   (Og_RACE %in% Races), Og_RACE, "W")
   )
+
 #Join FRAX and px to calculate 10 year risk of major osteoporotic fracture (do you mean major hip fracture?)
-fx <- px %>% 
+ed <- px %>% 
   left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE)%>%
   select(ID, Risk, Range_upper, Range_lower) %>% 
-  arrange(ID)
-percent_complete_cases <- (sum(complete.cases(fx))/nrow(fx))*100
-#Remove incomplete cases
-fxfinal <- na.omit(fx)
-write.csv(fxfinal, "C:\\Users\\acriscit\\Documents\\fxfinal.csv")
-write.csv(EM_Dates, "C:\\Users\\acriscit\\Documents\\EM_Dates.csv")
+  arrange(ID) %>%
+  na.omit()
+
+EM_Dates_ed <- EM_Dates %>% left_join(ed, by = 'ID')
+
+write.csv(EM_Dates_ed, "C:\\Users\\acriscit\\Documents\\EM_Dates_ed.csv")
+
+percent_complete_cases <- (nrow(ed)/nrow(EM_Dates))*100
+percent_missing_FRAX <- (nrow(ed)/nrow(EM_Dates_ed))*100
+percent_missing_HT <- (nrow(is.na(EM_Dates_ed$HT.in))/nrow(EM_Dates_ed))*100
+percent_missing_WT <- (nrow(is.na(EM_Dates_ed$WT.in))/nrow(EM_Dates_ed))*100
+
+Flow <- tibble()
+
+Flow <- Flow %>% add_row(
+  percent_complete_cases = as.double(percent_complete_cases),
+  number_excluded_frac = as.double(number_excluded_frac),
+  number_excluded_hip = as.double(number_excluded_hip),
+  percent_missing_FRAX = as.double(percent_missing_FRAX),
+  percent_missing_WT = as.double(percent_missing_WT),
+  percent_missing_HT = as.double(percent_missing_HT)
+)
+write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
+
+#Remove any tibbles you will not need
+rm(EM_Dates)
+#EM_Dates_ed contains all the info from the table
+#EM_Dates_Og contains the original, unaltered info from the FRAX loop
+```
+#The below lines will select patients with a history of fracture. The patient pull in i2b2 stipulated that patients not have a diagnosis of fracture prior to the index date (ED visit between 5/1/2013 and 5/31/2014). Importantly, patients may have a fracture after 5/31/2014. We want to capture these patients.
+
+#It will also allow you to select patients without fracture from a population of patients with and without fractures.
+```{r filtering}
+#Select the ID of anyone with a fracture diagnosis: ICD9/10 codes- S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone, hip fracture M84.359, M84.459, M84.659, Vertebral: 805|806|733.13|S12|M48.50|M80.08, Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A, Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
+ID_fracs <- tibble_names$Diagnosis %>%
+  #filter(grepl('[Ff]racture', DESC)) %>%
+  filter(grepl('S62|S92|S99|M88|S02|V|Y04|C79.5|M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
+  group_by(ID) %>%
+  arrange(DATE, .by_group = TRUE) %>% 
+  distinct(ID, .keep_all = TRUE) %>%
+  select(ID, DATE, CODE, DESC)
+
+#Join the date of fracture (after EM visit) to EM_Dates_ed
+EM_Dates_ed$ID <- as.character(EM_Dates_ed$ID)
+EM_Dates_ed <- EM_Dates_ed %>% left_join(ID_fracs, by = 'ID')
+
+#Note that there should not be any fractures prior to 5/31/2014, if there are, i2b2 let patients slip through the collection criteria
 ```
 The tibble 'EM_Dates' now contains a row for each patient and associated information necessary to calculate FRAX score. Below we will use the 'FRAX' tibble create from publicly available FRAX paper charts (https://www.sheffield.ac.uk/FRAX/charts.aspx) to calculate the FRAX score for each patient.
 
-Discern whether the patients with fracture have diabetes.
-What is the duration of disease prior to fracture?
-Were they well controlled?
+Discern whether the patients have diabetes.
 ```{r Diabetes calculator}
-DM_dates_fx <- tibble (
+#Select patients with type 2 DM using ICD-10/9 code 'E11' or '250'
+All_DM <- x %>% 
+  filter((grepl('E11|250', CODE))) %>% 
+  select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
+#Select patients with DM for whom we have a Frax score
+test <- EM_Dates_ed %>% filter(!is.na(Risk))
+ID_DM <- inner_join(All_DM, test, by = 'ID')
+
+rm(test)
+rm(All_DM)
+
+#calculate the time different between ED visit and diagnosis of DM. A negative value indicates that the diagnosis was made after this visit
+ID_DM <- ID_DM %>% mutate(
+  days_before_fracture = difftime(DATE.y, DATE.x, units = "days"))
+ID_DM <- ID_DM %>% mutate(
+  DM_Dx_postvisit = ifelse(days_before_fracture < 0, "TRUE", "FALSE"))
+
+#Pre-loop
+Insulin <- x %>%
+  filter(grepl('[Ii]nsulin', DESC)) %>%
+  arrange(desc(DATE))
+BG <- x %>%
+  filter(grepl('GLU', CODE)) %>%
+  arrange(desc(DATE))
+HBA1C <- x %>%
+  filter(grepl('HBA1C', CODE)) %>%
+  filter(UNITS == '%') %>%
+  arrange(desc(DATE))
+```
+Diabetes loop
+```{r DM loop}
+#Tibble to be filled by loop
+DM_dates_ed <- tibble (
   ID = numeric(),
-  Dx_DATE = mdy_hms(),
-  Duration = duration(),
   HBA1C_max = numeric(),
   HBA1C_max_date = character(),
   HBA1C_avg = numeric(),
@@ -413,64 +466,41 @@ DM_dates_fx <- tibble (
   BG = numeric(),
   BG_date = character()
 )
-#Select patients with type 2 DM using ICD-10/9 code 'E11' or '250'
-All_DM <- x %>% 
-  filter((grepl('E11|250', CODE))) %>% 
-  select(ID, DATE) %>% group_by(ID) %>% arrange(DATE, .by_group = TRUE) %>% distinct(ID, .keep_all = TRUE)
-#Select patients with DM for whom we have a Frax score
-EM_Dates_final <- transform((EM_Dates), ID = as.character(ID))
-ID_DM <- inner_join(All_DM, EM_Dates_final, by = 'ID')
-#Remove patients diagnosed with DM after the first fracture
-ID_DM <- ID_DM %>% mutate(
-  days_before_fracture = DATE.y - DATE.x)
-ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
-#Pre-loop
-Insulin <- x %>%
-  filter(grepl('[Ii]sulin', DESC)) %>%
-  filter(UNITS == 'Units')
-BG <- x %>%
-  filter(grepl('GLU', CODE))
-```
-Diabetes loop
-```{r DM loop}
+
 for(i in 1:nrow(ID_DM)) {
   id <- as.double(ID_DM$ID[i])
   
   #Date of patients first fracture
   fracture_date <- ID_DM$DATE.y[i]
- #if (as.character(fracture_date) == 'NA') {next}
-  pt_DM <- ID_DM$DATE.x[i]
-  
-days_before_fracture <- (fracture_date[[1]]) - pt_DM
 #HBA1C's prior to fracture and date of measurement
-HBA1C <- x %>% 
+HBA1C_loop <- HBA1C %>% 
   filter(ID == id) %>%
-  filter(grepl('HBA1C', CODE)) %>%
-  filter(UNITS == '%') %>%
   filter(DATE <= fracture_date)
-HBA1C_max <- as.double(max(HBA1C$NUMERIC_VALUE))
-HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
-HBA1C_max_date <- (HBA1C %>%
+
+HBA1C_max <- as.double(max(HBA1C_loop$NUMERIC_VALUE))
+#HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
+
+HBA1C_max_date <- (HBA1C_loop %>%
                      filter(NUMERIC_VALUE == HBA1C_max))$DATE[1]
+
 #Average HBA1C in the year before fracture
-HBA1C_avg <- HBA1C$NUMERIC_VALUE %>% as.double() %>% mean()
-HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
+HBA1C_avg <- HBA1C_loop$NUMERIC_VALUE %>% as.double() %>% mean()
+#HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
+
 #Insulin and BG
-Insulin_start <- (Insulin %>%
-  filter(ID == id) %>%
-  filter(DATE <= fracture_date) %>%
-  arrange(DATE))$DATE[1]
+Insulin_start <- Insulin %>%
+  filter(id == ID) %>%
+  filter(DATE <= fracture_date)
+Insulin_start <- Insulin_start$DATE[1]
   
 BGgen <- BG %>%
   filter(ID == id) %>%
-  filter(DATE == fracture_date) %>%
-  arrange(DATE)
+  filter(DATE < fracture_date)
 BG_date <- BGgen$DATE[1]
 BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
-  DM_dates_fx <- DM_dates_fx %>% add_row(
+
+  DM_dates_ed <- DM_dates_ed %>% add_row(
    ID = id,
-   Dx_DATE = pt_DM,
-   Duration = days_before_fracture,
    HBA1C_max = as.double(HBA1C_max),
    HBA1C_max_date = as.character(HBA1C_max_date),
    HBA1C_avg = as.double(HBA1C_avg),
@@ -478,158 +508,22 @@ BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
    BG = BGnow,
    BG_date = as.character(BG_date)
 )
+  rm(HBA1C_loop)
+  rm(Insulin_start)
+  rm(BGgen)
 }
-DM_dates_fx_HBA1C <- na.omit(DM_dates_fx)
-#write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+#replace 'NaN' with NA
+DM_dates_ed$HBA1C_avg[DM_dates_ed$HBA1C_avg == "NaN"] <- NA
+#Join the info pulled into 'ID_DM' form FRAX loop
+DM_dates_ed <- DM_dates_ed %>%
+  left_join(ID_DM, by='ID')
+#Rename the date columns
+DM_dates_ed <- DM_dates_ed %>% rename(ed_DATE = DATE.y, DM_DATE = DATE.x)
+
+write.csv(DM_dates_ed, "C:\\Users\\acriscit\\Documents\\DM_dates_ed.csv")
+
+rm(ID_DM)
+rm(BG)
+rm(Insulin)
+rm(HBA1C)
 ```
-DXA info and death info
-Output is in hours for death
-``` {r DXA}
-EM_Dates$ID <- as.character(EM_Dates$ID)
-DXA <- tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(ID, DESC, DATE) %>% left_join(EM_Dates, by = 'ID')
-write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA.csv")
-Fx_to_death <- y %>% select(ID, DEATH_DATE) %>% left_join(EM_Dates, by = 'ID') %>% mutate(TIME_TO_DEATH = DEATH_DATE - DATE) %>% select(ID, TIME_TO_DEATH, DEATH_DATE, DATE)
-write.csv(Fx_to_death, "C:\\Users\\acriscit\\Documents\\Fx_to_death.csv")
-```
-Visit info
-```{r Visits}
-Visits <- ("H:/Hip fracture/Visits_acriscit.xlsx")
-filename <- Visits
-Visits <- read_excel_allsheets(filename)
-col_names <- c(
-  "ID", 
-  "VISIT", 
-  "START_DATE",
-  "END_DATE",
-  "AGE_AT_VISIT", 
-  "ADMIT_SOURCE", 
-  "ADMIT_TYPE", 
-  "LOS",
-  "TYPE",
-  "ENCOUTER_TYPE",
-  "CCI"
-)
-#Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
-  names(Visits) <- col_names[1:ncol(Visits)]
-  
-  #Convert visits dates to dates and use as.Date to remove the time element
-  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
-  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
-  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
-  Visits <- Visits %>% distinct(ID, START_DATE, .keep_all = TRUE)
-#Information about number of visits and date of visits relative to fracture date
-Visit_Dates <-  tibble(
-  ID = numeric(),
-  first_visit_date = mdy(),
-  last_visit_date = mdy(),
-  num_visits_before_frac = numeric(),
-  num_visits_after_frac = numeric(),
-  LOS_fx = numeric (),
-  CCI = numeric ()
-)
-for (i in 1:nrow(EM_Dates)){
-  id <- as.double(EM_Dates$ID[i])
-date <- (EM_Dates %>% 
-    filter(ID == id) %>%
-    select(ID, DATE))[[1,2]]
-#Create a tibble with one patients into
-visit <- Visits %>% 
-    filter(ID == id)
-first_visit_date <- visit$START_DATE[1]
-last_visit_date <- (
-  visit %>% 
-    arrange(desc(START_DATE))
-  )$START_DATE[1]
-num_visits_before_frac <- visit %>% 
-  filter(START_DATE < date) %>%
-  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
-  #group_by(START_DATE) %>% 
-  #distinct(START_DATE, .keep_all = TRUE) %>%
-  nrow()
-num_visits_after_frac <- visit %>% 
-  filter(START_DATE > date) %>% 
-  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
-  #group_by(START_DATE) %>% 
-  #distinct(START_DATE, .keep_all = TRUE) %>%
-  nrow()
-#LOS_fx <- visit %>% 
-  #filter(TYPE == 'I|S') %>% 
- # filter(START_DATE <= date & END_DATE >= date) %>%
- # select(LOS) %>% as.double()[[1]]
-#Finds the most recent CCI prior to the fracture date
-CCI <- visit %>%
-  filter(!is.na(CCI)) %>%
-  filter(START_DATE <= date) %>%
-  arrange(desc(START_DATE)) %>%
-  distinct(ID, .keep_all = TRUE) %>%
-  select(CCI) %>%
-  as.double()
-Visit_Dates <- Visit_Dates %>% add_row(
-  ID = id,
-  first_visit_date = first_visit_date,
-  last_visit_date = last_visit_date,
-  num_visits_before_frac = num_visits_before_frac,
-  num_visits_after_frac = num_visits_after_frac,
-  LOS_fx = as.double(LOS_fx),
-  CCI = as.double(CCI)
-)
-}
-```
-Osteo meds
-This loop has not been tested
-```{r osteo meds}
-#FDA approved osteoporosis medication usage
-osteo_med_all <- x %>% 
-  filter(
-    grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab|[Ee]strogen|[Rr]aloxifene|[Bb]azodoxifene|[Rr]omosozumab|[Tt]eriparatide|[Aa]baloparatide', DESC) &
-    !grepl('[Rr]eceptor', DESC)
-         ) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-Osteo_Meds <- tibble(
-  osteo_med_start_date = mdy_hms(),
-  osteo_med_start_dose = numeric(),
-  osteo_med_last_date = mdy_hms(),
-  osteo_med_name = as.character()
-)
-for (i in 1:nrow(ID_fracs)){
-  id <- as.double(ID_fracs$ID[i])
-date <- (ID_fracs %>% 
-    filter(ID == id) %>%
-    select(ID, DATE))[[1,2]]
-  
-  #FDA approved osteoporosis medication usage
-osteo_med <- (filter(osteo_med_all, id == ID)) %>% 
-                           arrange(DATE)
-osteo_med_name <- as.character(osteo_med$DESC[1])
-Osteo_Meds <- Osteo_Meds %>% add_row(
-osteo_med_start_date = as.Date(osteo_med_start_date),
-osteo_med_start_dose = as.double(osteo_med_start_dose),
-osteo_med_last_date = as.Date(osteo_med_last_date),
-osteo_med_name = as.character(osteo_med_name)
-)
-}
-```
-Adding CCI to facture visit. CCI pulled from I2b2 and given for every patient visit
-```{r CCI}
-#Import the 'EM_Dates' and 'CCI_acriscit'
-EM_Dates <- EM_Dates[-1]
-col_names <- c(
-  "ID", 
-  "VISIT", 
-  "START_DATE",
-  "END_DATE",
-  "CCI"
-)
-names(CCI_acriscit) <- col_names
-CCI_acriscit <- transform(CCI_acriscit, ID = as.numeric(ID), VISIT = as.numeric(VISIT), CCI = as.numeric(CCI))
-#Need to join by ID and date or try to add visit number
-EM_Dates_CCI <- EM_Dates %>%
-  inner_join(CCI_acriscit, 
-  by = 'ID',
-  copy = FALSE,
-  keep = FALSE)
-tibble_names[[i]]$DATE <- mdy_hm(
-    tibble_names[[i]]$DATE, 
-    quiet = TRUE
-    )
