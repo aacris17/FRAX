@@ -117,6 +117,14 @@ for (i in 1:length(tibble_names)){
 x <- tibble_names %>%
   bind_rows()
 
+#remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
+rm(Diagnosis)
+rm(Lab)
+rm(Meds)
+rm(Patients)
+rm(Vitals)
+rm(History)
+
 #Do the same process for demographic data
 col_names <- c(
   "ID", 
@@ -473,9 +481,7 @@ Flow <- Flow %>% add_row(
 )
 write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
 
-rm(fx)
 rm(px)
-rm(CRF_calc)
 rm(Fracture_Dates)
 
 ```
@@ -496,13 +502,13 @@ All_DM <- x %>%
 #Select patients with DM for whom we have a Frax score
 fx <- Fracture_Dates_fx %>% filter(!is.na(Risk))
 ID_DM <- inner_join(All_DM, fx, by = 'ID')
-rm(fx)
 rm(All_DM)
 
-#Remove patients diagnosed with DM after the first fracture
+#calculate the time different between fracture and diagnosis of DM. A negative value indicates that the diagnosis was made after this visit
 ID_DM <- ID_DM %>% mutate(
   days_before_fracture = difftime(DATE.y, DATE.x, units = "days"))
-ID_DM <- ID_DM[ID_DM$days_before_fracture > 0,]
+ID_DM <- ID_DM %>% mutate(
+  DM_Dx_postvisit = ifelse(days_before_fracture < 0, "TRUE", "FALSE"))
 
 #Pre-loop
 Insulin <- x %>%
@@ -580,10 +586,10 @@ BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
 
 #replace 'NaN' with NA
 DM_dates_fx$HBA1C_avg[DM_dates_fx$HBA1C_avg == "NaN"] <- NA
-
+#Join the info pulled into 'ID_DM' form FRAX loop
 DM_dates_fx <- DM_dates_fx %>%
   left_join(ID_DM, by='ID')
-
+#Rename the date columns
 DM_dates_fx <- DM_dates_fx %>% rename(fx_DATE = DATE.y, DM_DATE = DATE.x)
 
 write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
