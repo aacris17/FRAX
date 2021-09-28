@@ -250,11 +250,9 @@ Parent_Osteoporosis <- x %>%
   arrange(DATE, .by_group = TRUE)
 
 #Current exposure to oral glucocorticoids or exposure to oral glucocorticoids for more than 3 months at a dose eqivalent to prednisolone > 5mg daily
-Glucocorticoid <- x %>% 
-     filter(UNITS == 'mg' &
-              grepl('[Bb]eclomethasone|[Bb]etamethasone|[Bb]udesonide|[Cc]ortisone|[Dd]examethasone|[Hh]ydrocortisone|[Mm]ethylprednisolone|[Pp]rednisolone|[Pp]rednisone|[Tt]riamcinolone', DESC) &
-              grepl('[Ii]njection| [Tt]ablet| [Ii]vbp', DESC)
-     ) %>%
+Glucocorticoid <- tibble_names$Meds %>% 
+     filter(MODIFIER == 'mg' &
+              grepl('[Bb]eclomethasone|[Bb]etamethasone|[Bb]udesonide|[Cc]ortisone|[Dd]examethasone|[Hh]ydrocortisone|[Mm]ethylprednisolone|[Pp]rednisolone|[Pp]rednisone|[Tt]riamcinolone', DESC)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
@@ -371,7 +369,7 @@ Parent_Osteoporosis_loop <- as.character(
 Glucocorticoid_data <- (
   filter(Glucocorticoid, id == ID & DATE <= date)
   )
-Glucocorticoid_rf <- ifelse(Glucocorticoid_data[1,1] == 'NA', 'NA', Glucocorticoid_data[1,1])
+Glucocorticoid_rf <- ifelse(is.na(Glucocorticoid_data$ID[1]), NA, "TRUE")
 #Exclude glucocorticoids taken for less than 3 months
 
 
@@ -411,6 +409,10 @@ Og_RACE = as.character(Race),
 CRF = as.double(CRF_score),
 BMI = as.double(BMI)
 )
+rm(loop_ID)
+rm(loop_ID1)
+rm(loop_ID_prefrac)
+rm(yID)
 }
 
 #Save the original Fracture_Dates because the below chunks will make changes to it
@@ -613,9 +615,8 @@ DM_dates_fx <- DM_dates_fx %>%
 #Rename the date columns
 DM_dates_fx <- DM_dates_fx %>% rename(fx_DATE = DATE.y, DM_DATE = DATE.x)
 
-#write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
-```
-``` {r gfdsa}
+write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+
 rm(ID_DM)
 rm(BG)
 rm(Insulin)
