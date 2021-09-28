@@ -513,9 +513,12 @@ ID_DM <- ID_DM %>% mutate(
 #Pre-loop
 Insulin <- x %>%
   filter(grepl('[Ii]nsulin', DESC)) %>%
-  arrange(desc(DATE))
+  group_by(ID) %>%
+  arrange(desc(DATE), .group_by = TRUE)
 BG <- x %>%
   filter(grepl('GLU', CODE)) %>%
+  filter(grepl('mg/dl|MG/DL', UNITS)) %>%
+  filter(NUMERIC_VALUE != 0 & !is.na(NUMERIC_VALUE)) %>%
   arrange(desc(DATE))
 HBA1C <- x %>%
   filter(grepl('HBA1C', CODE)) %>%
@@ -531,8 +534,11 @@ DM_dates_fx <- tibble (
   HBA1C_max_date = character(),
   HBA1C_avg = numeric(),
   Insulin_start = character(),
+  long_term_insulin = character(),
   BG = numeric(),
-  BG_date = character()
+  BG_date = character(),
+  BG1yavg = numeric(),
+  BG1yr_num_values = numeric()
 )
 
 for(i in 1:nrow(ID_DM)) {
@@ -559,16 +565,25 @@ HBA1C_avg <- HBA1C_loop$NUMERIC_VALUE %>% as.double() %>% mean()
 #HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
 
 #Insulin and BG
-Insulin_start <- Insulin %>%
+Insulin_dates <- Insulin %>%
   filter(id == ID) %>%
-  filter(DATE <= fracture_date)
-Insulin_start <- Insulin_start$DATE[1]
+  filter(DATE < fracture_date)
+Insulin_start <- Insulin_dates$DATE[1]
+#Long term insulin use noted in problem list
+long_term_insulin <- (Insulin_dates %>%
+  filter(grepl('[Ll]ong term|[Ll]ong-term', DESC)))$DESC[1]
   
 BGgen <- BG %>%
   filter(ID == id) %>%
   filter(DATE < fracture_date)
 BG_date <- BGgen$DATE[1]
 BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
+#BG averaged over 1 year prior to fracture if there are 2 or more values recorded
+BG1yr <- BGgen %>% filter(DATE >= fracture_date - years(1))
+BG1yr_num_values <- BG1yr %>% nrow()
+BG1yavg <- ifelse(BG1yr_num_values > 1, BG1yr$NUMERIC_VALUE %>% as.double() %>% mean(), NA)
+
+rm(BG1yr)
 
   DM_dates_fx <- DM_dates_fx %>% add_row(
    ID = id,
@@ -576,24 +591,31 @@ BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
    HBA1C_max_date = as.character(HBA1C_max_date),
    HBA1C_avg = as.double(HBA1C_avg),
    Insulin_start = as.character(Insulin_start),
+   long_term_insulin = long_term_insulin,
    BG = BGnow,
-   BG_date = as.character(BG_date)
+   BG_date = as.character(BG_date),
+   BG1yavg = BG1yavg,
+   BG1yr_num_values = BG1yr_num_values
 )
   rm(HBA1C_loop)
-  rm(Insulin_start)
+  rm(Insulin_dates)
   rm(BGgen)
+  rm(BG1yr)
 }
 
 #replace 'NaN' with NA
 DM_dates_fx$HBA1C_avg[DM_dates_fx$HBA1C_avg == "NaN"] <- NA
+#Make long term insulin true or false
+DM_dates_fx$long_term_insulin <- ifelse(!is.na(DM_dates_fx$long_term_insulin), "TRUE", "FALSE")
 #Join the info pulled into 'ID_DM' form FRAX loop
 DM_dates_fx <- DM_dates_fx %>%
   left_join(ID_DM, by='ID')
 #Rename the date columns
 DM_dates_fx <- DM_dates_fx %>% rename(fx_DATE = DATE.y, DM_DATE = DATE.x)
 
-write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
-
+#write.csv(DM_dates_fx, "C:\\Users\\acriscit\\Documents\\DM_dates_fx.csv")
+```
+``` {r gfdsa}
 rm(ID_DM)
 rm(BG)
 rm(Insulin)
