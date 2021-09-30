@@ -1,0 +1,1074 @@
+---
+title: "Code for descriptive characteristics"
+author: "Anthony Criscitiello"
+date: "3/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(readr)
+library(lubridate)
+library(tibble)
+library(purrr)
+library(stringr)
+
+#be sure to load Fracture_Dates_fx, Visit_Dates and DM_Dates_fx
+#remove the first column
+DM_Dates_fx <- DM_Dates_fx[-1]
+Fracture_Dates_fx <- Fracture_Dates_fx[-1]
+Visit_Dates <- Visit_Dates[-1]
+
+#add DM column to Fracture_Dates_fx
+DM_Dates_fx <- DM_Dates_fx %>% mutate(DM = "TRUE")
+test <- DM_Dates_fx %>% select(ID, DM)
+Fracture_Dates_fx <- Fracture_Dates_fx %>% left_join(test, by = 'ID')
+Fracture_Dates_fx$DM <- ifelse(is.na(Fracture_Dates_fx$DM), "FALSE", "TRUE")
+rm(test)
+
+#Fracture_Dates_sum contains all patients with fractures
+Fracture_Dates_sum <- Fracture_Dates_fx
+```
+#Remove patients who fractured prior to 2013
+```{r 1}
+date <- ymd_hms("2013-01-01 UTC 00:00:00")
+Fracture_Dates_fx <- Fracture_Dates_fx %>% filter(DATE > date)
+numberafter2013 <-  nrow(Fracture_Dates_fx) - nrow(Fracture_Dates_fx)
+percentafter2013 <- (nrow(Fracture_Dates_fx )/nrow(Fracture_Dates_fx))*100
+
+```
+#Remove all patients with less than 3 prior visits and all patients without at least 1 follow-up
+#Note that this is being applied to the tibble created above
+```{r 2}
+Fracture_Dates_fx <- Visit_Dates %>%
+  filter(num_visits_before_frac >= 3 & num_visits_after_frac >= 1) %>%
+  inner_join(Fracture_Dates_fx, by = 'ID', keep = FALSE)
+nrow(Fracture_Dates_fx) - nrow(Fracture_Dates_fx)
+nrow(Fracture_Dates_fx)
+```
+Create a tibble that does not include patients with DM
+```{r 3}
+#Use this to select patients with DM who fractured prior to 2013
+#DM_Dates_fx will hold this data
+test <- Fracture_Dates_fx %>% filter(DM == "TRUE") %>% select(ID)
+DM_Dates_fx <- DM_Dates_fx %>% inner_join(test, by = 'ID')
+rm(test)
+#Remove patients with DM from Fracture_Dates_fx
+Fracture_Dates_fx <- Fracture_Dates_fx %>% filter(DM == "FALSE")
+nrow(Fracture_Dates_fx)
+nrow(DM_Dates_fx)
+nrow(DM_Dates_fx) + nrow(Fracture_Dates_fx)
+```
+#Output some basic descriptive stats
+```{r 4}
+Desc <- summary(Fracture_Dates_fx)
+names(dimnames(Desc)) <- c("x", "y")
+Desc <- as.tibble(Desc)
+Desc <- Desc[-1]
+Desc_noDM <- separate(
+  Desc, 
+  "n",
+  c("m", "n"),
+  sep = ":",
+  remove = TRUE,
+  convert = TRUE) %>%
+  na.omit() %>%
+  pivot_wider(
+    names_from = m, 
+    values_from = n
+              )
+
+write.csv(Desc, "C:\\Users\\acriscit\\Documents\\Descriptors_no_DM.csv")
+```
+Descriptive stats for DM, same code as above
+```{r 5}
+Desc <- summary(DM_Dates_fx)
+names(dimnames(Desc)) <- c("x", "y")
+Desc <- as.tibble(Desc)
+Desc <- Desc[-1]
+Desc_DM <- separate(
+  Desc, 
+  "n",
+  c("m", "n"),
+  sep = ":",
+  remove = TRUE,
+  convert = TRUE) %>%
+  na.omit() %>%
+  pivot_wider(
+    names_from = m, 
+    values_from = n
+              )
+rm(Desc)
+
+write.csv(Desc_DM, "C:\\Users\\acriscit\\Documents\\Descriptors_DM.csv")
+```
+ID missing data
+#Change true, false or non to select the population who is missing data
+#Change the tibble to determine what data you want to work with
+```{r missing_data}
+test <- Fracture_Dates_fx %>% filter(DM == "FALSE")
+
+tot_na <- (test %>% filter(is.na(Risk)) %>% nrow())/nrow(test)
+CODE_na <- (test %>% filter(is.na(CODE)) %>% nrow())/nrow(test)
+HT_na <- (test %>% filter(is.na(HT.in)) %>% nrow())/nrow(test)
+WT_na <- (test %>% filter(is.na(WT.in)) %>% nrow())/nrow(test)
+AGE_na <- (test %>% filter(is.na(AGE)) %>% nrow())/nrow(test)
+GENDER_na <- (test %>% filter(is.na(GENDER)) %>% nrow())/nrow(test)
+Og_RACE_na <- (test %>% filter(is.na(Og_RACE)) %>% nrow())/nrow(test)
+
+missing_data <- tibble(
+  total = as.double(tot_na),
+  Diagnosis = as.double(CODE_na),
+  Height = as.double(HT_na),
+  Weight = as.double(WT_na),
+  Age = as.double(AGE_na),
+  Sex = as.double(GENDER_na),
+  Race = as.double(Og_RACE_na)
+)
+write.csv(missing_data, "C:\\Users\\acriscit\\Downloads\\missing_data.csv")
+rm(missing_data)
+rm(test)
+
+```
+t.tests and chi sq tests
+example:
+G_v_Risk <- tibble %>% 
+  {t.test(.$column1 ~ .$column2, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+Risk_v <- tibble(
+  mod  = character(),
+  data.name = character(),
+  p.value = numeric(),
+  conf.int1 = numeric(),
+  conf.int2 = numeric(),
+  estimate1 = numeric(),
+  estimate2 = numeric(),
+  n = numeric()
+)
+#Alter the variables in the first line then hit run to make comparisons for different data-sets
+```{r stats}
+test <- Fracture_Dates_sum %>% filter(!is.na(Risk))
+
+Desc_tibble <- tibble(
+  Descriptor = character(),
+  non.DM = numeric(),
+  DM = numeric(),
+  p.value = numeric(),
+  CI = character()
+)
+
+#number (n)
+n <- nrow(Fracture_Dates_fx)
+nDM <- nrow(DM_Dates_fx)
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "n",
+  non.DM = n,
+  DM = nDM)
+
+#%men
+chi <- chisq.test(table(test$GENDER, test$DM))
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value[1]
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "% Men",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+#%White
+test2 <- test %>% filter(Og_RACE == 'B'| Og_RACE == 'W')
+chi <- chisq.test(table(test2$Og_RACE, test2$DM))
+rm(test2)
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value[1]
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "% Men",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+#%Black
+non.DM <- chi$observed[1]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[3]/nrow(test %>% filter(DM == "TRUE"))*100
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "% Men",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+rm(chi)
+
+#Mean age
+G_v_Risk <- test %>% 
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean Age",
+  non.DM = round(G_v_Risk$estimate[1], digits = 2),
+  DM = round(G_v_Risk$estimate[2], digits = 2),
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
+#Mean age Male
+G_v_Risk <- test %>% filter(GENDER == 'M') %>%
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean Age Male",
+  non.DM = G_v_Risk$estimate[1],
+  DM = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
+#Mean age female
+G_v_Risk <- test %>% filter(GENDER == 'F') %>%
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean Age Female",
+  non.DM = G_v_Risk$estimate[1],
+  DM = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
+#Mean FRAX
+G_v_Risk <- test %>%
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean FRAX Risk",
+  non.DM = G_v_Risk$estimate[1],
+  DM = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
+#FRAX>20
+test <- test %>% mutate(threshold = ifelse(Risk > 20, "TRUE", "FALSE"))
+chi <- chisq.test(table(test$threshold, test$DM))
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "FRAX Risk > 20%",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+#FRAX_lower>20
+test <- test %>% mutate(threshold = ifelse(Range_lower > 20, "TRUE", "FALSE"))
+chi <- chisq.test(table(test$threshold, test$DM))
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "FRAX Risk with lowest weighting > 20%",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+#Anti-osteo meds
+  #Make a column for osteo_med start date
+test <- Osteo_Meds %>% select(ID, osteo_med_start_date) %>% right_join(test, by = 'ID', .keep_all = FALSE)
+  #Make a column to see if they were taking the med prior to fracture
+test <- test %>% mutate(med_before_fx = DATE - osteo_med_start_date)
+test <- test %>% mutate(true_med = ifelse(med_before_fx > 0, "TRUE", "FALSE"))
+chi <- chisq.test(table(test$true_med, test$DM))
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Taking anti-osteo med prior to first fracture",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+#Mean time on anti-osteo med prior to fracture
+test2 <- test %>% filter(true_med == "TRUE")
+G_v_Risk <- test2 %>%
+  {t.test(.$med_before_fx ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1])/86400, digits = 0)
+CI2 <- round(as.double(G_v_Risk$conf.int[2])/86400, digits = 0)
+CI <- toString(c(CI1, CI2))
+non.DM <- as.double(G_v_Risk$estimate[1])/86400
+DM <- as.double(G_v_Risk$estimate[2])/86400
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean days on anti-osteo med prior to first fracture",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = as.double(G_v_Risk$p.value),
+  CI = CI)
+rm(test2)
+
+#Mean BMI
+G_v_Risk <- test %>%
+  {t.test(.$BMI ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Mean BMI",
+  non.DM = G_v_Risk$estimate[1],
+  DM = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
+#%DXA prior to fracture
+DXA <- DXA[-1]
+DXA <- rename(DXA, DXA_DATE = DATE)
+test <- DXA %>% group_by(ID) %>% arrange(DXA_DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE) %>% select(ID, DXA_DATE) %>% right_join(test, by = 'ID')
+test <- test %>% mutate(DXA_before_fx = DATE - DXA_DATE)
+test <- test %>% mutate(true_DXA = ifelse(DXA_before_fx > 0, "TRUE", "FALSE"))
+
+chi <- chisq.test(table(test$true_DXA, test$DM))
+non.DM <- chi$observed[2]/nrow(test %>% filter(DM == "FALSE"))*100
+DM <- chi$observed[4]/nrow(test %>% filter(DM == "TRUE"))*100
+p.value <- chi$p.value
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "% with DXA prior to fracture",
+  non.DM = non.DM,
+  DM = DM,
+  p.value = p.value)
+
+###############################
+#Stopped working here
+
+
+#Osteo meds vs FRAX score
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$Risk ~ .$oste_med, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+Risk_v <- tibble(
+  mod  = character(),
+  data.name = character(),
+  p.value = numeric(),
+  conf.int1 = numeric(),
+  conf.int2 = numeric(),
+  estimate1 = numeric(),
+  estimate2 = numeric(),
+  n = numeric()
+)
+
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'NA',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Gender vs FRAX score
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$Risk ~ .$GENDER, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'NA',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Race
+#T.test Risk vs Race
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'| Og_RACE == 'W') %>%
+  {t.test(.$Risk ~ .$Og_RACE, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'NA',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Age of fracture vs Race
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'| Og_RACE == 'W') %>%
+  {t.test(.$AGE ~ .$Og_RACE, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'NA',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'| Og_RACE == 'W'))
+)
+
+#BMI v Race
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'| Og_RACE == 'W') %>%
+  filter(BMI < 100) %>%
+  {t.test(.$BMI ~ .$Og_RACE, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'NA',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'| Og_RACE == 'W'))
+)
+
+#White
+#Risk v DM
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'W') %>%
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'White',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'W'))
+)
+#Age v DM
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'W') %>%
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'White',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'W'))
+)
+
+#Black
+#Risk v DM
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B') %>%
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'Black',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'))
+)
+#Age v DM
+G_v_Risk <- Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B') %>%
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is B and group 2 is W. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod  = 'Black',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>% 
+  filter(Og_RACE == 'B'))
+)
+
+#Age of fracture vs Gender
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$AGE ~ .$GENDER, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is F and group 2 is M. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Diabetes vs age at fracture
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$AGE ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is non-DM and group 2 is DM. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+
+#Diabetes
+#Is FRAX score different between those with and without DM?
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is non-DM and group 2 is DM. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#BMI v DM
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$BMI ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is non-DM and group 2 is DM. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Mortality for DM vs non-DM
+#Add death data
+Fracture_Dates_fx <- Fx_to_death %>% 
+  filter(TIME_TO_DEATH > 0) %>% 
+  select(ID, TIME_TO_DEATH) %>% 
+  right_join(Fracture_Dates_fx, by = 'ID')
+
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$TIME_TO_DEATH ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is non-DM and group 2 is DM. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx %>%
+             filter(TIME_TO_DEATH > 0))
+)
+
+#Risk v dead or alive 5 years after fx
+G_v_Risk <- Fracture_Dates_fx %>%
+  mutate(DEATH = (TIME_TO_DEATH < 43800) == 'TRUE') %>%
+  replace_na(list(DEATH = 'FALSE')) %>%
+  {t.test(.$Risk ~ .$DEATH, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is Alive and group 2 is Dead. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod = '5 years post fx',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#DXA v DM
+DXA$X <- "TRUE"
+names(DXA)[1] <- c('DXA')
+Fracture_Dates_fx <- DXA %>%
+  select(ID, DXA) %>%
+  right_join(Fracture_Dates_fx, by = 'ID')
+Fracture_Dates_fx$DXA <-  ifelse(is.na(Fracture_Dates_fx$DXA),
+                                 'FALSE', 'TRUE')
+
+G_v_Risk <- Fracture_Dates_fx %>% 
+  {t.test(.$Risk ~ .$DXA, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+#Note that group 1 is non-DM and group 2 is DM. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(DXA)
+)
+
+DM_percent_DXA <- (nrow(Fracture_Dates_fx %>%
+                          filter(DM == 'TRUE' & 
+                                   DXA == 'TRUE')
+                        )/nrow(Fracture_Dates_fx %>% 
+                            filter(DM == 'TRUE')))*100
+
+NoDM_percent_DXA <- (nrow(Fracture_Dates_fx %>%
+                          filter(DM == 'FALSE' & 
+                                   DXA == 'TRUE')
+                        )/nrow(Fracture_Dates_fx %>% 
+                            filter(DM == 'FALSE')))*100
+
+#HBA1c vs treatment threshold
+# #of patients with HbA1c
+DM_Dates_fx %>% filter(HBA1C_avg != 0) %>% nrow()
+
+#of pateints with HbA1c recorded, Avg HbA1c for patients above and below treatment threshold
+DM_Dates_full <- DM_Dates_fx %>% left_join(Fracture_Dates_fx, by = 'ID') %>% filter(HBA1C_avg != 0)
+
+#t.test treatment threshold vs HBa1C
+G_v_Risk <- DM_Dates_full %>% 
+  {t.test(.$HBA1C_avg ~ .$Threshold, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+
+rm(DM_Dates_full)
+```
+#Chi squ
+#Number of patients who reached treatment threshold
+```{r chi}
+#DM v Sex
+chisq.test(table(Fracture_Dates_fx$GENDER, Fracture_Dates_fx$DM))
+
+#DM v race. Change the variable "W" or "B"
+test <- Fracture_Dates_fx %>% mutate(Og_RACE = ifelse(Og_RACE == "B", "B", "X"))
+
+chisq.test(table(test$Og_RACE, test$DM))
+rm(test)
+
+#DM v treatment threshold
+#Make a new column that is TRUE if FRAX score is above treatment threshold
+Fracture_Dates_fx <- Fracture_Dates_fx %>% mutate(Threshold = if_else(Risk > 20, "TRUE", "FALSE"))
+
+Fracture_Dates_fx %>% filter(Risk >= 20 & DM == "TRUE") %>% nrow()
+
+chisq.test(table(Fracture_Dates_fx$Threshold, Fracture_Dates_fx$DM))
+
+#same calculation as above but for higher risk range > 20%
+# % with DM and Range_upper> 20
+(Fracture_Dates_fx %>% filter(Range_lower >= 20 & DM == "TRUE") %>% nrow())/(Fracture_Dates_fx %>% filter(DM == "TRUE") %>% nrow())
+
+Fracture_Dates_fx <- Fracture_Dates_fx %>% mutate(Threshold = if_else(Range_lower > 20, "TRUE", "FALSE"))
+
+chisq.test(table(Fracture_Dates_fx$Threshold, Fracture_Dates_fx$DM))
+
+#Anti-osteoporotic meds vs DM
+# % With DM and antiosteoporotic meds
+(Fracture_Dates_fx %>% filter(oste_med == "Y" & DM == "TRUE") %>% nrow())/(Fracture_Dates_fx %>% filter(DM == "TRUE") %>% nrow())
+
+chisq.test(table(Fracture_Dates_fx$oste_med, Fracture_Dates_fx$DM))
+
+#FRAX risk > 20 and on osteo meds with DM
+# % With DM, antiosteoporotic meds and Risk > 20
+(Fracture_Dates_fx %>% filter(oste_med == "Y" & DM == "TRUE" & Risk >= 20) %>% nrow())/(Fracture_Dates_fx %>% filter(DM == "TRUE") %>% nrow())
+
+Fracture_Dates_fx <- Fracture_Dates_fx %>% mutate(Threshold = if_else(Risk > 20, "TRUE", "FALSE"))
+
+#Treatment threshold vs Race
+#percentage calculation
+(Fracture_Dates_fx %>% filter(Risk >= 20 & Og_RACE == "W") %>% nrow())/(Fracture_Dates_fx %>% filter(Og_RACE == "W") %>% nrow())
+
+#Change B or W depending on what you are testing
+test <- Fracture_Dates_fx %>% filter(Og_RACE == "W"|Og_RACE == "B")
+
+chisq.test(table(test$Threshold, test$Og_RACE))
+rm(test)
+
+#Create a new column that is "TRUE" if both Risk >20 and they are on meds
+Fracture_Dates_fx <- Fracture_Dates_fx %>% mutate(Thresh_oste = if_else(Risk > 20 & oste_med == "Y", "TRUE", "FALSE"))
+
+chisq.test(table(Fracture_Dates_fx$Thresh_oste, Fracture_Dates_fx$DM))
+
+```
+Patients with FRAX > 20
+```{r to treat}
+# % of patients  with FRAX > 20 not on medication
+(Fracture_Dates_fx %>% filter(oste_med == "Y" & Risk >= 20 & DM == "TRUE") %>% nrow())/(Fracture_Dates_fx %>% filter(Risk >= 20 & DM == "TRUE") %>% nrow())
+
+#Create a new tibble of just patients with Risk > 20
+Fracture_Dates_fx20 <- Fracture_Dates_fx %>% filter(Risk >= 20)
+
+#of patients with Risk > 20, DM vs meds
+chisq.test(table(Fracture_Dates_fx20$oste_med, Fracture_Dates_fx20$DM))
+
+chisq.test(table(Fracture_Dates_fx20$GENDER, Fracture_Dates_fx20$DM))
+
+#DM v race. Change the variable "W" or "B"
+(Fracture_Dates_fx20 %>% filter(Og_RACE == "B" & DM == "FALSE") %>% nrow())/(Fracture_Dates_fx20 %>% filter(DM == "FALSE") %>% nrow())
+
+test <- Fracture_Dates_fx20 %>% mutate(Og_RACE = ifelse(Og_RACE == "B", "B", "X"))
+
+chisq.test(table(test$Og_RACE, test$DM))
+rm(test)
+
+#t.tests for this sub population
+G_v_Risk <- Fracture_Dates_fx20 %>% 
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+```
+Histogram
+```{r histogram}
+#Create a new df that contains a column of Risk for patient with DM and a column for Risk without DM
+Fracture_Dates_fx <- Fracture_Dates_fx %>%
+  mutate(Risk_DM = ifelse(DM == "TRUE", Risk, NA))
+
+Fracture_Dates_fx <- Fracture_Dates_fx %>%
+  mutate(Risk_no_DM = ifelse(DM == "FALSE", Risk, NA))
+
+
+ggplot(data = Fracture_Dates_fx, aes(x=Risk, fill=DM)) + 
+  geom_histogram(data = subset(Fracture_Dates_fx), aes(x=Risk_DM),
+                 breaks=seq(0, 80, by=2), 
+                 col="red", 
+                 fill="red", 
+                 alpha = 1) +
+  geom_histogram(data = subset(Fracture_Dates_fx),aes(x=Risk_no_DM),
+                 breaks=seq(0, 80, by=2), 
+                 col="blue", 
+                 fill="blue", 
+                 alpha = .4) +
+  labs(title = "FRAX Risk Score", x="FRAX score", y="Count") +
+  stat_function(aes(color = "Normal"), fun = dnorm) +
+  scale_color_manual(title = "Legend", values=c("red", "blue"),labels=c("DM", "non-DM"))
+
+#This one has a legend
+
+ggplot(data = Fracture_Dates_fx, aes(x=Risk, fill=DM)) + 
+  geom_histogram() +
+  labs(title = "FRAX Risk Score", x="FRAX score", y="Count") +
+  theme(labels=c("DM", "non-DM"))
+
+```
+Kolmogrov-Smirnov test for normality on above data
+```{r normal}
+
+Fracture_Dates_nona <- Fracture_Dates_fx %>% filter(!is.na(Risk))
+
+ks.test(Fracture_Dates_nona$Risk, 'pnorm', mean=mean(Fracture_Dates_nona$Risk), sd=sd(Fracture_Dates_nona$Risk))
+
+shapiro.test(Fracture_Dates_nona$Risk)
+
+#test for skew of the data
+install.packages("tseries")
+library(tseries)
+jarque.bera.test(Fracture_Dates_nona$Risk)
+  
+rm(Fracture_Dates_nona)
+#Create a histogram that outlines the chonology of fractures
+library(scales)
+ggplot() + 
+  geom_histogram(data = Fracture_Dates_fx, aes(time_trans(DATE)),
+                 breaks=seq(0, 80, by=1), 
+                 col="blue", 
+                 fill="blue", 
+                 alpha = 1) +
+  labs(title = "Fracture Chonology", x="Time", y="Count")+
+  scale_x_datetime(labels = date_format("%H:%M:%S"))
+
+# OR
+
+ggplot(data = Fracture_Dates_fx, aes(x=DATE)) +
+  geom_histogram(colour = "white") +
+  scale_x_datetime(
+    name = "Date",
+    #date_breaks = "10 years",
+  position = "bottom") +
+  geom_vline(xintercept=date_mean, size=1, color="blue")+
+  labs(title = "Fracture Chonology", x="Time", y="Count")+
+  geom_text(aes(x=date_mean-20000000000000000,label=paste0("Mean  ",date_mean), y=200))
+  
+
+#some numbers associated with this
+date_mean <- mean.POSIXct(Fracture_Dates_fx$DATE)
+
+```
+Plotting FRAX score vs meds
+```{r plot}
+#Could also plot this on a histogram, but will try violin plot and box plot
+ggplot() +
+  geom_violin(data = Fracture_Dates_fx, aes(Risk,oste_med),
+                 col="dodgerblue", 
+                 fill="dodgerblue", 
+                 alpha = .5) +
+  labs(title = "FRAX Risk Score", x="FRAX score", y="Anti-osteoporotic Medication") +
+  stat_boxplot(data = Fracture_Dates_fx, aes(Risk,oste_med),width=.2, col="black", fun.data = mean_se, geom = "errorbar", size=.5) +
+  geom_boxplot(data = Fracture_Dates_fx, aes(Risk,oste_med),width=.3,
+                 col="black", 
+                 fill="dodgerblue", 
+                 alpha = 1)
+#Associated stats
+test <- Fracture_Dates_fx %>% filter(oste_med == "Y") %>% drop_na(Risk)
+mean(test$Risk)
+mean(test$Risk) + sd(test$Risk)
+mean(test$Risk) - sd(test$Risk)
+rm(test)
+
+test <- Fracture_Dates_fx %>% filter(oste_med == "N") %>% drop_na(Risk)
+mean(test$Risk)
+mean(test$Risk) + sd(test$Risk)
+mean(test$Risk) - sd(test$Risk)
+rm(test)
+
+#Antiosteoporotic meds for pts with risk > 20
+ggplot() +
+  geom_violin(data = Fracture_Dates_fx20, aes(Risk,oste_med),
+                 col="blue", 
+                 fill="blue", 
+                 alpha = .4) +
+  labs(title = "Patients with FRAX Risk > 20%", x="FRAX score", y="Anti-osteoporotic Medication") +
+  geom_violin(draw_quantiles = c(0.25, 0.5, 0.75))
+
+#Box plot DM, sex and FRAX score
+smooth <- Fracture_Dates_fx %>% unite('SEX_DM', c(GENDER,DM), remove = TRUE) %>% select(ID,SEX_DM,AGE,Risk) %>% filter (!is.na(Risk))
+
+smooth_plot <- ggplot(data = smooth, aes(SEX_DM,AGE)) +
+geom_boxplot() +
+  labs(title = "Sex, DM and Age", x="Sex and Diabetes", y="Age") +
+  scale_x_discrete(labels=c("F DM","F","M DM","M"))
+```
+Plotting a smooth curve
+```{r smooth}
+smooth <- Fracture_Dates_fx %>% unite('SEX_DM', c(GENDER,DM), remove = TRUE) %>% select(ID,SEX_DM,AGE,Risk) %>% pivot_longer(cols = c(SEX_DM,AGE,Risk), names_to = "Variable", values_to = "Value", values_drop_na = TRUE)
+
+ggplot(Fracture_Dates_fx, aes(x=AGE, y=Risk)) +
+  #geom_point() +
+  geom_smooth(se=FALSE, col='red', size=2) +
+  geom_hline(xintercept, linetype, color, size)
+
+
+```
+#Linear regression FRAX score and death
+```{r anova}
+
+#Anova DM, Age, Risk
+G_v_Risk <- aov(Risk ~ DM * AGE, data = Fracture_Dates_fx)
+summary(G_v_Risk)
+#Note that group 1 is Alive and group 2 is Dead. I think they are sorted alphabetically
+Risk_v <- Risk_v %>% add_row(
+  mod = '5 years post fx',
+  data.name = G_v_Risk$data.name,
+  p.value = G_v_Risk$p.value,
+  conf.int1 = G_v_Risk$conf.int[1],
+  conf.int2 = G_v_Risk$conf.int[2],
+  estimate1 = G_v_Risk$estimate[1],
+  estimate2 = G_v_Risk$estimate[2],
+  n = nrow(Fracture_Dates_fx)
+)
+
+#Anova Risk, time to death, DM
+G_v_Risk <- aov(Risk ~ DM * TIME_TO_DEATH, data = Fracture_Dates_fx)
+summary(G_v_Risk)
+
+#Anova Risk, Time to death, Race
+G_v_Risk <- aov(Risk ~ Og_RACE * TIME_TO_DEATH, data = Fracture_Dates_fx)
+summary(G_v_Risk)
+
+#Anova Risk, DM, Race
+G_v_Risk <- aov(Risk ~ Og_RACE * DM, data = Fracture_Dates_fx)
+summary(G_v_Risk)
+
+#Question: What are the risk of being black and having DM
+
+#Question: Are those taking meds more likely to be white?
+
+#Question: Are those without DM more likely to be taking anti-osteoporotic meds
+
+#Number with FRAX score that warranted treatment
+#test whether there is a difference between those with DM and Risk >20 requires chi test
+
+#Osteoporosis meds
+
+write.csv(Risk_v, "C:\\Users\\acriscit\\Documents\\ttest.csv")
+################################################################
+DM_Dates_fx <- DM_dates_fx[-1]
+colnames <- DM_Dates_fx[1,]
+names(DM_Dates_fx) <- colnames
+DM_Dates_fx <- DM_Dates_fx[-1,] %>% as.tibble
+DM_Dates_fx$ID <- as.numeric(DM_Dates_fx$ID)
+rm(colnames)
+#Patients with Fracture and DM w/ FRAX scores
+DM_Dates_fx <- left_join(DM_Dates_fx, Fracture_Dates_fx, by = 'ID')
+
+#Patients with Fracture, w/o DM, w/ FRAX scores
+Fracture_Dates_fx_no_DM <- anti_join(Fracture_Dates_fx, DM_Dates_fx, by = 'ID')
+
+
+```
+Plotting linear regression
+
+DXA
+tibble_names$Procedures %>% filter(grepl('DXA', DESC)) %>% select(DATE, ID)
+``` {r linear regression}
+fx_Fracture_Dates <- Fracture_Dates_fx
+
+#Age vs FRAX Risk score
+lm_FRAX_AGE <- lm(Risk ~ AGE, data = fx_Fracture_Dates)
+summary(lm_FRAX_AGE)
+
+ggplot(lm_FRAX_AGE, aes(x=AGE, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("Age (years)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("Age vs FRAX score")
+
+#FRAX Score vs time to death
+Death_data <- drop_na(Fracture_Dates_fx, TIME_TO_DEATH)
+lm_FRAX_AGE <- lm(TIME_TO_DEATH~Risk , data = Death_data)
+summary(lm_FRAX_AGE)
+
+ggplot(lm_FRAX_AGE, aes(x=TIME_TO_DEATH, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("Time to death (hours)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("Time_to_death vs FRAX score")
+rm(Death_data)
+
+#DM linear regression
+fxfinal <- transform(na.omit(fx), ID = as.character(ID))
+
+ID_DM_HBA1C <- DM_Dates_fx %>% filter(HBA1C_avg > 0)
+
+lm_ABA1Cavg_Age <- lm(Risk ~ HBA1C_avg, data = ID_DM_HBA1C)
+summary(lm_ABA1Cavg_Age)
+
+ggplot(lm_ABA1Cavg_Age, aes(x=HBA1C_avg, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("HbA1C mean (%)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("Mean HbA1C vs FRAX score")
+
+
+lm_ABA1Cavg_max <- lm(Risk ~ HBA1C_max, data = ID_DM_HBA1C)
+summary(lm_ABA1Cavg_max)
+
+ggplot(lm_ABA1Cavg_max, aes(x=HBA1C_max, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("HbA1C max (%)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("HbA1C vs FRAX score")
+
+
+lm_ABA1Cavg_time <- lm(Risk ~ Duration, data = DM_Dates_fx)
+summary(lm_ABA1Cavg_time)
+
+ggplot(lm_ABA1Cavg_time, aes(x=Duration, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("Time (seconds)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("DM duration vs FRAX score")
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
