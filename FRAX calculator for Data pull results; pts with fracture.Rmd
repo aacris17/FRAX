@@ -150,39 +150,6 @@ y <- Patients
 
 #Now that the patient data is more readable, we will create a tibble that contains data needed to calculate a FRAX score for each patient. This will primarily be accomplished with the use of a loop.
 
-#Create an empty tibble ('Fracture_Dates') with the below columns. It will later be populated by each cycle of the loop
-Fracture_Dates <- tibble(
-  ID = numeric(),
-  DATE = mdy_hms(),
-  CODE = character(),
-  DESC = character(),
-  HT.in = numeric(), 
-  WT.in = numeric(),
-  AGE = numeric(),
-  Birth_Date = mdy_hms(),
-  ageatfracture = numeric(),
-  ageatdeath = numeric(),
-  GENDER = character(), 
-  Og_RACE = character(), 
-  CRF = numeric(),
-  #CRF is Combined Risk Factors
-  BMI = numeric()
-)
-
-#Tibble where the risk factors will be compiled
-CRF <- tibble(
-  ID = numeric(),
-  Fracture = character(),
-  Smoker = character(),
-  EToH = character(),
-  RA = character(),
-  Osteoporosis = character(),
-  Parent_Osteoporosis = character(),
-  Glucocorticoid_rf = character()
-)
-#Collect risk factors into above tibble. If there is no observation prior to DATE, it is assumed that the risk factor was not present. For example, if there is no prior fracture documented, it is assumed that there was no prior fracture
-
-
 #The below lines will select patients with fracture then remove instances with traumatic fracture or fractures of the hands, feet, face or skull (non major osteoporotic fractures). It is assumed that all other fractures in this >50 y/o population are major osteoporotic fractures. Like the below lines it will then group fracture events by patient ID, arrange them by date and exclude all but the first fracture event using 'distinct ()'
 #Note that this does not exclude patients who have had a non-MOF but excludes that diagnosis from analysis
 
@@ -259,6 +226,38 @@ Glucocorticoid <- tibble_names$Meds %>%
 ```
 The below loop will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient and will populate the tibble 'Fracture_Dates'
 ```{r loop}
+#Create an empty tibble ('Fracture_Dates') with the below columns. It will later be populated by each cycle of the loop
+Fracture_Dates <- tibble(
+  ID = numeric(),
+  DATE = mdy_hms(),
+  CODE = character(),
+  DESC = character(),
+  HT.in = numeric(), 
+  WT.in = numeric(),
+  AGE = numeric(),
+  Birth_Date = mdy_hms(),
+  ageatfracture = numeric(),
+  ageatdeath = numeric(),
+  GENDER = character(), 
+  Og_RACE = character(), 
+  CRF = numeric(),
+  #CRF is Combined Risk Factors
+  BMI = numeric()
+)
+
+#Tibble where the risk factors will be compiled
+CRF <- tibble(
+  ID = numeric(),
+  Fracture = character(),
+  Smoker = character(),
+  EToH = character(),
+  RA = character(),
+  Osteoporosis = character(),
+  Parent_Osteoporosis = character(),
+  Glucocorticoid_rf = character()
+)
+#Collect risk factors into above tibble. If there is no observation prior to DATE, it is assumed that the risk factor was not present. For example, if there is no prior fracture documented, it is assumed that there was no prior fracture
+
 for (i in 1:nrow(ID_fracs)){
   id <- as.double(ID_fracs$ID[i])
 
@@ -451,18 +450,28 @@ fx <- px %>%
 Fracture_Dates_fx <- Fracture_Dates %>% left_join(fx, by = 'ID')
 
 write.csv(Fracture_Dates_fx, "C:\\Users\\acriscit\\Documents\\Fracture_Dates_fx.csv")
+```
+#Descriptors
+```{r descriptors}
 
 percent_complete_cases <- (nrow(fx)/nrow(Fracture_Dates))*100
-percent_missing_FRAX <- (nrow(fx)/nrow(Fracture_Dates_fx))*100
+percent_missing_FRAX <- ((nrow(fx)-nrow(Fracture_Dates_fx))/percent_complete_cases)*100
 percent_missing_HT <- (nrow(is.na(Fracture_Dates_fx$HT.in))/nrow(Fracture_Dates_fx))*100
 percent_missing_WT <- (nrow(is.na(Fracture_Dates_fx$WT.in))/nrow(Fracture_Dates_fx))*100
 
-Flow <- tibble()
+Flow <- tibble(
+  percent_complete_cases = numeric(),
+  number_excluded_frac = numeric(),
+  number_excluded_hip = numeric(),
+  percent_missing_FRAX = numeric(),
+  percent_missing_WT = numeric(),
+  percent_missing_HT = numeric()
+)
 
 Flow <- Flow %>% add_row(
   percent_complete_cases = as.double(percent_complete_cases),
   number_excluded_frac = as.double(number_excluded_frac),
-  number_excluded_hip = as.double(number_excluded_hip),
+  number_excluded_hip = as.double(number_excluded_frac),
   percent_missing_FRAX = as.double(percent_missing_FRAX),
   percent_missing_WT = as.double(percent_missing_WT),
   percent_missing_HT = as.double(percent_missing_HT)
@@ -470,6 +479,7 @@ Flow <- Flow %>% add_row(
 write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
 
 rm(px)
+rm(fx)
 rm(Fracture_Dates)
 ```
 #FOR HIP FRACTURE ONLY
