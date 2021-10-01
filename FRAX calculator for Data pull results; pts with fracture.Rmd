@@ -450,6 +450,7 @@ fx <- px %>%
 Fracture_Dates_fx <- Fracture_Dates %>% left_join(fx, by = 'ID')
 
 write.csv(Fracture_Dates_fx, "C:\\Users\\acriscit\\Documents\\Fracture_Dates_fx.csv")
+write.csv(CRF, "C:\\Users\\acriscit\\Documents\\CRF_fx.csv")
 ```
 #Descriptors
 ```{r descriptors}
@@ -742,6 +743,10 @@ rm(visit)
 
 write.csv(Visit_Dates, "C:\\Users\\acriscit\\Documents\\Visit_Dates.csv")
 rm(Visit_Dates)
+#Join Visits to tibble_names and save tibble_names as a patient database for future use
+#remove 'test' once you've tested this
+test <- list.append(tibble_names, Visits, after = Vitals)
+rm(Visits)
 ```
 Osteo meds
 ```{r osteo meds}
