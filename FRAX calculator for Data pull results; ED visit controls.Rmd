@@ -50,7 +50,7 @@ thirteen <- read_excel_allsheets(filename)
 thirteen_patients <- thirteen[1:2789,1:8]
 #Remove these rows and columns from the og tibble
 thirteen <- thirteen[-c(1:2789),-c(2:9)]
-####
+####pivot longer might be good here, but I would lose the associations between dates, quantities and units
 test <- thirteen %>% pivot_longer(cols = 2:27, names_to = TYPE, values_to = VALUE)
 
 ##### alternative, try this because the above lines merge the file into one tibble, not a list
@@ -61,19 +61,26 @@ tab_names <- excel_sheets(path = test)
 test <- map(tab_names, ~read_excel(path = test, sheet = .x))
 test <- test %>% set_names(tab_names)
 
-tab_names2 <- tibble(
-Row = (1:length(tab_names)),
-tab_names = tab_names
+###I want a want to create a list with an element for each data type
+
+col_names <- c(
+  "ID", 
+  "VISIT", 
+  "DATE",
+  "CODE",
+  "DESC", 
+  "TEXT_VALUE", 
+  "NUMERIC_VALUE", 
+  "UNITS",
+  "MODIFIER"
 )
-Frax_tabs <- tab_names2 %>% 
-    filter(
-    grepl('Diagnoses', tab_names) | 
-    grepl('Labs', tab_names) | 
-    grepl('Meds', tab_names) | 
-    grepl('Vitals', tab_names) | 
-    grepl('Smoking', tab_names)
-  )
-FRAX_pts <- FRAX_data[c(Frax_tabs$Row)]
+for (i in 1:length(test)){
+  names(test[[i]]) <- col_names[1:ncol(test[[i]])]
+}
+#Tidy the data by condensing the 'list' into a 'tibble' using 'bind_rows'
+#BEWARE USING X AND Y OR SIMILARLY NON-DESCRIPT VARIABLES FOR OBJECTS YOU NEED TO USE OVER A LONG PERIOD. MORE DESCRIPTIVE NAMES HELP YOU REMEMBER WHAT YOU WERE DOING DOWN THE LINE
+x <- bind_rows(test)
+x$DATE <- mdy_hm(x$DATE, quiet = TRUE)
 
 ```
 In this chunk we are organizing data so that relevant information can be more easily collected
