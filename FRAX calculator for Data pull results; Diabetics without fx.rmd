@@ -137,6 +137,57 @@ names(Patients) <- col_names[1:ncol(Patients)]
     mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
 y <- Patients
 #Now that the patient data is more readable, we will create a tibble that contains data needed to calculate a FRAX score for each patient. This will primarily be accomplished with the use of a loop.
+```
+Create a tibble with a row for each patient with the date of their ED visit and diagnosis at visit
+```{r ED}
+date_lower <- mdy("5/1/2013")
+date_upper <- mdy("5/31/2014")
+ID_EM <- tibble_names$Diagnosis %>% filter(TEXT_VALUE == "Primary" & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
+#Add a visit filter to this when the data is available
+```
+#The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
+```{r risk_factors}
+# alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
+Fracture <- tibble_names$Diagnosis %>% 
+     filter(grepl('[Ff]racture', DESC)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#Smoker at the time of the fracture
+Smoker <- tibble_names$History %>% 
+     filter(grepl('[Ss]moker', DESC) & grepl('[Cc]urrent', DESC)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+EToH <- tibble_names$Diagnosis %>% 
+     filter(grepl('F10|3050|291|303|V11.3|K70', CODE)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#RA diagnosis of Rheumatoid Arthritis 
+RA <- tibble_names$Diagnosis %>% 
+     filter(grepl('M05|M06|714', CODE)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#According to FRAX this includes osteoporosis (M81, 7330) and diseases strongly associated with osteoporosis including type I (insulin dependent) diabetes (E10, 250), osteogenesis imperfecta in adults (Q78.0, 75651), untreated long-standing hyperthyroidism E05, 242)(these are the codes for hyperthyroidism irrespective of treatment), hypogonadism (E29.1, 2572 (male), E28.3, 25631, 25639 (female) including) premature menopause (<45 years), chronic malnutrition (intestinal malabsorption K90, 579, nutritional malabsorption E41-46, 261-263, 579), or malabsorption and chronic liver disease (571-573, K71-K76)
+#An alternative to malabsorption could be to consider BMI <15
+Osteoporosis <- tibble_names$Diagnosis %>% 
+     filter(grepl('M81|7330|E10|250|Q78.0|75651|E05|242|E29.1|2572|E28.3|25631|25639|k90|579|E41|E42|E43|E44|E45|E46|261|262|263|579|571|572|573|K71|K72|K73|K74|K75|K76', CODE)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#FRAX considers parental hip fracture a risk. We have substituted parental osteoporosis for this risk factor because there is a searchable diagnostic code
+Parent_Osteoporosis <- tibble_names$Diagnosis %>% 
+     filter(grepl('Z82.62|V17.81', CODE)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+#Current exposure to oral glucocorticoids or exposure to oral glucocorticoids for more than 3 months at a dose eqivalent to prednisolone > 5mg daily
+Glucocorticoid <- tibble_names$Meds %>% 
+     filter(MODIFIER == 'mg' &
+              grepl('[Bb]eclomethasone|[Bb]etamethasone|[Bb]udesonide|[Cc]ortisone|[Dd]examethasone|[Hh]ydrocortisone|[Mm]ethylprednisolone|[Pp]rednisolone|[Pp]rednisone|[Tt]riamcinolone', DESC)) %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+
+```
+The below loop will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient and will populate the tibble 'EM_Dates'
+```{r loop}
 #Create an empty tibble ('EM_Dates') with the below columns. It will later be populated by each cycle of the loop
 EM_Dates <- tibble(
   ID = numeric(),
@@ -167,55 +218,9 @@ CRF <- tibble(
 )
 #Collect risk factors into above tibble. If there is no observation prior to DATE, it is assumed that the risk factor was not present. For example, if there is no prior fracture documented, it is assumed that there was no prior fracture
 
-```
-#The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
-```{r risk_factors}
-# alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
-Fracture <- x %>% 
-     filter(grepl('[Ff]racture', DESC)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#Smoker at the time of the fracture
-Smoker <- x %>% 
-     filter(grepl('[Ss]moker', DESC) & grepl('[Cc]urrent', DESC)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
-EToH <- x %>% 
-     filter(grepl('F10|3050|291|303|V11.3|K70', CODE)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#RA diagnosis of Rheumatoid Arthritis 
-RA <- x %>% 
-     filter(grepl('M05|M06|714', CODE)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#According to FRAX this includes osteoporosis (M81, 7330) and diseases strongly associated with osteoporosis including type I (insulin dependent) diabetes (E10, 250), osteogenesis imperfecta in adults (Q78.0, 75651), untreated long-standing hyperthyroidism E05, 242)(these are the codes for hyperthyroidism irrespective of treatment), hypogonadism (E29.1, 2572 (male), E28.3, 25631, 25639 (female) including) premature menopause (<45 years), chronic malnutrition (intestinal malabsorption K90, 579, nutritional malabsorption E41-46, 261-263, 579), or malabsorption and chronic liver disease (571-573, K71-K76)
-#An alternative to malabsorption could be to consider BMI <15
-Osteoporosis <- x %>% 
-     filter(grepl('M81|7330|E10|250|Q78.0|75651|E05|242|E29.1|2572|E28.3|25631|25639|k90|579|E41|E42|E43|E44|E45|E46|261|262|263|579|571|572|573|K71|K72|K73|K74|K75|K76', CODE)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#FRAX considers parental hip fracture a risk. We have substituted parental osteoporosis for this risk factor because there is a searchable diagnostic code
-Parent_Osteoporosis <- x %>% 
-     filter(grepl('Z82.62|V17.81', CODE)) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-#Current exposure to oral glucocorticoids or exposure to oral glucocorticoids for more than 3 months at a dose eqivalent to prednisolone > 5mg daily
-Glucocorticoid <- x %>% 
-     filter(UNITS == 'mg' &
-              grepl('[Bb]eclomethasone|[Bb]etamethasone|[Bb]udesonide|[Cc]ortisone|[Dd]examethasone|[Hh]ydrocortisone|[Mm]ethylprednisolone|[Pp]rednisolone|[Pp]rednisone|[Tt]riamcinolone', DESC) &
-              grepl('[Ii]njection| [Tt]ablet| [Ii]vbp', DESC)
-     ) %>%
-  group_by(ID) %>% 
-  arrange(DATE, .by_group = TRUE)
-
-```
-The below loop will collect and distill information relevant to calculating FRAX score FOR PATIENTS WHO HAVE HAD A FRACTURE ONLY. Each cycle of this loop will collect data for 1 patient and will populate the tibble 'EM_Dates'
-```{r loop}
-for (i in 1:nrow(ID_fracs)){
-  id <- as.double(ID_fracs$ID[i])
-loop_ID1 <- ID_fracs %>% 
+for (i in 1:nrow(ID_EM)){
+  id <- as.double(ID_EM$ID[i])
+loop_ID1 <- ID_EM %>% 
     filter(ID == id)
 #Below are common variables that will be used throughout the loop
 date <- loop_ID1$DATE[1]
@@ -379,7 +384,9 @@ ed <- px %>%
 EM_Dates_ed <- EM_Dates %>% left_join(ed, by = 'ID')
 
 write.csv(EM_Dates_ed, "C:\\Users\\acriscit\\Documents\\EM_Dates_ed.csv")
-
+```
+#Descriptors
+```{r descriptors}
 percent_complete_cases <- (nrow(ed)/nrow(EM_Dates))*100
 percent_missing_FRAX <- (nrow(ed)/nrow(EM_Dates_ed))*100
 percent_missing_HT <- (nrow(is.na(EM_Dates_ed$HT.in))/nrow(EM_Dates_ed))*100
@@ -406,19 +413,35 @@ rm(EM_Dates)
 
 #It will also allow you to select patients without fracture from a population of patients with and without fractures.
 ```{r filtering}
-#Select the ID of anyone with a fracture diagnosis: ICD9/10 codes- S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone, hip fracture M84.359, M84.459, M84.659, Vertebral: 805|806|733.13|S12|M48.50|M80.08, Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A, Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
-ID_fracs <- tibble_names$Diagnosis %>%
+#Select the ID of anyone with a non MOF diagnosis: ICD9/10 codes- S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
+non_MOF <-  tibble_names$Diagnosis %>%
   #filter(grepl('[Ff]racture', DESC)) %>%
-  filter(grepl('S62|S92|S99|M88|S02|V|Y04|C79.5|M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
+  filter(grepl('S62|S92|S99|M88|S02|V|Y04|C79.5', CODE)) %>%
   group_by(ID) %>%
   arrange(DATE, .by_group = TRUE) %>% 
   distinct(ID, .keep_all = TRUE) %>%
   select(ID, DATE, CODE, DESC)
+### Not doing anything with the above info
+```
+#select patients who subsequently had a MOF
+```{r MOF}
+#Select anyone with MOF: hip fracture M84.359, M84.459, M84.659, Vertebral: 805|806|733.13|S12|M48.50|M80.08, Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A, Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
+MOF <- tibble_names$Diagnosis %>%
+  #filter(grepl('[Ff]racture', DESC)) %>%
+  filter(grepl('M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
+  group_by(ID) %>%
+  arrange(DATE, .by_group = TRUE) %>% 
+  distinct(ID, .keep_all = TRUE) %>%
+  select(ID, DATE, CODE, DESC)
+MOF <- rename(MOF, fx_DATE = DATE)
 
 #Join the date of fracture (after EM visit) to EM_Dates_ed
 EM_Dates_ed$ID <- as.character(EM_Dates_ed$ID)
-EM_Dates_ed <- EM_Dates_ed %>% left_join(ID_fracs, by = 'ID')
-
+EM_Dates_ed <- EM_Dates_ed %>% left_join(MOF, by = 'ID')
+#Create a column to see when the fracture occurred
+EM_Dates_ed <- EM_Dates_ed %>% mutate(fx_time = difftime(fx_DATE, DATE,
+         units = c("days")))
+#Will be positive if after the ED visit
 #Note that there should not be any fractures prior to 5/31/2014, if there are, i2b2 let patients slip through the collection criteria
 ```
 The tibble 'EM_Dates' now contains a row for each patient and associated information necessary to calculate FRAX score. Below we will use the 'FRAX' tibble create from publicly available FRAX paper charts (https://www.sheffield.ac.uk/FRAX/charts.aspx) to calculate the FRAX score for each patient.
