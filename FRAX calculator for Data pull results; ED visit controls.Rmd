@@ -57,6 +57,9 @@ test <- thirteen %>% pivot_longer(cols = 2:27, names_to = TYPE, values_to = VALU
 test <- "H:/Health Control (Hip fx)/2013_acriscit.xlsx"
 #Label each list element with it's associated tab from the excel sheet
 tab_names <- excel_sheets(path = test)
+#############################################working in github
+#Subset the list elements to merge, try to make this into a loop eventually#In this loop, i would be tab names.
+tab_names <- tab_names %>% filter(grepl(Meds,***)
 #Below is the slow line
 test <- map(tab_names, ~read_excel(path = test, sheet = .x))
 test <- test %>% set_names(tab_names)
