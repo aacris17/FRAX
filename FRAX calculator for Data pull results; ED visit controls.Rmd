@@ -31,69 +31,47 @@ library(stringr)
 FRAX <-  read_csv("H:/Functional Data/Hip fracture/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
-
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
 thirteen <- ("H:/Health Control (Hip fx)/2013_acriscit.xlsx")
-
-#Remove patients and visits because they do not fit the common column naming convention below
-thirteen_patients <- test$Patients
-thirteen_visits <- test$Visits
-thirteen[thirteen != "Patients"]
-thirteen[thirteen != "Visits"]
-
 #Function to import excel data with multiple tabs as a list
-read_excel_all_sheets <- function(filename, tibble = TRUE) {
+read_excel_allsheets <- function(filename, tibble = TRUE) {
   tab_names <- excel_sheets(path = filename)
 #Below is the slow line
 filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
 filename <- filename %>% set_names(tab_names)
+#Next Remove patients and visits because they do not fit the common column naming convention below
+filename_patients <- filename$Patients
+filename_visits <- filename$Visits
+filename <- within(filename, rm(Patients, Visits))
 }
 filename <- thirteen
 thirteen <- read_excel_allsheets(filename)
+thirteen_patients <- filename_patients
+thirteen_visits <- filename_visits
 
-col_names <- c(
-  "ID", 
-  "VISIT", 
-  "DATE",
-  "CODE",
-  "DESC", 
-  "TEXT_VALUE", 
-  "NUMERIC_VALUE", 
-  "UNITS",
-  "MODIFIER"
-)
-for (i in 1:length(test)){
-  names(test[[i]]) <- col_names[1:ncol(test[[i]])]
-}
-#Tidy the data by condensing the 'list' into a 'tibble' using 'bind_rows'
-#BEWARE USING X AND Y OR SIMILARLY NON-DESCRIPT VARIABLES FOR OBJECTS YOU NEED TO USE OVER A LONG PERIOD. MORE DESCRIPTIVE NAMES HELP YOU REMEMBER WHAT YOU WERE DOING DOWN THE LINE
-x <- bind_rows(test)
-x$DATE <- mdy_hm(x$DATE, quiet = TRUE)
-```
-In this chunk we are organizing data so that relevant information can be more easily collected
-- All the documents we imported above will be combined into one large tibble
-- We will create an empty tibble that will be filled with info to calculate FRAX score at the time of fracture for each patient
-```{r run}
-#Accumulate data tibbles as a list
-tibble_names <- list(
-  Vitals, 
-  Meds, 
-  Lab, 
-  Procedures, 
-  Diagnosis,
-  History
-  )
-#Title each list element appropriately
+#Break the tibble down into components rather than conglomerate into a large tibble. This will significantly speed up the filter function used to search for specific data elements later in this code
+#put this into the function above
 tibble_titles <- c(
-  "Vitals", 
-  "Meds", 
-  "Lab", 
   "Procedures",
-  "Diagnosis",
-  "History"
+  "Diagnoses",
+  "Labs",
+  "Meds",
+  "Vitals", 
+  "Smoking"
   )
-names(tibble_names) <- tibble_titles
-#rename columns and remove spaces from column names
+ test2 <- list()
+tab_names <- excel_sheets(path = "H:/Health Control (Hip fx)/2013_acriscit.xlsx")
+for (i in 1:length(tibble_titles)) {
+ tab_names_x <- tab_names %>% as_tibble() %>% filter(grepl(tibble_titles[i], value))
+ x <- thirteen[tab_names_x$value] %>% bind_rows()
+ test2 <- append(test2, list(x))
+}
+names(test2) <- tibble_titles
+thirteen <- test2
+
+rm(filename, filename_patients, filename_visits, test2)
+
+#Rename all the columns in thirteen and change DATE to a date format
 col_names <- c(
   "ID", 
   "VISIT", 
@@ -105,27 +83,11 @@ col_names <- c(
   "UNITS",
   "MODIFIER"
 )
-#This loop applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
-for (i in 1:length(tibble_names)){
-  names(tibble_names[[i]]) <- col_names[1:ncol(tibble_names[[i]])]
-  tibble_names[[i]]$DATE <- mdy_hm(
-    tibble_names[[i]]$DATE, 
-    quiet = TRUE
-    )
+for (i in 1:length(thirteen)){
+  names(thirteen[[i]]) <- col_names[1:ncol(thirteen[[i]])]
+  thirteen[[i]]$DATE <- thirteen[[i]]$DATE %>% mdy_hm(quiet = TRUE) %>% as.Date()
 }
-#Flatten list into a tibble
-x <- tibble_names %>%
-  bind_rows()
 
-#remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
-rm(Diagnosis)
-rm(Lab)
-rm(Meds)
-rm(Patients)
-rm(Vitals)
-rm(History)
-
-#Do the same process for demographic data
 col_names <- c(
   "ID", 
   "AGE_NOW", 
@@ -135,61 +97,55 @@ col_names <- c(
   "MATCH",
   "GENDER", 
   "RACE", 
-  "MIXED RACE", 
-  "ETHNICITY"
+  "MIXED RACE"
 )
-names(Patients) <- col_names[1:ncol(Patients)]
-  Patients <- Patients %>%
-    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
+names(thirteen_patients) <- col_names[1:ncol(thirteen_patients)]
+  thirteen_patients <- thirteen_patients %>%
+    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE) %>% as.Date()) %>%
+    mutate(DEATH_DATE = mdy_hm(DEATH_DATE) %>% as.Date())
   
- Patients <- Patients %>%
-    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
-y <- Patients
-#Now that the patient data is more readable, we will create a tibble that contains data needed to calculate a FRAX score for each patient. This will primarily be accomplished with the use of a loop.
-
+tibble_names <- thirteen
+Patients <- thirteen_patients
+rm(thirteen, thirteen_patients)
 ```
-#FROM THIS POINT ON YOU HAVE TWO OPTIONS
-1) Upload all files from all months, merge them and remove duplicates
-2) Run each file through the loop (faster) and combine after processing to remove duplicates
-```{r continue}
-```
-Create a tibble with a row for each patient with the date of their ED visit and diagnosis at visit
+Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
 date_lower <- mdy("5/1/2013")
 date_upper <- mdy("5/31/2014")
-ID_EM <- tibble_names$Diagnosis %>% filter(TEXT_VALUE == "Primary" & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
-#Add a visit filter to this when the data is available
+ID_EM <- tibble_names$Diagnoses %>% filter(TEXT_VALUE == "Primary" & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
+```
+Remove patients that do not meet visit criteria: 3 prior visits, one follow-up
 ```
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
 ```{r risk_factors}
 # alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
-Fracture <- tibble_names$Diagnosis %>% 
+Fracture <- tibble_names$Diagnoses %>% 
      filter(grepl('[Ff]racture', DESC)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 #Smoker at the time of the fracture
-Smoker <- tibble_names$History %>% 
+Smoker <- tibble_names$Smoking %>% 
      filter(grepl('[Ss]moker', DESC) & grepl('[Cc]urrent', DESC)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
-EToH <- tibble_names$Diagnosis %>% 
+#A Diagnoses of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+EToH <- tibble_names$Diagnoses %>% 
      filter(grepl('F10|3050|291|303|V11.3|K70', CODE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
-#RA diagnosis of Rheumatoid Arthritis 
-RA <- tibble_names$Diagnosis %>% 
+#RA Diagnoses of Rheumatoid Arthritis 
+RA <- tibble_names$Diagnoses %>% 
      filter(grepl('M05|M06|714', CODE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 #According to FRAX this includes osteoporosis (M81, 7330) and diseases strongly associated with osteoporosis including type I (insulin dependent) diabetes (E10, 250), osteogenesis imperfecta in adults (Q78.0, 75651), untreated long-standing hyperthyroidism E05, 242)(these are the codes for hyperthyroidism irrespective of treatment), hypogonadism (E29.1, 2572 (male), E28.3, 25631, 25639 (female) including) premature menopause (<45 years), chronic malnutrition (intestinal malabsorption K90, 579, nutritional malabsorption E41-46, 261-263, 579), or malabsorption and chronic liver disease (571-573, K71-K76)
 #An alternative to malabsorption could be to consider BMI <15
-Osteoporosis <- tibble_names$Diagnosis %>% 
+Osteoporosis <- tibble_names$Diagnoses %>% 
      filter(grepl('M81|7330|E10|250|Q78.0|75651|E05|242|E29.1|2572|E28.3|25631|25639|k90|579|E41|E42|E43|E44|E45|E46|261|262|263|579|571|572|573|K71|K72|K73|K74|K75|K76', CODE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 #FRAX considers parental hip fracture a risk. We have substituted parental osteoporosis for this risk factor because there is a searchable diagnostic code
-Parent_Osteoporosis <- tibble_names$Diagnosis %>% 
+Parent_Osteoporosis <- tibble_names$Diagnoses %>% 
      filter(grepl('Z82.62|V17.81', CODE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
@@ -235,21 +191,21 @@ CRF <- tibble(
 
 for (i in 1:nrow(ID_EM)){
   id <- as.double(ID_EM$ID[i])
-loop_ID1 <- ID_EM %>% 
+loop_ID <- ID_EM %>% 
     filter(ID == id)
 #Below are common variables that will be used throughout the loop
-date <- loop_ID1$DATE[1]
-CODE <- loop_ID1$CODE[1]
-DESC <- loop_ID1$DESC[1]
+date <- loop_ID$DATE[1]
+CODE <- loop_ID$CODE[1]
+DESC <- loop_ID$DESC[1]
 #REMOVE THIS IF YOU ARE NOT LOOKING FOR HIP FRACTURES ONLY!!!
 #####
 #Create a tibble with one patients into
-loop_ID <- x %>% 
+loop_ID <- tibble_names$Vitals %>% 
     filter(ID == id)
 #Select only the info prior to fracture
 loop_ID_prefrac <- loop_ID %>% filter(DATE <= date)
 #Height and weight closest to the time of fracture
-HT <- (loop_ID %>% 
+HT <- (loop_ID_prefrac %>% 
          filter(CODE == "HT") %>% 
          arrange(desc(DATE)) %>% 
          select(NUMERIC_VALUE)
@@ -272,9 +228,12 @@ WT <- as.double(ifelse (is.na(WT), ((
     arrange(desc(DATE)) %>% 
     select(NUMERIC_VALUE))[1,1]), 
   WT))
+  
+rm(loop_ID, loop_ID_prefrac)
 #Calculate BMI
 BMI <- (703*as.double(WT)/as.double(HT)^2)
-yID <- y %>% filter(ID == id)
+
+yID <- Patients %>% filter(ID == id)
 #Calcuate age at time of fracture
 Birth_Date <- (yID %>% select(BIRTH_DATE))[[1]]
 ageatEM <- (date - Birth_Date) %>% as.double/365.25
@@ -283,6 +242,7 @@ ageatdeath <- as.double(yID %>% select(AGE_AT_DEATH))
 Gender <- yID %>% select(GENDER)
 #Select race
 Race <- yID %>% select(RACE)
+rm(yID)
 # alternative to 'filter(grepl())' is library(stringr), x %>% filter(str_detect(rowname, "^ICD-10 code")). '^' means starts with
 Fracture_loop <- as.character(
   (filter(Fracture, id == ID & DATE <= date) %>%
@@ -293,12 +253,12 @@ Smoker_loop <- as.character(
   (filter(Smoker, id == ID & DATE <= date & DATE >= date-years(2)) %>% 
      select(DESC))[1,2]
   )
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+#A Diagnoses of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
 EToH_loop <- as.character(
   (filter(EToH, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
   )
-#A diagnosis of Rheumatoid Arthritis 
+#A Diagnoses of Rheumatoid Arthritis 
 RA_loop <- as.character(
   (filter(RA, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
@@ -424,12 +384,12 @@ rm(EM_Dates)
 #EM_Dates_ed contains all the info from the table
 #EM_Dates_Og contains the original, unaltered info from the FRAX loop
 ```
-#The below lines will select patients with a history of fracture. The patient pull in i2b2 stipulated that patients not have a diagnosis of fracture prior to the index date (ED visit between 5/1/2013 and 5/31/2014). Importantly, patients may have a fracture after 5/31/2014. We want to capture these patients.
+#The below lines will select patients with a history of fracture. The patient pull in i2b2 stipulated that patients not have a Diagnoses of fracture prior to the index date (ED visit between 5/1/2013 and 5/31/2014). Importantly, patients may have a fracture after 5/31/2014. We want to capture these patients.
 
 #It will also allow you to select patients without fracture from a population of patients with and without fractures.
 ```{r filtering}
-#Select the ID of anyone with a non MOF diagnosis: ICD9/10 codes- S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
-non_MOF <-  tibble_names$Diagnosis %>%
+#Select the ID of anyone with a non MOF Diagnoses: ICD9/10 codes- S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
+non_MOF <-  tibble_names$Diagnoses %>%
   #filter(grepl('[Ff]racture', DESC)) %>%
   filter(grepl('S62|S92|S99|M88|S02|V|Y04|C79.5', CODE)) %>%
   group_by(ID) %>%
@@ -441,7 +401,7 @@ non_MOF <-  tibble_names$Diagnosis %>%
 #select patients who subsequently had a MOF
 ```{r MOF}
 #Select anyone with MOF: hip fracture M84.359, M84.459, M84.659, Vertebral: 805|806|733.13|S12|M48.50|M80.08, Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A, Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
-MOF <- tibble_names$Diagnosis %>%
+MOF <- tibble_names$Diagnoses %>%
   #filter(grepl('[Ff]racture', DESC)) %>%
   filter(grepl('M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
   group_by(ID) %>%
