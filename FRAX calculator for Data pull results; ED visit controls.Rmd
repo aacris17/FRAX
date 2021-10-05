@@ -35,36 +35,21 @@ names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Rang
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
 thirteen <- ("H:/Health Control (Hip fx)/2013_acriscit.xlsx")
 
+#Remove patients and visits because they do not fit the common column naming convention below
+thirteen_patients <- test$Patients
+thirteen_visits <- test$Visits
+thirteen[thirteen != "Patients"]
+thirteen[thirteen != "Visits"]
+
 #Function to import excel data with multiple tabs as a list
-read_excel_allsheets <- function(filename, tibble = TRUE) {
+read_excel_all_sheets <- function(filename, tibble = TRUE) {
   tab_names <- excel_sheets(path = filename)
-  #Below is the slow line
-  filename <- map(tab_names, ~read_excel(path = filename, sheet = .x, col_types = "text"))
-  filename <- filename %>% set_names(tab_names) %>% bind_rows ()
+#Below is the slow line
+filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
+filename <- filename %>% set_names(tab_names)
 }
-#The function above will convert each file below into a list that is easy to work with
 filename <- thirteen
 thirteen <- read_excel_allsheets(filename)
-#Remove the 'Patients' part of the tibble by selecting the number of patients/rows
-#2789 patients in this group
-thirteen_patients <- thirteen[1:2789,1:8]
-#Remove these rows and columns from the og tibble
-thirteen <- thirteen[-c(1:2789),-c(2:9)]
-####pivot longer might be good here, but I would lose the associations between dates, quantities and units
-test <- thirteen %>% pivot_longer(cols = 2:27, names_to = TYPE, values_to = VALUE)
-
-##### alternative, try this because the above lines merge the file into one tibble, not a list
-test <- "H:/Health Control (Hip fx)/2013_acriscit.xlsx"
-#Label each list element with it's associated tab from the excel sheet
-tab_names <- excel_sheets(path = test)
-#############################################working in github
-#Subset the list elements to merge, try to make this into a loop eventually#In this loop, i would be tab names.
-tab_names <- tab_names %>% filter(grepl(Meds,***)
-#Below is the slow line
-test <- map(tab_names, ~read_excel(path = test, sheet = .x))
-test <- test %>% set_names(tab_names)
-
-###I want a want to create a list with an element for each data type
 
 col_names <- c(
   "ID", 
@@ -84,7 +69,6 @@ for (i in 1:length(test)){
 #BEWARE USING X AND Y OR SIMILARLY NON-DESCRIPT VARIABLES FOR OBJECTS YOU NEED TO USE OVER A LONG PERIOD. MORE DESCRIPTIVE NAMES HELP YOU REMEMBER WHAT YOU WERE DOING DOWN THE LINE
 x <- bind_rows(test)
 x$DATE <- mdy_hm(x$DATE, quiet = TRUE)
-
 ```
 In this chunk we are organizing data so that relevant information can be more easily collected
 - All the documents we imported above will be combined into one large tibble
