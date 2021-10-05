@@ -421,31 +421,6 @@ Desc_tibble <- Desc_tibble %>% add_row(
 ```
 Histogram
 ```{r histogram}
-#Create a new df that contains a column of Risk for patient with DM and a column for Risk without DM
-Fracture_Dates_fx <- Fracture_Dates_fx %>%
-  mutate(Risk_DM = ifelse(DM == "TRUE", Risk, NA))
-
-Fracture_Dates_fx <- Fracture_Dates_fx %>%
-  mutate(Risk_no_DM = ifelse(DM == "FALSE", Risk, NA))
-
-
-ggplot(data = Fracture_Dates_fx, aes(x=Risk, fill=DM)) + 
-  geom_histogram(data = subset(Fracture_Dates_fx), aes(x=Risk_DM),
-                 breaks=seq(0, 80, by=2), 
-                 col="red", 
-                 fill="red", 
-                 alpha = 1) +
-  geom_histogram(data = subset(Fracture_Dates_fx),aes(x=Risk_no_DM),
-                 breaks=seq(0, 80, by=2), 
-                 col="blue", 
-                 fill="blue", 
-                 alpha = .4) +
-  labs(title = "FRAX Risk Score", x="FRAX score", y="Count") +
-  stat_function(aes(color = "Normal"), fun = dnorm) +
-  scale_color_manual(title = "Legend", values=c("red", "blue"),labels=c("DM", "non-DM"))
-
-#This one has a legend
-
 ggplot(data = test, aes(x=Risk, fill=DM)) + 
   geom_histogram() +
   labs(title = "FRAX Risk Score", x="FRAX score", y="Count") 
@@ -462,6 +437,9 @@ shapiro.test(test$Risk)
 install.packages("tseries")
 library(tseries)
 jarque.bera.test(test$Risk)
+```
+Chronology
+```{r chron}
   
 rm(test)
 #Create a histogram that outlines the chonology of fractures
@@ -493,7 +471,7 @@ ggplot(data = test, aes(x=DATE)) +
 date_mean <- mean.POSIXct(Fracture_Dates_fx$DATE)
 
 ```
-Plotting FRAX score vs meds
+Box plots
 ```{r plot}
 #DM vs Frax score box plot (Chnage DM to fracture vs no fracture)
 ggplot(data = test, aes(DM, Risk)) +
@@ -524,13 +502,13 @@ test %>%
   roc(DM, Risk, levels=c("TRUE", "FALSE")) %>%
   ggroc()
 
-#FRAX change over time
+#ROC DM vs FRAX -5 years (substitute fracture for DM)
+#You can do this for each year leading up to fracture and determine the predictive value of FRAX for each year
 
 ```
 Linear regression
 ```{r regression}
 #Implement multiple regression
-#Regress FRAX vs time to fracture
 #Regress FRAX vs comorbidities
 
 #Age vs FRAX Risk score
@@ -544,6 +522,11 @@ ggplot(lm_FRAX_AGE, aes(x=AGE, y=Risk)) +
   ylab("FRAX score") +
   theme_bw() +
   ggtitle("Age vs FRAX score")
+
+
+#Finally, use your cohort of non-fractured diabetics to assess the predictive value of FRAX with
+  #1) A survival curve (where fracture is supplemented for survicval)
+  #2) Linear regression of FRAX score vs time to fracture from index date
 
 
 ############################
