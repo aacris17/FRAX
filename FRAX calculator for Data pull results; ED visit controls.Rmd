@@ -33,6 +33,7 @@ FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
 thirteen <- ("H:/Health Control (Hip fx)/2013_acriscit.xlsx")
+
 #Function to import excel data with multiple tabs as a list
 read_excel_allsheets <- function(filename, tibble = TRUE) {
   tab_names <- excel_sheets(path = filename)
@@ -40,14 +41,18 @@ read_excel_allsheets <- function(filename, tibble = TRUE) {
 filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
 filename <- filename %>% set_names(tab_names)
 #Next Remove patients and visits because they do not fit the common column naming convention below
-filename_patients <- filename$Patients
-filename_visits <- filename$Visits
-filename <- within(filename, rm(Patients, Visits))
+#filename_patients <- filename$Patients
+#filename_visits <- filename$Visits
+#filename <- within(filename, rm(Patients, Visits))
 }
 filename <- thirteen
 thirteen <- read_excel_allsheets(filename)
-thirteen_patients <- filename_patients
-thirteen_visits <- filename_visits
+#Patients <- filename_patients
+#thirteen_visits <- filename_visits
+
+Patients <- thirteen$Patients
+Visits <- thirteen$Visits
+thirteen <- within(thirteen, rm(Patients, Visits))
 
 #Break the tibble down into components rather than conglomerate into a large tibble. This will significantly speed up the filter function used to search for specific data elements later in this code
 #put this into the function above
@@ -69,7 +74,7 @@ for (i in 1:length(tibble_titles)) {
 names(test2) <- tibble_titles
 thirteen <- test2
 
-rm(filename, filename_patients, filename_visits, test2)
+rm(test2)
 
 #Rename all the columns in thirteen and change DATE to a date format
 col_names <- c(
@@ -99,14 +104,12 @@ col_names <- c(
   "RACE", 
   "MIXED RACE"
 )
-names(thirteen_patients) <- col_names[1:ncol(thirteen_patients)]
-  thirteen_patients <- thirteen_patients %>%
+names(Patients) <- col_names[1:ncol(Patients)]
+  Patients <- Patients %>%
     mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE) %>% as.Date()) %>%
     mutate(DEATH_DATE = mdy_hm(DEATH_DATE) %>% as.Date())
   
 tibble_names <- thirteen
-Patients <- thirteen_patients
-rm(thirteen, thirteen_patients)
 ```
 Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
