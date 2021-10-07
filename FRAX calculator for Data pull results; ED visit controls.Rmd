@@ -74,7 +74,7 @@ for (i in 1:length(tibble_titles)) {
 names(test2) <- tibble_titles
 thirteen <- test2
 
-rm(test2)
+rm(test2, x)
 
 #Rename all the columns in thirteen and change DATE to a date format
 col_names <- c(
@@ -326,11 +326,14 @@ EM_Dates <- EM_Dates %>% mutate(time_to_death = ageatdeath - ageatEM)
 EM_Dates <- EM_Dates %>% filter(ageatEM >= 50)
 ```
 Calculate FRAX score below
+How does this calculator work?
+We have all the components needed to calculate FRAX score for each patient at the time of the sentinel event collected in EM_Dates. We will now create a tibble 'px' from EM_Dates in which BMI and age will be rounded and Race will be modified to match the descriptions in our FRAX paper charts. FRAX paper charts uses age, race, sex, BMI and # of CRFs to estimate FRAX risk. We will use 'join' to match each patient to a risk in the FRAX paper charts.
 ```{r FRAX calculator}
 #add death date to EM_Dates and change the name of the tibble to 'px'
-px <- y %>%
-  select(ID, DEATH_DATE) %>%
-  right_join(EM_Dates, by = ID)
+px <- Patients %>%
+  select(ID, DEATH_DATE) 
+px$ID <- as.double(px$ID) 
+px <- px %>% right_join(EM_Dates, by = 'ID')
 #Round BMI down to the nearest 5
 floorfive <- function(x) {floor(x/5)*5}
 px <- px %>% mutate(
@@ -340,8 +343,8 @@ px <- px %>% mutate(
   )
 #Round age down to the nearest 5
 px <- px %>% mutate (
-  AGE = ifelse((AGE<90)&(AGE>50),floorfive(AGE), 
-               ifelse (AGE<50,50,90)
+  AGE = ifelse((ageatEM<90)&(ageatEM>50),floorfive(ageatEM), 
+               ifelse (ageatEM<50,50,90)
                )
   )
 #Change race to white if not white, black, hispanic or asian
@@ -353,37 +356,33 @@ px <- px %>% mutate(RACE = ifelse(
   )
 
 #Join FRAX and px to calculate 10 year risk of major osteoporotic fracture (do you mean major hip fracture?)
-ed <- px %>% 
-  left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE)%>%
+px <- px %>% 
+  left_join(FRAX, by= c("GENDER","RACE","AGE","CRF","BMI"), copy=FALSE, keep=FALSE) %>%
   select(ID, Risk, Range_upper, Range_lower) %>% 
   arrange(ID) %>%
   na.omit()
 
-EM_Dates_ed <- EM_Dates %>% left_join(ed, by = 'ID')
+EM_Dates_ed <- EM_Dates %>% left_join(px, by = 'ID')
 
 write.csv(EM_Dates_ed, "C:\\Users\\acriscit\\Documents\\EM_Dates_ed.csv")
+write.csv(CRF, "C:\\Users\\acriscit\\Documents\\CRF_EM_Dates_ed.csv")
 ```
 #Descriptors
 ```{r descriptors}
-percent_complete_cases <- (nrow(ed)/nrow(EM_Dates))*100
-percent_missing_FRAX <- (nrow(ed)/nrow(EM_Dates_ed))*100
-percent_missing_HT <- (nrow(is.na(EM_Dates_ed$HT.in))/nrow(EM_Dates_ed))*100
-percent_missing_WT <- (nrow(is.na(EM_Dates_ed$WT.in))/nrow(EM_Dates_ed))*100
+percent_complete_cases <- (nrow(px)/nrow(EM_Dates))*100
+percent_missing_FRAX <- (nrow(px)/nrow(EM_Dates_ed))*100
+percent_missing_HT <- (sum(is.na(EM_Dates_ed$HT.in))/nrow(EM_Dates_ed))*100
+percent_missing_WT <- (sum(is.na(EM_Dates_ed$WT.in))/nrow(EM_Dates_ed))*100
 
-Flow <- tibble()
-
-Flow <- Flow %>% add_row(
-  percent_complete_cases = as.double(percent_complete_cases),
-  number_excluded_frac = as.double(number_excluded_frac),
-  number_excluded_hip = as.double(number_excluded_hip),
+Flow <- tibble(percent_complete_cases = as.double(percent_complete_cases),
   percent_missing_FRAX = as.double(percent_missing_FRAX),
   percent_missing_WT = as.double(percent_missing_WT),
-  percent_missing_HT = as.double(percent_missing_HT)
-)
-write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
+  percent_missing_HT = as.double(percent_missing_HT))
+
+write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow_ED.csv")
 
 #Remove any tibbles you will not need
-rm(EM_Dates)
+rm(EM_Dates, px, Flow)
 #EM_Dates_ed contains all the info from the table
 #EM_Dates_Og contains the original, unaltered info from the FRAX loop
 ```
@@ -411,7 +410,7 @@ MOF <- tibble_names$Diagnoses %>%
   arrange(DATE, .by_group = TRUE) %>% 
   distinct(ID, .keep_all = TRUE) %>%
   select(ID, DATE, CODE, DESC)
-MOF <- rename(MOF, fx_DATE = DATE)
+MOF <- rename(MOF, fx_DATE = DATE, fx_CODE = CODE, fx_DESC = DESC)
 
 #Join the date of fracture (after EM visit) to EM_Dates_ed
 EM_Dates_ed$ID <- as.character(EM_Dates_ed$ID)
@@ -421,5 +420,289 @@ EM_Dates_ed <- EM_Dates_ed %>% mutate(fx_time = difftime(fx_DATE, DATE,
          units = c("days")))
 #Will be positive if after the ED visit
 #Note that there should not be any fractures prior to 5/31/2014, if there are, i2b2 let patients slip through the collection criteria
+num_pts_missed_i2b2 <- EM_Dates_ed %>% filter(fx_time < -1) %>% nrow()
+#Overwrite prior ED_Dates_ed
+write.csv(EM_Dates_ed, "C:\\Users\\acriscit\\Documents\\EM_Dates_ed.csv")
 ```
 #Must discern which patients have diabetes within this cohort, and when they were diagnosed
+```{r Diabetes calculator}
+#Select patients with type 2 DM using ICD-10/9 code 'E11' or '250'
+All_DM <- tibble_names$Diagnoses %>% 
+  filter((grepl('E11|250', CODE))) %>% 
+  #Select the ID and Date of first DM diagnosis in the record
+  select(ID, DATE) %>% group_by(ID) %>%
+  arrange(DATE, .by_group = TRUE) %>%
+  distinct(ID, .keep_all = TRUE)
+#Select patients with DM for whom we have a Frax score
+ed <- EM_Dates_ed %>% filter(!is.na(Risk))
+ID_DM <- inner_join(All_DM, ed, by = 'ID')
+rm(All_DM, ed)
+
+#calculate the time different between fracture and diagnosis of DM. A negative value indicates that the diagnosis was made after this visit
+ID_DM <- ID_DM %>% mutate(
+  days_before_ed = difftime(DATE.y, DATE.x, units = "days"))
+ID_DM <- ID_DM %>% mutate(
+  DM_Dx_postvisit = ifelse(days_before_ed < 0, "TRUE", "FALSE"))
+
+#Pre-loop
+Insulin <- tibble_names$Meds %>%
+  filter(grepl('[Ii]nsulin', DESC)) %>%
+  group_by(ID) %>%
+  arrange(desc(DATE), .group_by = TRUE)
+BG <- tibble_names$Labs %>%
+  filter(grepl('GLU', CODE)) %>%
+  filter(grepl('mg/dl|MG/DL', UNITS)) %>%
+  filter(NUMERIC_VALUE != 0 & !is.na(NUMERIC_VALUE)) %>%
+  arrange(desc(DATE))
+HBA1C <- tibble_names$Labs %>%
+  filter(grepl('HBA1C', CODE)) %>%
+  filter(UNITS == '%') %>%
+  arrange(desc(DATE))
+```
+Diabetes loop
+Note that all characteristics are characterized prior to ED date, because we did the same for fracture date. For example, avg_HBA1C is the mean HBA1c in the year leading up to the ED visit.
+```{r DM loop}
+#Tibble to be filled by loop
+DM_Dates_ed <- tibble (
+  ID = numeric(),
+  HBA1C_max = numeric(),
+  HBA1C_max_date = character(),
+  HBA1C_avg = numeric(),
+  Insulin_start = character(),
+  long_term_insulin = character(),
+  BG = numeric(),
+  BG_date = character(),
+  BG1yavg = numeric(),
+  BG1yr_num_values = numeric()
+)
+
+for(i in 1:nrow(ID_DM)) {
+  id <- as.double(ID_DM$ID[i])
+  
+  #Date of patients first fracture
+  ed_date <- ID_DM$DATE.y[i]
+
+  #date <- ID_DM$DATE.x[i]
+
+#HBA1C's prior to fracture and date of measurement
+HBA1C_loop <- HBA1C %>% 
+  filter(ID == id) %>%
+  filter(DATE <= ed_date)
+
+HBA1C_max <- as.double(max(HBA1C_loop$NUMERIC_VALUE))
+#HBA1C_max <- ifelse(is.na(HBA1C_max),0,HBA1C_max)
+
+HBA1C_max_date <- (HBA1C_loop %>%
+                     filter(NUMERIC_VALUE == HBA1C_max))$DATE[1]
+
+#Average HBA1C in the year before fracture
+HBA1C_avg <- HBA1C_loop$NUMERIC_VALUE %>% as.double() %>% mean()
+#HBA1C_avg <- ifelse(is.na(HBA1C_avg),0,HBA1C_avg)
+
+#Insulin and BG
+Insulin_dates <- Insulin %>%
+  filter(id == ID) %>%
+  filter(DATE < fracture_date)
+Insulin_start <- Insulin_dates$DATE[1]
+#Long term insulin use noted in problem list
+long_term_insulin <- (Insulin_dates %>%
+  filter(grepl('[Ll]ong term|[Ll]ong-term', DESC)))$DESC[1]
+  
+BGgen <- BG %>%
+  filter(ID == id) %>%
+  filter(DATE < fracture_date)
+BG_date <- BGgen$DATE[1]
+BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
+#BG averaged over 1 year prior to fracture if there are 2 or more values recorded
+BG1yr <- BGgen %>% filter(DATE >= fracture_date - years(1))
+BG1yr_num_values <- BG1yr %>% nrow()
+BG1yavg <- ifelse(BG1yr_num_values > 1, BG1yr$NUMERIC_VALUE %>% as.double() %>% mean(), NA)
+
+rm(BG1yr)
+
+  DM_Dates_ed <- DM_Dates_ed %>% add_row(
+   ID = id,
+   HBA1C_max = as.double(HBA1C_max),
+   HBA1C_max_date = as.character(HBA1C_max_date),
+   HBA1C_avg = as.double(HBA1C_avg),
+   Insulin_start = as.character(Insulin_start),
+   long_term_insulin = long_term_insulin,
+   BG = BGnow,
+   BG_date = as.character(BG_date),
+   BG1yavg = BG1yavg,
+   BG1yr_num_values = BG1yr_num_values
+)
+  rm(HBA1C_loop)
+  rm(Insulin_dates)
+  rm(BGgen)
+  rm(BG1yr)
+}
+
+#replace 'NaN' with NA
+DM_Dates_ed$HBA1C_avg[DM_Dates_ed$HBA1C_avg == "NaN"] <- NA
+#Make long term insulin true or false
+DM_Dates_ed$long_term_insulin <- ifelse(!is.na(DM_Dates_ed$long_term_insulin), "TRUE", "FALSE")
+#Join the info pulled into 'ID_DM' form FRAX loop
+ID_DM$ID <- as.double(ID_DM$ID)
+DM_Dates_ed <- DM_Dates_ed %>%
+  left_join(ID_DM, by='ID')
+#Rename the date columns
+DM_Dates_ed <- DM_Dates_ed %>% rename(ED_DATE = DATE.y, DM_DATE = DATE.x)
+
+write.csv(DM_Dates_ed, "C:\\Users\\acriscit\\Documents\\DM_Dates_ed.csv")
+
+rm(ID_DM)
+rm(BG)
+rm(Insulin)
+rm(HBA1C)
+```
+Visits
+```{r Visits}
+#Ensure that the column names listed below match the column names in your actual data (ie the tibble 'Visits')
+col_names <- c(
+  "ID", 
+  "VISIT", 
+  "START_DATE",
+  "END_DATE",
+  "AGE_AT_VISIT",
+  "LOS",
+  "ENCOUTER_TYPE",
+  "CCI"
+)
+#Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
+  names(Visits) <- col_names[1:ncol(Visits)]
+  
+  #Convert visits dates to dates and use as.Date to remove the time element
+  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
+  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
+
+  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
+  Visits <- Visits %>%
+    distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
+  
+```
+run the loop below
+```{r visit_loop}
+
+#Information about number of visits and date of visits relative to fracture date
+Visit_Dates <-  tibble(
+  ID = numeric(),
+  first_visit_date = mdy(),
+  last_visit_date = mdy(),
+  num_visits_before_ed = numeric(),
+  num_visits_after_ed = numeric(),
+  CCI = numeric ()
+)
+
+for (i in 1:nrow(EM_Dates_ed)){
+  id <- as.double(EM_Dates_ed$ID[i])
+
+date <- (EM_Dates_ed %>% 
+    filter(ID == id) %>%
+    select(ID, DATE))[[1,2]]
+
+#Create a tibble with one patients into
+visit <- Visits %>% 
+    filter(ID == id)
+
+first_visit_date <- visit$START_DATE[1]
+last_visit_date <- (
+  visit %>% 
+    arrange(desc(START_DATE))
+  )$START_DATE[1]
+
+num_visits_before_ed <- visit %>% 
+  filter(START_DATE < date) %>%
+  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  #group_by(START_DATE) %>% 
+  #distinct(START_DATE, .keep_all = TRUE) %>%
+  nrow()
+num_visits_after_ed <- visit %>% 
+  filter(START_DATE > date) %>% 
+  #mutate(START_DATE = floor_date(START_DATE, "day")) %>%
+  #group_by(START_DATE) %>% 
+  #distinct(START_DATE, .keep_all = TRUE) %>%
+  nrow()
+#LOS_fx <- visit %>% 
+  #filter(TYPE == 'I|S') %>% 
+ # filter(START_DATE <= date & END_DATE >= date) %>%
+ # select(LOS) %>% as.double()[[1]]
+
+#Finds the most recent CCI prior to the fracture date
+CCI <- visit %>%
+  filter(!is.na(CCI) & START_DATE < date) %>%
+ # filter(START_DATE <= date) %>%
+  arrange(desc(START_DATE)) %>%
+  distinct(ID, .keep_all = TRUE) %>%
+  select(CCI)
+CCI <- as.double(CCI[1,2])
+
+Visit_Dates <- Visit_Dates %>% add_row(
+  ID = id,
+  first_visit_date = first_visit_date,
+  last_visit_date = last_visit_date,
+  num_visits_before_ed = num_visits_before_ed,
+  num_visits_after_ed = num_visits_after_ed,
+  CCI = as.double(CCI)
+)
+rm(visit)
+}
+
+write.csv(Visit_Dates, "C:\\Users\\acriscit\\Documents\\Visit_Dates_ed.csv")
+rm(Visit_Dates)
+#Join Visits to tibble_names and save tibble_names as a patient database for future use
+#remove 'test' once you've tested this
+test <- append(tibble_names, list(Visits))
+rm(Visits)
+
+```
+Osteo meds
+```{r osteo meds}
+#FDA approved osteoporosis medication usage
+osteo_med_all <- tibble_names$Meds %>% 
+  filter(
+    grepl('[Ee]tidronate|[Aa]lendronate|[Ii]bandronate|[Zz]oledronic|[Rr]isedronate|[Cc]alcitonin|[Dd]enosumab|[Ee]strogen|[Rr]aloxifene|[Bb]azodoxifene|[Rr]omosozumab|[Tt]eriparatide|[Aa]baloparatide', DESC) &
+    !grepl('[Rr]eceptor', DESC)
+         ) %>%
+  filter(MODIFIER == "mg") %>%
+  group_by(ID) %>% 
+  arrange(DATE, .by_group = TRUE)
+```
+Osteo loop
+```{r osteo_loop}
+Osteo_Meds <- tibble(
+  ID = numeric(),
+  osteo_med_start_date = character(),
+  osteo_med_start_dose_mg = numeric(),
+  osteo_med_last_date = character(),
+  osteo_med_name = character()
+)
+
+for (i in 1:nrow(Fracture_Dates_fx)){
+  id <- as.double(Fracture_Dates_fx$ID[i])
+
+date <- (Fracture_Dates_fx %>% 
+    filter(ID == id) %>%
+    select(ID, DATE))[[1,2]]
+  
+  #FDA approved osteoporosis medication usage
+osteo_med <- (filter(osteo_med_all, id == ID))
+osteo_med_name <- as.character(osteo_med$DESC[1])
+osteo_med_start_date <- osteo_med$DATE[1]
+osteo_med_start_dose <- osteo_med$UNITS[1]
+osteo_med_last_date <- (osteo_med %>%
+  arrange(desc(DATE)))$DATE[1]
+
+Osteo_Meds <- Osteo_Meds %>% add_row(
+  ID = id,
+  osteo_med_start_date = as.character(osteo_med_start_date),
+  osteo_med_start_dose_mg = as.double(osteo_med_start_dose),
+  osteo_med_last_date = as.character(osteo_med_last_date),
+  osteo_med_name = as.character(osteo_med_name)
+)
+rm(osteo_med)
+}
+
+Osteo_Meds <- na.omit(Osteo_Meds)
+write.csv(Osteo_Meds, "C:\\Users\\acriscit\\Documents\\Osteo_Meds.csv")
+rm(Osteo_Meds)
