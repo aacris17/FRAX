@@ -1,0 +1,2535 @@
+"","ID","Fracture","Smoker","EToH","RA","Osteoporosis","Parent_Osteoporosis","Glucocorticoid_rf"
+"1",85156,NA,NA,NA,NA,NA,NA,NA
+"2",177735,NA,NA,NA,NA,NA,NA,NA
+"3",187793,NA,NA,NA,NA,"250.00",NA,NA
+"4",216520,"Closed fracture of upper end of tibia alone","Current Every Day Smoker",NA,NA,NA,NA,"216520"
+"5",267437,NA,NA,NA,NA,"250.00",NA,NA
+"6",381597,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"7",422973,NA,NA,NA,NA,NA,NA,NA
+"8",523133,NA,NA,NA,NA,NA,NA,NA
+"9",625564,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"10",648776,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"11",699983,NA,"Current Some Day Smoker",NA,NA,"263.9",NA,NA
+"12",709160,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"13",793887,NA,NA,NA,NA,NA,NA,"793887"
+"14",861298,"Unspecified fracture of unspecified thoracic vertebra, initial encounter for closed fracture","Current Every Day Smoker",NA,NA,NA,NA,"861298"
+"15",878701,NA,NA,NA,NA,"250.00",NA,NA
+"16",883309,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"17",935545,NA,NA,NA,"714.0","M25.571",NA,"935545"
+"18",936071,"Unspecified displaced fracture of second cervical vertebra, initial encounter for closed fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"19",937980,NA,NA,NA,NA,"250.00",NA,NA
+"20",1006577,NA,"Current Every Day Smoker",NA,NA,"250.01",NA,NA
+"21",1054524,NA,NA,NA,NA,NA,NA,"1054524"
+"22",1061750,NA,NA,NA,NA,NA,NA,NA
+"23",1067419,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"24",1110397,"Fracture of nasal bones, initial encounter for closed fracture",NA,NA,NA,"263.9",NA,"1110397"
+"25",1117729,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"26",1127458,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"27",1127970,NA,NA,NA,NA,"250.00",NA,NA
+"28",1142130,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"29",1187169,NA,NA,NA,NA,"573.3",NA,NA
+"30",1206895,NA,NA,NA,NA,NA,NA,"1206895"
+"31",1209630,NA,NA,NA,NA,"250.00",NA,NA
+"32",1222834,"Closed fracture of patella",NA,NA,NA,"250.50",NA,NA
+"33",1237548,NA,"Current Some Day Smoker",NA,NA,"250.50",NA,NA
+"34",1238128,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"35",1242378,NA,NA,NA,NA,"250.00",NA,"1242378"
+"36",1251428,NA,NA,NA,NA,"250.40",NA,NA
+"37",1253206,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"262",NA,NA
+"38",1254154,NA,NA,NA,NA,"E29.1",NA,NA
+"39",1255733,NA,NA,NA,NA,"250.00",NA,NA
+"40",1274385,"Closed fracture of second cervical vertebra",NA,NA,NA,"250.00",NA,"1274385"
+"41",1275272,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1275272"
+"42",1293626,NA,NA,NA,NA,"250.00",NA,NA
+"43",1298645,"Closed fracture of middle or proximal phalanx or phalanges of hand",NA,NA,NA,NA,NA,NA
+"44",1308380,NA,NA,NA,"714.0","262",NA,NA
+"45",1309194,NA,NA,NA,NA,NA,NA,NA
+"46",1316459,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"47",1318998,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,"1318998"
+"48",1329468,NA,NA,NA,NA,NA,NA,NA
+"49",1330002,NA,NA,NA,NA,"M25.571",NA,NA
+"50",1331508,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"51",1335824,NA,NA,NA,NA,"250.00",NA,"1335824"
+"52",1342857,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,"250.00",NA,NA
+"53",1343550,"Fracture, cause unspecified",NA,NA,NA,"250.02",NA,NA
+"54",1361101,NA,NA,NA,NA,NA,NA,NA
+"55",1369922,NA,NA,NA,NA,NA,NA,NA
+"56",1379116,NA,NA,NA,NA,NA,NA,NA
+"57",1382624,"Aftercare for healing traumatic fracture of other bone",NA,NA,NA,NA,NA,"1382624"
+"58",1382664,NA,NA,NA,NA,"250.51",NA,"1382664"
+"59",1384237,NA,NA,NA,NA,NA,"V17.81",NA
+"60",1387803,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"61",1389407,NA,NA,NA,NA,"571.8",NA,"1389407"
+"62",1395783,NA,NA,NA,NA,NA,NA,NA
+"63",1396828,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,"714.2","250.00",NA,"1396828"
+"64",1403566,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1403566"
+"65",1405709,NA,NA,NA,NA,"571.8",NA,"1405709"
+"66",1419607,NA,NA,NA,NA,"250.00",NA,NA
+"67",1420118,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"242.90",NA,"1420118"
+"68",1423986,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,"250.00",NA,"1423986"
+"69",1429205,NA,NA,NA,NA,NA,NA,NA
+"70",1436083,"Nonunion of fracture",NA,NA,NA,"579.3",NA,NA
+"71",1438856,NA,NA,NA,NA,NA,NA,"1438856"
+"72",1441998,NA,NA,NA,NA,"263.9",NA,NA
+"73",1443885,NA,NA,NA,NA,NA,NA,NA
+"74",1445315,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"75",1450154,NA,NA,NA,NA,"263.9",NA,NA
+"76",1450817,NA,NA,NA,NA,"250.00",NA,NA
+"77",1458679,"Closed fracture of navicular [scaphoid], foot",NA,NA,NA,"250.00",NA,"1458679"
+"78",1458967,"Closed fracture of astragalus",NA,NA,NA,"242.00",NA,NA
+"79",1459156,NA,NA,NA,NA,"250.00",NA,"1459156"
+"80",1463710,"Closed fracture of mandible, multiple sites","Current Every Day Smoker",NA,NA,"250.00",NA,"1463710"
+"81",1470391,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"82",1470545,NA,NA,NA,NA,NA,NA,"1470545"
+"83",1475375,NA,NA,NA,NA,"250.90",NA,"1475375"
+"84",1475697,NA,NA,NA,NA,"571.5",NA,NA
+"85",1475729,"Closed fracture of greater tuberosity of humerus",NA,NA,NA,"250.00",NA,NA
+"86",1484956,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"87",1486044,NA,NA,NA,NA,NA,NA,NA
+"88",1488086,"Age-related osteoporosis without current pathological fracture",NA,NA,"714.0","M81.0",NA,NA
+"89",1490160,"Nonunion of fracture",NA,NA,NA,"250.00",NA,NA
+"90",1495593,NA,NA,NA,NA,NA,NA,NA
+"91",1506358,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"92",1506381,NA,NA,NA,NA,"250.00",NA,NA
+"93",1514657,NA,NA,NA,NA,"250.00",NA,NA
+"94",1516924,"Open fracture of metacarpal bone(s), site unspecified",NA,NA,NA,"250.00",NA,NA
+"95",1525436,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"96",1531012,NA,NA,NA,NA,NA,NA,NA
+"97",1532722,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"98",1537663,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker","V11.3",NA,"250.00",NA,"1537663"
+"99",1539685,"Closed fracture of carpal bone, unspecified",NA,NA,NA,"250.02",NA,NA
+"100",1543259,NA,"Current Some Day Smoker",NA,NA,"573.8",NA,NA
+"101",1544274,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"102",1546301,NA,NA,NA,NA,"250.00",NA,"1546301"
+"103",1546811,NA,"Current Every Day Smoker",NA,NA,"250.40",NA,"1546811"
+"104",1551677,NA,NA,NA,NA,"263.9",NA,"1551677"
+"105",1552392,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"106",1555481,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1555481"
+"107",1555589,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"108",1555938,"Closed fracture of intertrochanteric section of neck of femur","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"109",1556668,NA,NA,NA,NA,"M25.572",NA,NA
+"110",1558565,NA,NA,NA,NA,"250.00",NA,NA
+"111",1559891,"Stress fracture of other bone","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"112",1560110,NA,NA,NA,NA,NA,NA,NA
+"113",1560577,NA,NA,NA,NA,"250.00",NA,"1560577"
+"114",1561555,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,"1561555"
+"115",1563977,"Nonunion of fracture",NA,NA,NA,"250.00",NA,NA
+"116",1568080,"Fracture of calcaneus, closed",NA,NA,NA,"571.8",NA,NA
+"117",1570707,NA,NA,NA,NA,"250.00",NA,NA
+"118",1570862,NA,NA,NA,NA,"250.00",NA,NA
+"119",1571656,"Closed fracture of one or more phalanges of foot",NA,NA,"714.0","250.00",NA,NA
+"120",1575852,"Closed fracture of one or more phalanges of foot",NA,NA,"714.0","571.9",NA,"1575852"
+"121",1578695,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"122",1579529,NA,NA,NA,NA,"250.50",NA,"1579529"
+"123",1583691,"Late effect of intracranial injury without mention of skull fracture","Current Every Day Smoker",NA,NA,"573.8",NA,"1583691"
+"124",1585505,"Closed fracture of head of radius",NA,NA,NA,"250.02",NA,NA
+"125",1585567,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1585567"
+"126",1587939,"Closed fracture of scapula, unspecified part","Current Every Day Smoker",NA,NA,"263.1",NA,"1587939"
+"127",1587943,NA,NA,NA,NA,"242.90",NA,NA
+"128",1589445,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"129",1591084,NA,NA,NA,NA,"571.8",NA,NA
+"130",1593130,NA,NA,NA,NA,"250.00",NA,NA
+"131",1595765,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"132",1595822,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Some Day Smoker",NA,NA,NA,NA,NA
+"133",1598705,NA,NA,NA,NA,"250.00",NA,NA
+"134",1604347,"Personal history of traumatic fracture",NA,NA,NA,"250.00",NA,NA
+"135",1605101,NA,NA,NA,NA,"250.00",NA,"1605101"
+"136",1605775,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,"1605775"
+"137",1605785,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"138",1605887,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,"1605887"
+"139",1607043,NA,NA,NA,"714.4","250.00",NA,"1607043"
+"140",1607208,NA,NA,NA,NA,"250.00",NA,"1607208"
+"141",1607823,"Closed fracture of metatarsal bone(s)","Current Some Day Smoker","V11.3",NA,"571.2",NA,NA
+"142",1607882,NA,NA,NA,NA,"250.00",NA,NA
+"143",1609089,"Closed fracture of carpal bone, unspecified",NA,NA,"714.1",NA,NA,NA
+"144",1610404,"Bimalleolar fracture, closed",NA,NA,"714.0","571.5",NA,NA
+"145",1611277,NA,NA,NA,NA,NA,NA,NA
+"146",1616398,"Closed fracture of one rib",NA,"K70.30",NA,"571.5",NA,NA
+"147",1616438,NA,"Current Every Day Smoker",NA,"714.0","573.9",NA,"1616438"
+"148",1627714,NA,NA,NA,NA,"250.00",NA,NA
+"149",1631750,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"150",1702832,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1702832"
+"151",1715844,NA,NA,NA,NA,"250.00",NA,"1715844"
+"152",1733470,NA,NA,NA,NA,"250.00",NA,NA
+"153",1762906,NA,NA,NA,NA,NA,NA,NA
+"154",1773874,NA,NA,NA,NA,"250.00",NA,NA
+"155",1775836,NA,NA,NA,NA,NA,NA,NA
+"156",1781087,NA,NA,NA,NA,NA,NA,NA
+"157",1801533,NA,NA,NA,NA,NA,NA,NA
+"158",1808497,"Closed fracture of seven ribs",NA,NA,NA,NA,NA,NA
+"159",1809742,NA,NA,NA,NA,NA,NA,NA
+"160",1821820,NA,NA,NA,NA,NA,NA,"1821820"
+"161",1823278,NA,NA,NA,NA,NA,NA,NA
+"162",1824329,NA,NA,NA,NA,"250.00",NA,NA
+"163",1876464,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"164",1876665,NA,NA,NA,NA,NA,NA,"1876665"
+"165",1879284,NA,NA,NA,NA,"250.00",NA,"1879284"
+"166",1927381,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1927381"
+"167",1934867,NA,NA,NA,NA,"250.00",NA,"1934867"
+"168",1935263,NA,NA,NA,NA,NA,NA,"1935263"
+"169",1938881,NA,NA,NA,NA,"250.00",NA,"1938881"
+"170",1947693,NA,NA,NA,NA,NA,NA,NA
+"171",2052267,NA,NA,NA,NA,"250.00",NA,"2052267"
+"172",2055819,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"173",2055864,NA,NA,NA,NA,NA,NA,NA
+"174",2058117,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"175",2058125,"Open fracture of phalanx or phalanges of hand, unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"176",2058174,NA,NA,NA,NA,NA,NA,NA
+"177",2058283,NA,NA,NA,NA,NA,NA,NA
+"178",2077303,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"179",177359,NA,NA,NA,NA,NA,NA,NA
+"180",258710,NA,NA,NA,NA,NA,NA,NA
+"181",313482,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"182",492207,"Personal history of traumatic fracture",NA,NA,NA,"250.02",NA,NA
+"183",517687,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,NA,"M81.0",NA,"517687"
+"184",519153,NA,NA,NA,NA,NA,NA,NA
+"185",538570,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,"538570"
+"186",545002,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"187",575725,NA,NA,NA,NA,NA,NA,NA
+"188",654370,NA,NA,NA,NA,"250.80",NA,NA
+"189",695236,NA,NA,NA,NA,"573.9",NA,"695236"
+"190",810418,NA,NA,NA,NA,NA,NA,NA
+"191",908295,NA,NA,NA,NA,NA,NA,NA
+"192",916695,"Closed fracture of head of radius","Current Every Day Smoker",NA,NA,"250.00",NA,"916695"
+"193",934629,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"194",970504,NA,NA,NA,NA,NA,NA,NA
+"195",976900,NA,"Current Every Day Smoker",NA,NA,"250.80",NA,"976900"
+"196",987368,NA,NA,NA,NA,"250.00",NA,NA
+"197",1013915,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,"1013915"
+"198",1025680,NA,NA,NA,NA,"250.00",NA,NA
+"199",1037998,NA,NA,NA,"714.0","250.00",NA,"1037998"
+"200",1040380,NA,NA,NA,NA,NA,NA,NA
+"201",1068866,NA,NA,NA,NA,NA,NA,NA
+"202",1098716,"Closed fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"250.00",NA,"1098716"
+"203",1115162,"Closed fracture of unspecified part of upper end of humerus","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"204",1122768,NA,NA,NA,NA,NA,NA,NA
+"205",1127506,NA,NA,NA,NA,"573.8",NA,NA
+"206",1128882,"Pathologic fracture of vertebrae","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"207",1132307,NA,NA,NA,NA,"250.00",NA,"1132307"
+"208",1170337,NA,NA,NA,NA,"250.00",NA,NA
+"209",1173313,NA,NA,NA,NA,"571.49",NA,NA
+"210",1183449,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"211",1223408,"Other closed skull fracture without mention of intracranial injury, unspecified state of consciousness",NA,NA,NA,NA,NA,NA
+"212",1227191,NA,NA,NA,"714.0",NA,NA,NA
+"213",1234195,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"214",1237423,NA,NA,NA,NA,NA,"Z82.62",NA
+"215",1248881,NA,NA,NA,NA,NA,NA,NA
+"216",1252887,NA,NA,NA,NA,NA,NA,NA
+"217",1254293,"Follow-up examination, following treatment of healed fracture",NA,NA,NA,"242.20",NA,NA
+"218",1263099,NA,NA,NA,NA,NA,NA,NA
+"219",1264657,NA,NA,NA,NA,"250.00",NA,"1264657"
+"220",1275172,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,"571.6",NA,NA
+"221",1277908,"Stress fracture of the metatarsals",NA,NA,NA,"250.01",NA,NA
+"222",1286476,NA,"Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"223",1290069,NA,NA,NA,NA,"250.00",NA,NA
+"224",1293287,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"225",1300834,"Closed fracture of unspecified part of radius (alone)",NA,NA,NA,"250.00",NA,NA
+"226",1303220,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,"1303220"
+"227",1335459,NA,NA,NA,NA,NA,NA,NA
+"228",1345300,"Closed fracture of three ribs",NA,NA,NA,"250.00",NA,"1345300"
+"229",1352482,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,"1352482"
+"230",1363653,NA,NA,NA,NA,"250.02",NA,"1363653"
+"231",1374824,NA,NA,NA,NA,NA,NA,NA
+"232",1378599,NA,NA,NA,NA,"250.00",NA,NA
+"233",1397922,"Aftercare for healing traumatic fracture of other bone",NA,NA,NA,"250.00",NA,NA
+"234",1400159,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"235",1404780,NA,NA,NA,NA,NA,"V17.81",NA
+"236",1419545,NA,NA,NA,NA,NA,NA,NA
+"237",1426176,"Late effect of fracture of lower extremities",NA,NA,NA,"242.90",NA,NA
+"238",1437755,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"239",1440672,NA,NA,NA,NA,"250.00",NA,NA
+"240",1441028,"Closed fracture of navicular [scaphoid] bone of wrist",NA,NA,NA,"250.00",NA,"1441028"
+"241",1442168,"Closed fracture of unspecified part of humerus",NA,NA,NA,"250.00",NA,NA
+"242",1455758,"Other open fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"243",1460902,"Aftercare for healing traumatic fracture of lower leg",NA,NA,NA,"250.00",NA,"1460902"
+"244",1461139,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,"1461139"
+"245",1461298,"Closed fracture of one rib",NA,NA,"714.0",NA,NA,"1461298"
+"246",1469536,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"242.00",NA,"1469536"
+"247",1469839,"Closed fracture of phalanx or phalanges of hand, unspecified","Current Every Day Smoker",NA,NA,"250.00",NA,"1469839"
+"248",1470388,NA,NA,NA,NA,"250.00",NA,"1470388"
+"249",1476140,"Closed fracture of multiple ribs, unspecified",NA,NA,"714.9","250.00",NA,NA
+"250",1480554,"Closed fracture of one rib",NA,"K70.10",NA,"250.51",NA,NA
+"251",1490623,NA,NA,NA,NA,"250.00",NA,NA
+"252",1491359,NA,"Current Every Day Smoker",NA,NA,"M25.579",NA,"1491359"
+"253",1494848,"Closed fracture of shaft of fibula with tibia",NA,NA,NA,"E29.1",NA,NA
+"254",1498188,"Closed supracondylar fracture of humerus",NA,NA,NA,"250.00",NA,"1498188"
+"255",1499586,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,"1499586"
+"256",1509747,NA,NA,NA,NA,NA,NA,NA
+"257",1509818,"Fracture of lateral malleolus, closed",NA,NA,NA,"250.01",NA,NA
+"258",1517992,NA,NA,NA,NA,"250.01",NA,NA
+"259",1520470,NA,NA,NA,NA,"571.8",NA,NA
+"260",1522426,NA,NA,NA,NA,"250.00",NA,"1522426"
+"261",1525533,NA,NA,NA,NA,NA,NA,NA
+"262",1527576,NA,NA,NA,NA,NA,NA,"1527576"
+"263",1527688,"Fracture of medial malleolus, closed",NA,NA,NA,"250.00",NA,"1527688"
+"264",1533287,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"265",1533932,NA,NA,NA,NA,"250.00",NA,"1533932"
+"266",1537638,NA,NA,NA,NA,"250.00",NA,NA
+"267",1538776,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,"1538776"
+"268",1541300,"Open fracture of unspecified part of radius (alone)","Current Every Day Smoker",NA,NA,"263.1",NA,NA
+"269",1542049,NA,"Current Some Day Smoker",NA,NA,"571.8",NA,NA
+"270",1542767,NA,NA,NA,NA,"250.02",NA,NA
+"271",1545524,NA,NA,NA,NA,"250.00",NA,"1545524"
+"272",1550978,NA,NA,NA,"714.0","250.01",NA,NA
+"273",1551454,NA,NA,NA,NA,"250.02",NA,NA
+"274",1558369,"Closed fracture of eight or more ribs",NA,NA,NA,"263.0",NA,NA
+"275",1562252,NA,NA,NA,NA,"250.00",NA,NA
+"276",1564874,"Closed fracture of multiple cervical vertebrae",NA,NA,NA,"571.8",NA,"1564874"
+"277",1566193,"Closed fracture of rib(s), unspecified",NA,NA,"714.0",NA,NA,"1566193"
+"278",1569134,"Closed fracture of sacrum and coccyx without mention of spinal cord injury","Smoker, Current Status Unknown",NA,NA,"250.00",NA,NA
+"279",1570741,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,"1570741"
+"280",1571492,NA,"Current Every Day Smoker",NA,"714.0",NA,NA,"1571492"
+"281",1573851,"Closed fracture of nasal bones","Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"282",1588867,NA,NA,NA,NA,NA,NA,NA
+"283",1588889,NA,NA,NA,NA,"250.00",NA,"1588889"
+"284",1589391,NA,NA,NA,NA,NA,NA,NA
+"285",1591536,NA,NA,NA,NA,"250.00",NA,NA
+"286",1592123,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"250.00",NA,NA
+"287",1597542,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"288",1598984,"Closed fracture of one rib",NA,NA,NA,"263.9",NA,"1598984"
+"289",1599897,"Nonunion of fracture","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"290",1600617,NA,NA,NA,NA,"250.00",NA,NA
+"291",1602666,"Closed fracture of unspecified part of lower end of humerus","Current Every Day Smoker",NA,NA,"242.00",NA,"1602666"
+"292",1607688,"Trimalleolar fracture, closed","Current Every Day Smoker",NA,NA,"571.8",NA,"1607688"
+"293",1607691,NA,NA,NA,"714.0","250.00",NA,"1607691"
+"294",1607905,"Closed fracture of unspecified part of fibula with tibia",NA,NA,NA,"250.03",NA,NA
+"295",1609640,"Unspecified fracture of ankle, closed",NA,NA,NA,"250.00",NA,NA
+"296",1609741,"Closed fracture of shaft of femur","Current Every Day Smoker",NA,NA,"250.00",NA,"1609741"
+"297",1611297,NA,NA,NA,NA,"250.00",NA,NA
+"298",1613761,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.60",NA,"1613761"
+"299",1614466,"Closed fracture of navicular [scaphoid] bone of wrist","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"300",1623095,NA,NA,NA,NA,NA,NA,NA
+"301",1714680,"Closed fractures involving skull or face with other bones, with other and unspecified intracranial hemorrhage, with loss of consciousness of unspecified duration",NA,NA,NA,NA,NA,NA
+"302",1738481,NA,NA,NA,NA,"250.00",NA,"1738481"
+"303",1772451,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"304",1786838,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"305",1789273,NA,NA,NA,NA,NA,NA,NA
+"306",1800258,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"307",1812376,NA,NA,NA,NA,NA,NA,NA
+"308",1838626,"Closed fracture of cuboid",NA,NA,NA,"250.01",NA,"1838626"
+"309",1875971,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1875971"
+"310",1877994,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1877994"
+"311",1917185,"Closed fracture of unspecified part of neck of femur","Current Every Day Smoker",NA,NA,NA,NA,NA
+"312",1918056,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"313",1920880,NA,NA,NA,NA,"250.00",NA,NA
+"314",1927809,NA,NA,NA,NA,NA,NA,NA
+"315",1929503,NA,"Current Every Day Smoker","T65.291A",NA,NA,NA,NA
+"316",1932495,NA,NA,NA,NA,NA,NA,"1932495"
+"317",1933176,NA,NA,NA,NA,"571.5",NA,"1933176"
+"318",1940988,NA,NA,NA,NA,NA,NA,NA
+"319",1943080,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"250.00",NA,"1943080"
+"320",1951511,NA,NA,NA,NA,NA,NA,NA
+"321",1951604,NA,NA,NA,NA,NA,NA,"1951604"
+"322",1959542,NA,NA,NA,NA,NA,NA,NA
+"323",1993605,NA,NA,NA,NA,NA,NA,NA
+"324",2037169,NA,NA,NA,NA,NA,NA,"2037169"
+"325",2058387,NA,NA,NA,NA,NA,NA,NA
+"326",2058401,NA,"Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"327",2058416,"Fracture of one rib, right side, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"328",2058448,NA,NA,NA,NA,NA,NA,NA
+"329",2058456,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"330",2058489,"Closed fracture of sternum",NA,NA,NA,"250.00",NA,NA
+"331",204028,"Closed fracture of orbital floor (blow-out)","Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"332",303397,NA,NA,NA,NA,"250.40",NA,NA
+"333",518500,"Open fracture of distal phalanx or phalanges of hand",NA,NA,NA,NA,NA,NA
+"334",665059,NA,NA,NA,NA,NA,NA,NA
+"335",784998,"Closed fracture of one rib",NA,NA,NA,NA,NA,NA
+"336",881491,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"337",906190,NA,NA,NA,NA,NA,NA,NA
+"338",959639,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"339",1076684,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,"1076684"
+"340",1135571,NA,"Current Every Day Smoker",NA,"714.0",NA,NA,NA
+"341",1143305,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,"250.40",NA,NA
+"342",1275452,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1275452"
+"343",1295728,NA,NA,NA,NA,NA,NA,NA
+"344",1371116,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"345",1374991,"Closed fracture of neck of metacarpal bone(s)","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"346",1381377,NA,NA,NA,NA,NA,NA,"1381377"
+"347",1381490,NA,NA,NA,NA,"250.00",NA,NA
+"348",1385397,"Closed fracture of vault of skull with subarachnoid, subdural, and extradural hemorrhage, unspecified state of consciousness",NA,NA,NA,NA,NA,NA
+"349",1391848,NA,"Current Every Day Smoker",NA,"714.0",NA,NA,NA
+"350",1392954,"Aftercare for healing traumatic fracture of vertebrae",NA,NA,NA,"242.00",NA,"1392954"
+"351",1397165,NA,NA,NA,NA,"250.00",NA,NA
+"352",1402703,NA,NA,NA,NA,"250.70",NA,"1402703"
+"353",1414524,NA,NA,NA,NA,"242.90",NA,NA
+"354",1452474,NA,NA,NA,NA,"263.9",NA,"1452474"
+"355",1486488,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"356",1503520,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Some Day Smoker",NA,NA,NA,NA,"1503520"
+"357",1505520,"Closed fracture of distal phalanx or phalanges of hand",NA,NA,NA,NA,NA,"1505520"
+"358",1557237,"Closed fracture of trochanteric section of neck of femur",NA,NA,"714.0","263.1",NA,NA
+"359",1565702,"Closed fracture of nasal bones",NA,NA,"714.0",NA,NA,"1565702"
+"360",1569067,NA,NA,NA,NA,NA,NA,NA
+"361",1571146,NA,NA,NA,NA,"573.8",NA,"1571146"
+"362",1590445,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"363",1591684,"Other closed transcervical fracture of neck of femur",NA,NA,NA,NA,NA,NA
+"364",1596766,"Closed fracture of capitate bone [os magnum] of wrist",NA,NA,NA,"250.00",NA,NA
+"365",1599432,"Unspecified fracture of ankle, closed",NA,NA,NA,"250.00",NA,"1599432"
+"366",1612854,NA,NA,NA,NA,NA,NA,NA
+"367",1615493,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"368",1711721,NA,NA,NA,NA,"250.00",NA,NA
+"369",1744694,NA,NA,NA,NA,NA,NA,NA
+"370",1763957,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,NA,NA,NA
+"371",1950880,NA,NA,NA,NA,"263.9",NA,NA
+"372",2058599,NA,NA,NA,NA,NA,NA,NA
+"373",2058619,NA,NA,NA,NA,"250.00",NA,NA
+"374",2058620,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"375",2058621,NA,NA,NA,NA,NA,NA,NA
+"376",2058626,NA,NA,NA,NA,NA,NA,NA
+"377",2077316,NA,NA,NA,NA,NA,NA,NA
+"378",2077318,NA,NA,NA,NA,NA,NA,NA
+"379",2077320,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"380",2077322,NA,NA,NA,NA,NA,NA,NA
+"381",2077323,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"382",2077325,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"383",2077327,NA,NA,NA,NA,NA,NA,NA
+"384",9301,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"385",46468,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"386",145710,NA,NA,NA,NA,"263.9",NA,NA
+"387",515896,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"388",577141,NA,NA,NA,NA,NA,NA,NA
+"389",951384,NA,NA,NA,NA,NA,NA,NA
+"390",965997,NA,"Current Every Day Smoker",NA,NA,"573.3",NA,"965997"
+"391",1020531,"Stress fracture of other bone",NA,NA,NA,NA,NA,NA
+"392",1060027,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,"1060027"
+"393",1117207,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"394",1178600,NA,NA,NA,NA,NA,NA,NA
+"395",1188233,NA,NA,NA,NA,"250.00",NA,"1188233"
+"396",1257909,NA,NA,NA,NA,NA,NA,NA
+"397",1311969,NA,NA,NA,NA,NA,NA,"1311969"
+"398",1328738,NA,NA,NA,NA,"573.8",NA,NA
+"399",1333506,"Closed fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,"1333506"
+"400",1342364,NA,NA,NA,NA,"250.50",NA,"1342364"
+"401",1371119,NA,NA,NA,NA,NA,NA,NA
+"402",1375029,"Closed fracture of mandible, angle of jaw",NA,NA,NA,"262",NA,NA
+"403",1385632,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.00",NA,NA
+"404",1422619,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"262",NA,NA
+"405",1426949,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"406",1430639,"Closed fracture of midcervical section of neck of femur","Current Every Day Smoker",NA,NA,"263.9",NA,"1430639"
+"407",1440024,NA,NA,NA,NA,"250.00",NA,NA
+"408",1448578,NA,NA,NA,NA,NA,NA,NA
+"409",1455649,NA,NA,NA,NA,NA,NA,NA
+"410",1461660,"Open fracture of one or more phalanges of foot",NA,NA,NA,"250.00",NA,NA
+"411",1489037,NA,NA,NA,NA,NA,NA,NA
+"412",1493750,"Closed fracture of lower end of radius with ulna",NA,NA,NA,NA,NA,NA
+"413",1495270,NA,NA,NA,NA,"250.00",NA,"1495270"
+"414",1497323,"Closed fracture of clavicle, unspecified part",NA,NA,NA,NA,NA,NA
+"415",1504608,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.41",NA,NA
+"416",1517332,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"417",1521122,NA,NA,NA,NA,"250.00",NA,NA
+"418",1539350,"Closed fracture of sacrum and coccyx without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"419",1542437,"Closed fracture of nasal bones","Current Some Day Smoker",NA,NA,"571.1",NA,"1542437"
+"420",1545378,"Closed fracture of carpal bone, unspecified",NA,NA,"714.0","573.8",NA,NA
+"421",1547505,NA,NA,NA,NA,"250.02",NA,"1547505"
+"422",1563587,"Closed fracture of lower end of femur, unspecified part",NA,NA,NA,"263.1",NA,NA
+"423",1567056,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"424",1574458,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"425",1574781,"Closed fracture of two ribs","Current Every Day Smoker",NA,NA,"571.1",NA,"1574781"
+"426",1575837,NA,NA,NA,NA,"250.80",NA,"1575837"
+"427",1577687,"Aftercare for healing pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"428",1579375,NA,NA,NA,NA,"263.1",NA,NA
+"429",1592505,NA,NA,NA,NA,"250.00",NA,NA
+"430",1604946,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,"1604946"
+"431",1607870,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"432",1633268,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"M25.572",NA,NA
+"433",1649670,NA,NA,NA,NA,NA,NA,NA
+"434",1710899,NA,NA,NA,NA,NA,NA,"1710899"
+"435",1751561,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"436",1834506,NA,NA,NA,NA,NA,NA,"1834506"
+"437",1916645,"Personal history of (healed) traumatic fracture",NA,NA,NA,NA,NA,NA
+"438",2058665,NA,NA,NA,NA,NA,NA,NA
+"439",2058685,NA,NA,NA,NA,NA,NA,NA
+"440",2058694,NA,NA,NA,NA,NA,NA,NA
+"441",2058702,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"442",2058709,NA,NA,NA,NA,NA,NA,"2058709"
+"443",2058710,NA,NA,NA,NA,NA,NA,NA
+"444",2077220,NA,"Current Every Day Smoker",NA,NA,NA,NA,"2077220"
+"445",2077333,NA,NA,NA,NA,NA,NA,NA
+"446",132948,NA,"Current Every Day Smoker",NA,NA,NA,NA,"132948"
+"447",143908,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"448",176914,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"449",182325,NA,NA,NA,NA,"263.9",NA,"182325"
+"450",191941,NA,NA,NA,NA,"250.00",NA,NA
+"451",208461,NA,NA,NA,NA,NA,NA,NA
+"452",279627,NA,NA,NA,NA,NA,NA,NA
+"453",319279,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"454",333815,NA,NA,NA,NA,NA,NA,NA
+"455",401210,NA,NA,NA,NA,NA,NA,"401210"
+"456",522920,NA,NA,"V11.3",NA,"250.00",NA,NA
+"457",558676,NA,NA,NA,NA,"250.00",NA,"558676"
+"458",604099,NA,NA,NA,NA,"573.3",NA,NA
+"459",607995,NA,NA,NA,NA,"250.40",NA,NA
+"460",678416,NA,NA,NA,NA,NA,NA,NA
+"461",694919,NA,NA,NA,NA,NA,NA,"694919"
+"462",709407,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"463",790850,NA,NA,NA,NA,"250.00",NA,"790850"
+"464",794851,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"465",812135,NA,NA,NA,NA,"250.00",NA,NA
+"466",863959,NA,NA,NA,NA,NA,NA,NA
+"467",880484,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"468",921674,NA,NA,NA,NA,"250.01",NA,NA
+"469",945744,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"470",946461,NA,NA,NA,NA,NA,NA,NA
+"471",977650,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"472",983241,NA,"Current Every Day Smoker","V11.3",NA,"573.3",NA,NA
+"473",1015580,NA,NA,NA,NA,"250.00",NA,NA
+"474",1019435,NA,NA,NA,NA,"573.8",NA,"1019435"
+"475",1029802,NA,NA,NA,NA,NA,NA,NA
+"476",1036229,NA,NA,NA,NA,NA,NA,NA
+"477",1038324,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1038324"
+"478",1048453,"Closed fracture of patella",NA,NA,NA,NA,NA,NA
+"479",1061272,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"480",1062702,NA,NA,NA,NA,"573.8",NA,NA
+"481",1114317,"Closed fracture of two ribs",NA,NA,NA,"M81.0",NA,NA
+"482",1115473,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"483",1147015,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1147015"
+"484",1174645,NA,NA,NA,NA,"263.0",NA,NA
+"485",1175828,NA,NA,NA,NA,"242.90",NA,"1175828"
+"486",1178295,"Closed fracture of two ribs",NA,NA,NA,NA,NA,NA
+"487",1196538,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"488",1223791,NA,NA,NA,NA,NA,NA,"1223791"
+"489",1227398,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,"M25.579",NA,NA
+"490",1232258,NA,NA,NA,NA,NA,NA,NA
+"491",1237113,"Malunion of fracture",NA,NA,NA,"242.00",NA,NA
+"492",1249488,"Closed fracture of navicular [scaphoid] bone of wrist",NA,NA,NA,"242.90",NA,NA
+"493",1258819,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"494",1261925,NA,NA,NA,NA,"250.00",NA,NA
+"495",1265420,NA,NA,NA,NA,"250.00",NA,NA
+"496",1271647,NA,NA,NA,NA,"250.02",NA,NA
+"497",1273315,NA,NA,NA,NA,"242.90",NA,"1273315"
+"498",1276772,NA,NA,NA,"714.0",NA,NA,NA
+"499",1286666,"Closed fracture of one rib",NA,NA,NA,NA,NA,NA
+"500",1288569,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"250.00",NA,NA
+"501",1293053,NA,NA,NA,NA,NA,NA,"1293053"
+"502",1294496,"Closed fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"250.00",NA,"1294496"
+"503",1302463,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"504",1302849,NA,NA,NA,NA,"250.01",NA,NA
+"505",1304777,"Closed fracture of lower end of radius with ulna",NA,NA,"714.0",NA,NA,NA
+"506",1311828,NA,NA,NA,NA,NA,NA,NA
+"507",1323195,NA,NA,NA,NA,"250.00",NA,NA
+"508",1325567,NA,NA,NA,"714.0","250.00",NA,"1325567"
+"509",1336573,NA,NA,NA,NA,"571.5",NA,NA
+"510",1354388,NA,NA,NA,NA,"250.00",NA,"1354388"
+"511",1360681,"Closed fracture of patella",NA,NA,NA,"250.00",NA,NA
+"512",1375099,"Closed fracture of lunate [semilunar] bone of wrist",NA,NA,NA,"250.00",NA,"1375099"
+"513",1376330,"Closed fracture of shaft of ulna (alone)","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"514",1381944,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1381944"
+"515",1383896,NA,NA,NA,NA,"250.00",NA,NA
+"516",1388745,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"517",1392639,NA,NA,NA,NA,NA,NA,"1392639"
+"518",1410814,NA,NA,NA,NA,NA,NA,NA
+"519",1430359,NA,NA,NA,NA,NA,NA,NA
+"520",1438181,"Closed fracture of intertrochanteric section of neck of femur",NA,NA,NA,NA,NA,NA
+"521",1440230,"Pathologic fracture of vertebrae",NA,NA,NA,NA,NA,NA
+"522",1443741,NA,NA,NA,NA,NA,NA,"1443741"
+"523",1444295,NA,NA,NA,NA,NA,NA,NA
+"524",1454655,NA,NA,NA,NA,"250.00",NA,NA
+"525",1457863,"Closed fracture of distal end of ulna (alone)",NA,NA,NA,"250.00",NA,"1457863"
+"526",1459443,"Unspecified fracture of ankle, closed",NA,NA,NA,"250.00",NA,"1459443"
+"527",1475534,NA,NA,NA,NA,NA,NA,NA
+"528",1476258,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,"1476258"
+"529",1485971,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"571.8",NA,"1485971"
+"530",1487577,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"571.40",NA,NA
+"531",1495795,"Closed fracture of unspecified part of fibula with tibia","Current Some Day Smoker",NA,NA,NA,NA,NA
+"532",1498597,"Unspecified fracture of ankle, closed",NA,NA,NA,"573.8","V17.81",NA
+"533",1501365,"Closed fracture of unspecified part of lower end of humerus",NA,NA,NA,"571.5",NA,NA
+"534",1513330,NA,NA,NA,NA,"250.00",NA,NA
+"535",1513778,NA,NA,NA,NA,NA,NA,"1513778"
+"536",1516161,"Closed fracture of metacarpal bone(s), site unspecified","Current Every Day Smoker",NA,NA,NA,NA,"1516161"
+"537",1516881,NA,NA,NA,"714.0",NA,NA,NA
+"538",1518050,"Unspecified fracture of ankle, closed",NA,NA,NA,"571.8",NA,"1518050"
+"539",1520153,NA,NA,NA,NA,"573.9",NA,NA
+"540",1523825,NA,NA,NA,NA,NA,NA,NA
+"541",1530146,"Nonunion of fracture","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"542",1530166,"Closed fracture of unspecified part of lower end of humerus","Current Some Day Smoker",NA,NA,"250.00",NA,"1530166"
+"543",1530310,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"544",1532707,NA,NA,NA,NA,"250.90",NA,"1532707"
+"545",1533919,NA,NA,NA,NA,NA,NA,"1533919"
+"546",1538078,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1538078"
+"547",1539669,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,NA
+"548",1551552,NA,NA,NA,NA,"250.00",NA,NA
+"549",1552203,NA,NA,NA,"714.9","242.90",NA,"1552203"
+"550",1559039,NA,NA,NA,NA,"263.9",NA,NA
+"551",1561104,NA,NA,NA,NA,NA,NA,NA
+"552",1565224,"Closed fracture of middle or proximal phalanx or phalanges of hand",NA,NA,"714.0","250.00",NA,"1565224"
+"553",1568475,"Closed fracture of seventh cervical vertebra","Current Every Day Smoker",NA,NA,NA,NA,NA
+"554",1569363,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"250.81",NA,"1569363"
+"555",1573279,"Closed fracture of unspecified part of upper end of humerus",NA,NA,"714.0","M81.8",NA,"1573279"
+"556",1578088,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,"1578088"
+"557",1579193,NA,NA,NA,NA,NA,NA,NA
+"558",1579409,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"559",1581705,"Closed fracture of upper end of tibia alone",NA,"V11.3",NA,"250.00",NA,"1581705"
+"560",1582197,"Open fracture of unspecified part of upper end of humerus","Current Every Day Smoker",NA,NA,"571.40",NA,NA
+"561",1584807,"Closed fracture of sternum",NA,NA,NA,NA,NA,NA
+"562",1585719,NA,NA,NA,NA,"250.00",NA,NA
+"563",1586349,NA,NA,NA,NA,"250.00",NA,NA
+"564",1588588,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"M25.571",NA,NA
+"565",1589140,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"566",1590962,NA,NA,NA,NA,"250.02",NA,NA
+"567",1595370,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"571.3",NA,"1595370"
+"568",1596393,NA,NA,NA,NA,NA,NA,NA
+"569",1599997,"Closed fracture of patella",NA,NA,NA,"250.00",NA,NA
+"570",1601125,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"571",1601151,NA,NA,NA,NA,NA,NA,NA
+"572",1601214,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,NA,NA,"1601214"
+"573",1603020,NA,NA,NA,"714.0","571.8",NA,NA
+"574",1604554,"Nonunion of fracture",NA,NA,"714.1",NA,NA,"1604554"
+"575",1605914,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,"1605914"
+"576",1607036,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"263.1",NA,"1607036"
+"577",1607080,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"578",1608410,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,"1608410"
+"579",1608985,NA,"Current Every Day Smoker",NA,NA,"250.01",NA,NA
+"580",1610885,NA,NA,NA,NA,NA,NA,NA
+"581",1613740,"Closed fracture of second cervical vertebra","Current Every Day Smoker",NA,NA,"M81.0",NA,"1613740"
+"582",1625513,NA,NA,NA,NA,"250.00",NA,"1625513"
+"583",1662924,NA,NA,NA,NA,"250.00",NA,NA
+"584",1733345,"Closed fracture of intertrochanteric section of neck of femur",NA,NA,NA,NA,NA,NA
+"585",1741286,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"586",1744808,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"587",1762410,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"588",1784085,NA,NA,NA,NA,"250.00",NA,NA
+"589",1786132,NA,NA,NA,NA,NA,NA,NA
+"590",1793892,NA,NA,NA,NA,NA,NA,NA
+"591",1795133,NA,NA,NA,NA,"250.00",NA,NA
+"592",1815672,NA,NA,NA,NA,NA,NA,NA
+"593",1841926,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"594",1907083,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1907083"
+"595",1924258,NA,NA,NA,NA,NA,NA,NA
+"596",1930146,NA,NA,NA,NA,"250.60",NA,NA
+"597",1932680,NA,NA,NA,NA,NA,NA,"1932680"
+"598",1933634,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,"714.0","250.00",NA,"1933634"
+"599",1934355,NA,NA,NA,NA,"250.00",NA,"1934355"
+"600",1946907,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1946907"
+"601",1950831,NA,NA,NA,NA,NA,NA,NA
+"602",1960435,NA,NA,NA,NA,NA,NA,NA
+"603",1960620,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"604",2054295,NA,NA,NA,NA,NA,NA,NA
+"605",2057135,NA,NA,NA,NA,"250.00",NA,NA
+"606",2058842,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"607",2058892,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"608",2077345,NA,NA,NA,NA,NA,NA,"2077345"
+"609",2077350,NA,NA,NA,NA,NA,NA,NA
+"610",20611,NA,NA,NA,NA,NA,NA,NA
+"611",39477,"Fracture of unspecified part of right clavicle, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"612",146004,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"613",174244,NA,NA,NA,NA,NA,NA,NA
+"614",407591,NA,NA,NA,"714.9",NA,NA,NA
+"615",505461,NA,NA,NA,NA,"242.90",NA,NA
+"616",557127,"Closed fracture of rib(s), unspecified",NA,NA,NA,"250.01",NA,"557127"
+"617",653418,NA,NA,NA,NA,"571.8",NA,NA
+"618",669631,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,"669631"
+"619",690421,"Closed fracture of sacrum and coccyx without mention of spinal cord injury",NA,NA,NA,NA,NA,"690421"
+"620",694080,NA,NA,NA,NA,"250.00",NA,NA
+"621",741267,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"622",802716,"Closed fracture of sacrum and coccyx without mention of spinal cord injury",NA,NA,NA,"250.00",NA,"802716"
+"623",894813,"Closed fracture of base of skull without mention of intra cranial injury, with no loss of consciousness",NA,NA,NA,NA,NA,NA
+"624",1000577,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,NA,NA,NA
+"625",1036866,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"573.3","V17.81",NA
+"626",1038166,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"627",1044975,"Closed fracture of distal end of ulna (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"628",1067973,"Open fracture of one or more phalanges of foot",NA,NA,NA,"250.00",NA,"1067973"
+"629",1075483,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,"714.0",NA,NA,"1075483"
+"630",1076694,NA,NA,NA,NA,"250.00",NA,"1076694"
+"631",1115666,NA,NA,NA,NA,NA,NA,NA
+"632",1137362,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,NA
+"633",1160834,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"634",1186370,NA,NA,NA,NA,NA,NA,"1186370"
+"635",1211471,"Closed fracture of one rib",NA,NA,NA,NA,NA,"1211471"
+"636",1213683,NA,NA,NA,NA,NA,NA,NA
+"637",1226061,NA,NA,NA,NA,NA,NA,"1226061"
+"638",1241092,NA,NA,NA,NA,"250.00",NA,NA
+"639",1268133,"Closed fracture of one rib","Current Every Day Smoker",NA,NA,NA,NA,NA
+"640",1276677,NA,NA,NA,NA,NA,NA,"1276677"
+"641",1293982,NA,NA,NA,NA,"250.00",NA,NA
+"642",1302297,"Fracture of medial malleolus, closed",NA,NA,NA,"250.00",NA,"1302297"
+"643",1315615,NA,NA,NA,NA,"250.00",NA,NA
+"644",1323128,"Nonunion of fracture",NA,NA,NA,"250.00",NA,NA
+"645",1325802,"Personal history of traumatic fracture",NA,NA,NA,"M12.579",NA,NA
+"646",1328020,NA,NA,NA,NA,NA,NA,NA
+"647",1332234,NA,NA,NA,NA,NA,NA,NA
+"648",1337356,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"649",1346164,"Closed fracture of distal end of ulna (alone)",NA,NA,"714.0","M81.0",NA,NA
+"650",1353193,"Pathologic fracture of vertebrae",NA,NA,NA,NA,NA,"1353193"
+"651",1360931,NA,NA,NA,NA,"250.02",NA,NA
+"652",1364378,NA,"Current Every Day Smoker",NA,NA,"571.8",NA,"1364378"
+"653",1366397,"Other and unspecified closed fractures of proximal end of ulna (alone)",NA,NA,"714.0","250.00",NA,NA
+"654",1376843,NA,"Current Every Day Smoker",NA,NA,"572.0",NA,NA
+"655",1386271,"Closed fracture of acetabulum",NA,NA,NA,"250.00",NA,NA
+"656",1386551,NA,NA,NA,NA,"250.00",NA,NA
+"657",1402131,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"658",1411525,NA,NA,NA,NA,"250.00",NA,NA
+"659",1414044,NA,NA,NA,NA,"250.01",NA,NA
+"660",1415013,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"661",1417337,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"662",1418354,NA,NA,NA,NA,"250.00",NA,"1418354"
+"663",1423570,NA,NA,NA,NA,"250.00",NA,"1423570"
+"664",1428948,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker",NA,NA,"573.3",NA,"1428948"
+"665",1442960,NA,NA,NA,NA,"242.90",NA,"1442960"
+"666",1456256,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"667",1461401,"Fracture of lateral malleolus, closed",NA,NA,"714.0",NA,NA,"1461401"
+"668",1467784,"Aftercare for healing traumatic fracture of other bone",NA,NA,NA,"573.9",NA,"1467784"
+"669",1468622,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1468622"
+"670",1477806,"Personal history of traumatic fracture",NA,NA,"714.0",NA,NA,NA
+"671",1478279,NA,NA,NA,NA,NA,NA,NA
+"672",1481933,"Closed fracture of mandible, body, other and unspecified","Current Every Day Smoker",NA,NA,"573.3",NA,NA
+"673",1484665,"Closed fracture of three ribs","Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"674",1484863,"Closed fracture of other facial bones",NA,NA,NA,"250.01",NA,NA
+"675",1489106,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,"1489106"
+"676",1490659,"Pathologic fracture, unspecified site",NA,NA,NA,"250.00",NA,NA
+"677",1497894,NA,NA,NA,NA,"250.00",NA,NA
+"678",1499062,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker","V11.3",NA,NA,NA,"1499062"
+"679",1502197,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"680",1503224,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1503224"
+"681",1503605,"Closed fracture of carpal bone, unspecified",NA,NA,NA,"250.00",NA,"1503605"
+"682",1503759,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"683",1505119,NA,NA,NA,NA,"250.90",NA,NA
+"684",1505243,NA,NA,NA,NA,NA,NA,NA
+"685",1508279,"Open fracture of condyle, femoral","Current Every Day Smoker",NA,NA,"571.8",NA,"1508279"
+"686",1510606,NA,NA,NA,NA,"250.60",NA,NA
+"687",1516281,NA,NA,NA,NA,"250.00",NA,NA
+"688",1519024,NA,NA,NA,NA,"250.00",NA,NA
+"689",1519606,"Closed fracture of one or more phalanges of foot",NA,"K70.30","714.0","571.8",NA,"1519606"
+"690",1520145,"Trimalleolar fracture, closed",NA,NA,"714.0","250.00",NA,"1520145"
+"691",1520291,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"263.9",NA,"1520291"
+"692",1526092,NA,NA,NA,NA,NA,NA,"1526092"
+"693",1526700,"Closed fracture of triquetral [cuneiform] bone of wrist","Current Every Day Smoker",NA,NA,NA,NA,NA
+"694",1535642,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"695",1539594,NA,NA,NA,NA,"250.00",NA,NA
+"696",1548904,"Closed fracture of middle or proximal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"697",1549160,NA,NA,"K70.10",NA,"571.1",NA,NA
+"698",1550998,"Pathologic fracture of vertebrae",NA,NA,NA,"M81.0",NA,NA
+"699",1551013,"Closed fracture of pubis","Current Some Day Smoker",NA,NA,"M81.0",NA,NA
+"700",1552805,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1552805"
+"701",1552997,NA,NA,NA,NA,NA,NA,"1552997"
+"702",1555083,"Closed fracture of rib(s), unspecified","Current Some Day Smoker",NA,NA,"571.5",NA,NA
+"703",1560656,NA,NA,NA,NA,"250.80",NA,NA
+"704",1562536,"Trimalleolar fracture, closed",NA,NA,NA,NA,NA,NA
+"705",1565857,"Other closed fracture of upper end of humerus",NA,NA,NA,NA,NA,"1565857"
+"706",1566362,NA,NA,NA,NA,"250.70",NA,NA
+"707",1570623,"Closed fracture of cuboid",NA,NA,NA,"250.02",NA,NA
+"708",1571397,NA,NA,NA,NA,"250.00",NA,NA
+"709",1576181,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"571.1",NA,"1576181"
+"710",1577080,NA,NA,NA,NA,"250.00",NA,NA
+"711",1583415,"Closed fracture of head of radius",NA,NA,NA,"242.90",NA,NA
+"712",1587021,"Closed fracture of nasal bones","Current Every Day Smoker",NA,NA,"M12.579","V17.81","1587021"
+"713",1588356,NA,NA,NA,NA,"250.00",NA,NA
+"714",1590324,NA,NA,NA,NA,NA,NA,NA
+"715",1595295,NA,NA,NA,NA,"250.00",NA,"1595295"
+"716",1598362,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1598362"
+"717",1598498,NA,NA,NA,NA,"263.9",NA,NA
+"718",1599562,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"719",1600324,NA,NA,NA,NA,"250.90",NA,"1600324"
+"720",1605308,NA,"Current Every Day Smoker",NA,"714.0","250.00",NA,"1605308"
+"721",1605812,NA,NA,NA,NA,NA,NA,"1605812"
+"722",1605858,NA,NA,NA,NA,"250.00",NA,"1605858"
+"723",1607224,"Closed fracture of mandible, unspecified site","Current Some Day Smoker",NA,NA,"573.8",NA,"1607224"
+"724",1608361,"Fracture of corpus cavernosum penis",NA,NA,NA,NA,NA,NA
+"725",1608419,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"726",1608699,NA,NA,NA,NA,NA,NA,NA
+"727",1608870,"Pathologic fracture of vertebrae",NA,NA,NA,"250.02",NA,"1608870"
+"728",1610682,"Follow-up examination, following treatment of healed fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"729",1612565,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1612565"
+"730",1619868,NA,"Current Every Day Smoker",NA,"714.9","250.20",NA,NA
+"731",1649855,NA,NA,NA,NA,NA,NA,NA
+"732",1659342,NA,NA,NA,NA,NA,NA,"1659342"
+"733",1723250,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"734",1729186,"Open fracture of distal phalanx or phalanges of hand",NA,NA,NA,"250.00",NA,NA
+"735",1758695,NA,NA,NA,NA,"263.9",NA,"1758695"
+"736",1761828,NA,NA,NA,NA,NA,NA,"1761828"
+"737",1777130,NA,NA,NA,NA,NA,NA,NA
+"738",1779140,NA,NA,NA,NA,NA,NA,"1779140"
+"739",1807445,NA,NA,NA,NA,"263.9",NA,NA
+"740",1822300,NA,NA,NA,NA,NA,NA,NA
+"741",1823053,NA,NA,NA,NA,NA,NA,"1823053"
+"742",1959645,NA,NA,NA,NA,NA,NA,NA
+"743",1984900,NA,NA,NA,NA,NA,NA,NA
+"744",2057578,NA,NA,NA,NA,NA,NA,NA
+"745",2058937,NA,NA,NA,NA,NA,NA,NA
+"746",2059046,NA,NA,NA,NA,NA,NA,NA
+"747",2059051,NA,NA,NA,NA,NA,NA,NA
+"748",2059111,NA,NA,NA,NA,NA,NA,NA
+"749",2077374,NA,NA,NA,NA,NA,NA,NA
+"750",42848,NA,NA,NA,NA,"571.40",NA,NA
+"751",50022,NA,NA,NA,NA,NA,NA,NA
+"752",169109,NA,NA,NA,NA,"250.00",NA,NA
+"753",347081,"Open fracture of phalanx or phalanges of hand, unspecified","Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"754",348930,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"755",430059,NA,"Current Every Day Smoker",NA,NA,NA,NA,"430059"
+"756",464345,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"757",544434,NA,NA,NA,NA,NA,NA,NA
+"758",591559,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"759",674244,NA,NA,NA,NA,NA,NA,NA
+"760",741759,"Closed fracture of carpal bone, unspecified",NA,NA,NA,NA,NA,NA
+"761",752803,NA,NA,NA,NA,NA,NA,NA
+"762",793512,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"763",810366,NA,"Current Some Day Smoker",NA,NA,"571.5",NA,NA
+"764",892585,NA,NA,NA,NA,NA,NA,NA
+"765",906743,NA,NA,NA,NA,NA,NA,NA
+"766",911299,"Closed fracture of three ribs","Smoker, Current Status Unknown",NA,NA,NA,NA,NA
+"767",962220,"Closed fracture of midcervical section of neck of femur",NA,NA,NA,NA,NA,NA
+"768",968929,NA,NA,NA,NA,NA,NA,NA
+"769",987634,NA,NA,NA,NA,"250.00",NA,NA
+"770",1002397,NA,NA,NA,NA,NA,NA,"1002397"
+"771",1006403,NA,NA,NA,NA,NA,NA,NA
+"772",1044046,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"773",1050555,NA,NA,NA,NA,NA,NA,NA
+"774",1062948,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"775",1067189,"Closed fracture of rib(s), unspecified","Smoker, Current Status Unknown",NA,NA,"250.92",NA,NA
+"776",1112987,NA,NA,NA,NA,NA,NA,NA
+"777",1119828,NA,NA,NA,NA,"250.00",NA,NA
+"778",1120020,NA,NA,NA,"714.0","250.00",NA,"1120020"
+"779",1120124,NA,NA,NA,NA,"250.00",NA,NA
+"780",1122938,"Stress fracture of other bone",NA,NA,NA,"263.9",NA,"1122938"
+"781",1151993,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"782",1182554,"Aftercare for healing traumatic fracture of other bone",NA,NA,NA,"242.90","Z82.62","1182554"
+"783",1215110,NA,NA,NA,NA,NA,NA,NA
+"784",1219228,"Unspecified fracture of unspecified femur, initial encounter for closed fracture",NA,NA,NA,"250.00",NA,NA
+"785",1221682,"Bimalleolar fracture, closed",NA,NA,NA,NA,NA,NA
+"786",1223307,NA,NA,NA,NA,NA,NA,"1223307"
+"787",1225547,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,"263.9",NA,NA
+"788",1231939,NA,NA,NA,NA,"250.00",NA,NA
+"789",1254903,NA,NA,NA,NA,"250.00",NA,NA
+"790",1255092,NA,NA,NA,NA,"250.00",NA,"1255092"
+"791",1263210,NA,NA,NA,NA,"573.8",NA,NA
+"792",1286762,"Closed fracture of clavicle, unspecified part","Current Every Day Smoker",NA,NA,NA,NA,NA
+"793",1302254,NA,NA,NA,NA,"250.00",NA,NA
+"794",1308127,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"795",1308429,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"796",1326353,NA,NA,NA,NA,"250.00",NA,"1326353"
+"797",1329823,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"798",1351645,"Closed fracture of base of skull without mention of intra cranial injury, with concussion, unspecified","Current Every Day Smoker",NA,NA,"571.8",NA,"1351645"
+"799",1354945,"Closed fracture of patella",NA,NA,NA,"250.00",NA,NA
+"800",1365556,NA,NA,NA,NA,NA,NA,NA
+"801",1377535,NA,NA,NA,NA,NA,NA,"1377535"
+"802",1377699,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.60",NA,NA
+"803",1382438,"Closed fracture of shaft of clavicle","Current Every Day Smoker",NA,NA,NA,NA,NA
+"804",1382880,"Closed fracture of nasal bones","Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"805",1392756,"Closed fracture of sacrum and coccyx without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"806",1399884,NA,NA,NA,NA,"250.60",NA,NA
+"807",1408388,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"808",1414453,NA,NA,NA,NA,"573.3",NA,NA
+"809",1417211,NA,NA,NA,NA,NA,NA,NA
+"810",1419060,"Closed fracture of unspecified part of fibula alone","Current Every Day Smoker",NA,NA,NA,NA,NA
+"811",1419860,NA,NA,NA,NA,"250.00",NA,"1419860"
+"812",1423213,"Closed Colles' fracture",NA,NA,NA,NA,NA,"1423213"
+"813",1432000,NA,"Current Every Day Smoker","K70.30",NA,"571.5",NA,NA
+"814",1434531,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"815",1452442,NA,NA,NA,NA,NA,NA,NA
+"816",1466180,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"817",1472576,NA,"Smoker, Current Status Unknown",NA,NA,"250.00",NA,NA
+"818",1480637,NA,NA,NA,NA,NA,NA,NA
+"819",1495706,"Closed fracture of orbital floor (blow-out)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"820",1504626,"Multiple fractures of ribs, bilateral, initial encounter for closed fracture",NA,NA,NA,"250.00",NA,NA
+"821",1512848,NA,NA,"V11.3",NA,NA,NA,NA
+"822",1513821,"Unspecified fracture of ankle, closed",NA,NA,"714.0","M25.579","V17.81","1513821"
+"823",1515970,NA,NA,NA,"714.0","250.00",NA,NA
+"824",1520038,NA,NA,NA,NA,NA,NA,NA
+"825",1523755,NA,NA,NA,NA,NA,NA,"1523755"
+"826",1527612,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"827",1532194,NA,NA,NA,NA,NA,NA,NA
+"828",1539339,NA,NA,NA,"714.0","250.42",NA,NA
+"829",1540509,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,"714.0","250.00",NA,"1540509"
+"830",1553770,NA,NA,NA,NA,"250.00",NA,NA
+"831",1558571,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.00",NA,NA
+"832",1558755,NA,NA,NA,NA,NA,NA,NA
+"833",1559670,NA,NA,NA,NA,NA,NA,NA
+"834",1563607,"Closed fracture of unspecified part of tibia alone",NA,NA,NA,"250.00",NA,"1563607"
+"835",1570291,NA,NA,NA,NA,"250.01",NA,NA
+"836",1571355,NA,NA,NA,NA,NA,NA,NA
+"837",1573267,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker",NA,"714.9","250.00",NA,"1573267"
+"838",1575219,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"839",1577035,"Closed fracture of one or more phalanges of foot",NA,NA,"714.0","263.9",NA,"1577035"
+"840",1587649,"Trimalleolar fracture, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"841",1588354,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1588354"
+"842",1590139,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"573.8","V17.81","1590139"
+"843",1591126,"Closed fracture of metatarsal bone(s)","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"844",1598756,NA,NA,NA,NA,"250.02",NA,NA
+"845",1604749,"Bimalleolar fracture, closed","Current Every Day Smoker","V11.3",NA,"571.5",NA,NA
+"846",1607174,NA,NA,NA,NA,"250.00",NA,NA
+"847",1607794,NA,"Current Every Day Smoker","V11.3",NA,"573.9",NA,NA
+"848",1608336,NA,NA,NA,NA,"250.00",NA,"1608336"
+"849",1608400,NA,NA,NA,NA,NA,NA,NA
+"850",1608707,NA,NA,NA,NA,NA,NA,NA
+"851",1609509,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,NA,NA,NA
+"852",1609991,NA,NA,NA,NA,"571.8",NA,NA
+"853",1657658,NA,NA,NA,NA,"250.40",NA,"1657658"
+"854",1707564,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1707564"
+"855",1737158,NA,NA,NA,NA,"263.9",NA,NA
+"856",1743846,NA,NA,NA,NA,"250.00",NA,NA
+"857",1757675,NA,NA,NA,NA,"250.00",NA,"1757675"
+"858",1764966,NA,NA,NA,NA,"573.8",NA,"1764966"
+"859",1781733,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"860",1805089,"Aftercare for healing traumatic fracture of other bone","Current Every Day Smoker",NA,NA,NA,NA,NA
+"861",1808593,NA,NA,NA,NA,NA,NA,NA
+"862",1826123,NA,NA,NA,NA,"250.00",NA,NA
+"863",1839218,NA,NA,NA,NA,"250.00",NA,NA
+"864",1915256,NA,NA,NA,"714.0","250.00",NA,NA
+"865",1927261,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"866",1944610,NA,NA,NA,NA,NA,NA,NA
+"867",1951998,NA,NA,NA,NA,NA,NA,NA
+"868",1958788,NA,NA,NA,NA,NA,NA,NA
+"869",2058006,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"870",2059372,"Other closed skull fracture without mention of intracranial injury, unspecified state of consciousness",NA,NA,NA,NA,NA,NA
+"871",2059390,NA,NA,NA,NA,NA,NA,NA
+"872",2059395,NA,NA,NA,NA,NA,NA,NA
+"873",2077283,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"874",2077389,NA,NA,NA,NA,NA,NA,NA
+"875",2077395,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"876",10494,NA,NA,NA,NA,NA,NA,NA
+"877",102398,NA,NA,NA,NA,NA,NA,NA
+"878",151379,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"879",158447,NA,NA,NA,NA,"250.00",NA,NA
+"880",242639,NA,NA,NA,NA,NA,NA,NA
+"881",323433,NA,"Current Every Day Smoker",NA,NA,"M25.572",NA,NA
+"882",351005,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,NA,"M81.0",NA,NA
+"883",374307,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"884",522569,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"885",570754,NA,NA,NA,NA,"262",NA,NA
+"886",597655,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"887",658675,NA,NA,NA,NA,NA,NA,"658675"
+"888",691943,"Closed fracture of intertrochanteric section of neck of femur",NA,NA,NA,NA,NA,NA
+"889",759691,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"890",934219,NA,NA,NA,NA,"250.00",NA,"934219"
+"891",949800,NA,NA,NA,NA,"250.51",NA,NA
+"892",952039,"Closed fracture of unspecified part of radius (alone)",NA,NA,NA,NA,NA,NA
+"893",969582,NA,NA,NA,NA,"242.00",NA,NA
+"894",989438,"Closed fracture of nasal bones",NA,NA,NA,NA,NA,NA
+"895",999154,"Fracture of lateral malleolus, closed",NA,NA,NA,NA,NA,"999154"
+"896",1028944,"Closed fracture of pubis",NA,NA,NA,"250.00",NA,NA
+"897",1040452,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"898",1112965,NA,NA,NA,"714.0","250.00",NA,"1112965"
+"899",1160377,"Fracture of neck, unspecified, initial encounter",NA,NA,NA,"263.9",NA,"1160377"
+"900",1177127,NA,NA,NA,NA,NA,NA,"1177127"
+"901",1178576,NA,NA,NA,NA,"573.9",NA,"1178576"
+"902",1184622,NA,NA,NA,NA,NA,NA,NA
+"903",1185331,NA,NA,NA,NA,"250.92",NA,NA
+"904",1211105,"Closed fracture of seventh cervical vertebra","Current Every Day Smoker",NA,NA,NA,NA,NA
+"905",1211946,NA,NA,NA,NA,"250.00",NA,NA
+"906",1232379,NA,NA,NA,NA,"250.00",NA,"1232379"
+"907",1236655,"Closed fracture of condyle, femoral",NA,NA,NA,"250.00",NA,NA
+"908",1244221,NA,NA,NA,NA,NA,NA,NA
+"909",1246672,NA,NA,NA,NA,"242.80",NA,NA
+"910",1256019,NA,NA,NA,NA,NA,NA,NA
+"911",1264675,NA,NA,NA,NA,NA,NA,"1264675"
+"912",1274939,NA,NA,NA,NA,NA,NA,NA
+"913",1295529,NA,NA,NA,"714.0","250.00",NA,"1295529"
+"914",1305186,NA,NA,NA,NA,NA,NA,NA
+"915",1305463,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"250.00",NA,NA
+"916",1318319,NA,"Current Every Day Smoker",NA,NA,"250.60",NA,NA
+"917",1326037,"Other and unspecified closed fractures of proximal end of ulna (alone)",NA,NA,NA,"250.00",NA,NA
+"918",1338684,"Unspecified fracture of unspecified metacarpal bone, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"919",1355242,"Closed fracture of intertrochanteric section of neck of femur","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"920",1370652,NA,NA,NA,NA,"250.60",NA,"1370652"
+"921",1373021,"Pathologic fracture of vertebrae",NA,NA,NA,NA,NA,"1373021"
+"922",1376848,NA,NA,NA,NA,"250.00",NA,NA
+"923",1377212,NA,NA,NA,NA,NA,NA,NA
+"924",1386209,NA,NA,NA,NA,NA,NA,NA
+"925",1395466,NA,NA,NA,NA,"250.02",NA,NA
+"926",1407051,NA,NA,NA,NA,"250.00",NA,"1407051"
+"927",1424337,NA,NA,NA,NA,"250.00",NA,NA
+"928",1449806,NA,NA,NA,NA,"242.90",NA,NA
+"929",1462254,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"930",1463778,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"931",1465493,NA,NA,NA,NA,NA,NA,NA
+"932",1469395,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"933",1476339,NA,NA,NA,NA,"250.00",NA,NA
+"934",1485590,NA,NA,NA,NA,NA,NA,NA
+"935",1490709,NA,"Current Every Day Smoker",NA,NA,"573.0",NA,NA
+"936",1503516,NA,NA,NA,NA,"250.00",NA,NA
+"937",1509731,"Age-related osteoporosis without current pathological fracture",NA,NA,"714.0","263.9",NA,NA
+"938",1512842,NA,NA,NA,NA,NA,NA,NA
+"939",1513011,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"940",1515167,NA,NA,NA,NA,NA,NA,NA
+"941",1521384,NA,NA,NA,NA,"250.00",NA,NA
+"942",1530296,NA,NA,NA,NA,"250.00",NA,NA
+"943",1535681,NA,NA,NA,NA,"250.01",NA,NA
+"944",1537535,"Closed fracture of surgical neck of humerus",NA,NA,NA,NA,NA,NA
+"945",1538288,NA,NA,NA,NA,"250.00",NA,NA
+"946",1542385,NA,NA,NA,NA,NA,"V17.81",NA
+"947",1543675,NA,NA,NA,NA,NA,NA,"1543675"
+"948",1545284,"Late effect of fracture of upper extremities","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"949",1549806,NA,NA,NA,NA,"250.00",NA,NA
+"950",1549896,NA,NA,NA,NA,"250.00",NA,"1549896"
+"951",1557607,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"952",1563576,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"953",1564249,NA,NA,NA,NA,"250.00",NA,NA
+"954",1565257,NA,NA,NA,NA,"571.8",NA,NA
+"955",1569284,NA,NA,NA,NA,"250.00",NA,NA
+"956",1569971,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"957",1575616,NA,NA,NA,NA,NA,NA,NA
+"958",1575622,"Closed unspecified fracture of pelvis",NA,NA,NA,"250.00",NA,NA
+"959",1583780,NA,"Current Every Day Smoker",NA,NA,"250.90",NA,NA
+"960",1584550,"Closed fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"250.00",NA,NA
+"961",1587831,NA,NA,NA,NA,"250.00",NA,NA
+"962",1591867,"Closed fracture of clavicle, unspecified part",NA,NA,NA,"250.00",NA,"1591867"
+"963",1592969,"Closed fracture of clavicle, unspecified part",NA,NA,NA,"250.02",NA,NA
+"964",1593879,NA,NA,NA,NA,"250.00",NA,"1593879"
+"965",1597803,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"966",1600787,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,"714.0","262",NA,NA
+"967",1604627,NA,NA,NA,NA,NA,NA,"1604627"
+"968",1606519,NA,NA,NA,NA,"250.00",NA,NA
+"969",1607068,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,"V11.3",NA,"250.22",NA,NA
+"970",1608389,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"971",1611312,NA,NA,NA,NA,NA,NA,NA
+"972",1613075,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,"1613075"
+"973",1614801,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"974",1617650,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1617650"
+"975",1629870,NA,NA,NA,NA,"250.00",NA,"1629870"
+"976",1702599,NA,NA,NA,NA,"571.5",NA,NA
+"977",1734910,NA,NA,NA,NA,NA,NA,NA
+"978",1746113,NA,"Current Every Day Smoker",NA,NA,"E29.1",NA,"1746113"
+"979",1798340,NA,NA,NA,NA,NA,NA,NA
+"980",1823161,NA,NA,NA,NA,"573.8",NA,NA
+"981",1825523,NA,NA,NA,NA,NA,NA,"1825523"
+"982",1840031,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"983",1842547,NA,"Current Some Day Smoker",NA,NA,NA,NA,"1842547"
+"984",1880433,NA,NA,NA,NA,NA,NA,NA
+"985",1908243,NA,NA,NA,NA,"250.00",NA,NA
+"986",1927790,NA,NA,NA,NA,"250.00",NA,NA
+"987",1929137,NA,"Current Every Day Smoker",NA,NA,"M25.572",NA,NA
+"988",1940168,NA,NA,NA,NA,NA,NA,"1940168"
+"989",1945136,NA,NA,NA,NA,"263.9",NA,NA
+"990",1951872,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"991",1953530,NA,NA,NA,NA,NA,NA,NA
+"992",1954402,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,"263.9",NA,"1954402"
+"993",1955865,"Closed fracture of upper end of tibia alone","Current Every Day Smoker",NA,NA,NA,NA,"1955865"
+"994",2054413,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"995",2058762,NA,NA,NA,NA,NA,NA,NA
+"996",2059570,NA,NA,NA,NA,NA,NA,NA
+"997",2059577,NA,NA,NA,NA,NA,NA,NA
+"998",2059638,"Closed fracture of base of skull without mention of intra cranial injury, unspecified state of consciousness",NA,NA,NA,"263.9",NA,NA
+"999",2077409,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1000",2870,NA,NA,NA,NA,NA,NA,"2870"
+"1001",59630,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1002",265965,NA,NA,NA,NA,NA,NA,NA
+"1003",534380,NA,NA,NA,NA,NA,NA,NA
+"1004",692454,NA,"Current Every Day Smoker",NA,NA,NA,NA,"692454"
+"1005",732113,"Closed fracture of base of skull without mention of intra cranial injury, with loss of consciousness of unspecified duration",NA,NA,NA,NA,NA,NA
+"1006",775005,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1007",793270,NA,NA,NA,NA,NA,NA,NA
+"1008",872297,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1009",933672,NA,NA,NA,NA,"250.00",NA,NA
+"1010",996211,NA,NA,NA,NA,"250.00",NA,NA
+"1011",997639,NA,NA,NA,NA,NA,NA,NA
+"1012",1002550,NA,NA,NA,NA,"573.8",NA,NA
+"1013",1024522,NA,NA,NA,NA,"250.00",NA,NA
+"1014",1067006,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1015",1099765,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1099765"
+"1016",1137267,NA,NA,NA,NA,NA,NA,NA
+"1017",1140865,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"250.11",NA,NA
+"1018",1164430,NA,NA,NA,NA,NA,NA,NA
+"1019",1187370,NA,NA,NA,NA,NA,NA,NA
+"1020",1213804,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1021",1221809,NA,NA,NA,NA,NA,NA,NA
+"1022",1231145,NA,NA,NA,NA,NA,NA,NA
+"1023",1240909,NA,NA,NA,NA,"250.00",NA,NA
+"1024",1265349,"Closed fracture of base of neck of femur",NA,NA,NA,"573.3",NA,NA
+"1025",1267228,"Closed fracture of unspecified part of upper end of humerus",NA,NA,NA,"250.00",NA,NA
+"1026",1301617,NA,NA,NA,NA,"250.00",NA,NA
+"1027",1314437,NA,"Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"1028",1314729,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"1029",1327954,NA,NA,NA,NA,"250.02",NA,"1327954"
+"1030",1332372,NA,NA,NA,NA,"250.00",NA,"1332372"
+"1031",1333093,NA,NA,NA,NA,"571.8",NA,"1333093"
+"1032",1361715,NA,NA,NA,NA,"250.00",NA,"1361715"
+"1033",1378532,"Aftercare for healing traumatic fracture of lower leg",NA,NA,NA,"250.00",NA,"1378532"
+"1034",1395893,NA,"Current Some Day Smoker",NA,"714.0",NA,NA,NA
+"1035",1399861,"Fracture of medial malleolus, closed",NA,NA,NA,"250.00",NA,NA
+"1036",1401629,NA,NA,NA,NA,NA,NA,NA
+"1037",1414950,NA,NA,NA,NA,"250.00",NA,NA
+"1038",1427849,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"262",NA,NA
+"1039",1428528,NA,NA,NA,NA,NA,NA,NA
+"1040",1431680,"Closed fracture of one rib",NA,NA,NA,"250.00",NA,NA
+"1041",1437477,"Nonunion of fracture",NA,NA,NA,NA,NA,"1437477"
+"1042",1439853,NA,NA,"V11.3",NA,NA,NA,NA
+"1043",1446252,NA,NA,NA,NA,NA,NA,"1446252"
+"1044",1449669,NA,NA,NA,NA,NA,NA,NA
+"1045",1451710,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,NA
+"1046",1467290,NA,NA,NA,NA,"250.00",NA,NA
+"1047",1469531,NA,NA,NA,NA,"250.00",NA,NA
+"1048",1487501,"Closed fracture of surgical neck of humerus",NA,NA,NA,"250.01",NA,NA
+"1049",1494032,NA,NA,NA,NA,NA,NA,NA
+"1050",1512175,"Closed fracture of orbital floor (blow-out)",NA,NA,NA,NA,NA,NA
+"1051",1515587,NA,NA,NA,NA,"250.02",NA,NA
+"1052",1516481,NA,NA,NA,NA,NA,NA,NA
+"1053",1516710,"Closed fracture of nasal bones",NA,NA,NA,"250.00",NA,"1516710"
+"1054",1527926,NA,NA,NA,NA,"250.00",NA,NA
+"1055",1538466,NA,NA,NA,"714.0","250.00",NA,"1538466"
+"1056",1538512,"Closed fracture of lower end of radius with ulna","Current Every Day Smoker",NA,NA,"250.40",NA,"1538512"
+"1057",1543185,NA,NA,NA,NA,"250.00",NA,"1543185"
+"1058",1545230,NA,NA,NA,NA,"250.00",NA,"1545230"
+"1059",1550428,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,"250.02",NA,"1550428"
+"1060",1557391,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,"250.00",NA,"1557391"
+"1061",1561305,NA,NA,NA,NA,"250.40",NA,NA
+"1062",1562843,NA,NA,NA,NA,"250.02",NA,"1562843"
+"1063",1564007,NA,NA,NA,NA,"250.00",NA,NA
+"1064",1586345,NA,"Current Some Day Smoker",NA,NA,"573.8",NA,NA
+"1065",1589539,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1066",1594503,"Open fracture of distal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1067",1601611,NA,NA,NA,NA,NA,NA,"1601611"
+"1068",1602550,NA,NA,NA,NA,"571.8",NA,NA
+"1069",1606484,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,"1606484"
+"1070",1607733,"Closed fracture of base of skull without mention of intra cranial injury, with loss of consciousness of unspecified duration","Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"1071",1609910,NA,NA,NA,NA,"250.00",NA,"1609910"
+"1072",1626066,NA,"Current Every Day Smoker","V11.3",NA,"571.2",NA,NA
+"1073",1702357,NA,NA,NA,NA,NA,NA,NA
+"1074",1705030,NA,NA,NA,NA,NA,NA,NA
+"1075",1706179,"Fracture, cause unspecified",NA,NA,NA,NA,NA,NA
+"1076",1708190,NA,NA,NA,NA,NA,NA,NA
+"1077",1715338,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,NA,NA,NA
+"1078",1729921,NA,NA,NA,NA,"250.50",NA,NA
+"1079",1747034,NA,NA,NA,NA,"250.00",NA,NA
+"1080",1799889,NA,NA,NA,NA,NA,NA,NA
+"1081",1805572,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"263.0",NA,"1805572"
+"1082",1818017,NA,NA,NA,NA,NA,NA,NA
+"1083",1819674,NA,NA,NA,NA,NA,NA,NA
+"1084",1833755,NA,NA,NA,NA,NA,NA,NA
+"1085",1914765,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1086",1915673,NA,NA,NA,NA,NA,NA,NA
+"1087",1934737,NA,NA,NA,NA,NA,NA,"1934737"
+"1088",1953143,NA,NA,NA,NA,"250.00",NA,NA
+"1089",2053737,NA,NA,NA,NA,NA,NA,NA
+"1090",2055961,NA,NA,NA,NA,NA,NA,NA
+"1091",2059819,NA,NA,NA,NA,NA,NA,NA
+"1092",2059845,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1093",2059871,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1094",2059890,NA,NA,NA,NA,NA,NA,NA
+"1095",2059892,"Open fracture of distal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1096",2077417,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1097",2077426,NA,NA,NA,NA,NA,NA,NA
+"1098",230122,NA,NA,NA,NA,NA,NA,NA
+"1099",338350,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1100",477838,"Closed fracture of vault of skull with subarachnoid, subdural, and extradural hemorrhage, with loss of consciousness of unspecified duration","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1101",721512,"Closed fracture of acetabulum",NA,NA,NA,"250.00",NA,NA
+"1102",860265,NA,NA,NA,NA,NA,NA,"860265"
+"1103",987027,NA,NA,NA,NA,NA,NA,NA
+"1104",1027568,NA,NA,NA,NA,"250.80",NA,NA
+"1105",1042513,NA,NA,NA,NA,"250.01",NA,NA
+"1106",1089745,NA,NA,NA,NA,NA,NA,NA
+"1107",1152642,NA,NA,NA,"714.0","250.00",NA,"1152642"
+"1108",1160618,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,"1160618"
+"1109",1228591,NA,NA,NA,NA,"242.90",NA,NA
+"1110",1250842,NA,NA,NA,NA,NA,NA,NA
+"1111",1250970,NA,NA,NA,NA,"250.00",NA,NA
+"1112",1270946,NA,NA,NA,NA,NA,NA,NA
+"1113",1275343,NA,NA,NA,NA,NA,NA,NA
+"1114",1283850,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"1115",1302475,NA,"Current Every Day Smoker",NA,NA,"250.60",NA,NA
+"1116",1315661,NA,NA,NA,NA,NA,NA,NA
+"1117",1325124,"Closed fracture of patella",NA,NA,NA,"M25.572",NA,NA
+"1118",1368823,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"1119",1401085,NA,NA,NA,NA,"250.00",NA,NA
+"1120",1406128,NA,NA,NA,NA,NA,NA,NA
+"1121",1443057,NA,NA,NA,NA,"250.00",NA,NA
+"1122",1495097,NA,"Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"1123",1498687,"Closed fracture of one rib","Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"1124",1500918,"Closed fracture of upper end of tibia alone","Current Every Day Smoker",NA,NA,NA,NA,"1500918"
+"1125",1529781,"Bimalleolar fracture, closed","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1126",1535167,NA,NA,NA,NA,"250.90",NA,NA
+"1127",1545586,"Closed fracture of distal phalanx or phalanges of hand",NA,NA,NA,NA,NA,NA
+"1128",1547712,NA,NA,NA,NA,"242.90",NA,NA
+"1129",1579465,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"1130",1586678,"Malunion of fracture",NA,NA,NA,"571.8",NA,NA
+"1131",1590236,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1132",1597452,NA,NA,NA,NA,"250.00",NA,NA
+"1133",1640788,"Closed fracture of base of skull without mention of intra cranial injury, unspecified state of consciousness","Current Every Day Smoker",NA,NA,"262",NA,NA
+"1134",1714293,NA,NA,NA,NA,NA,NA,"1714293"
+"1135",1758314,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1758314"
+"1136",1780423,NA,NA,NA,NA,NA,NA,NA
+"1137",1783236,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1138",1783528,NA,NA,NA,NA,NA,NA,NA
+"1139",1788982,NA,NA,NA,NA,NA,NA,NA
+"1140",1937316,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,"1937316"
+"1141",2035281,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1142",2059805,NA,NA,NA,NA,NA,NA,NA
+"1143",2060035,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1144",2060036,NA,NA,NA,NA,"250.00",NA,NA
+"1145",2060049,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1146",2077432,NA,NA,NA,NA,NA,NA,NA
+"1147",2077434,"Closed fracture of first cervical vertebra",NA,NA,NA,NA,NA,NA
+"1148",2077437,NA,NA,NA,NA,NA,NA,NA
+"1149",2077438,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1150",2077439,NA,NA,NA,NA,NA,NA,NA
+"1151",158021,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1152",285127,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1153",454206,NA,NA,NA,NA,"250.00",NA,NA
+"1154",722924,NA,NA,NA,NA,"250.00",NA,NA
+"1155",735239,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1156",777188,NA,NA,NA,NA,"250.22",NA,NA
+"1157",1038513,NA,NA,"K70.30","714.0","571.2",NA,"1038513"
+"1158",1046297,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.01",NA,NA
+"1159",1089454,"Closed fracture of distal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1160",1123880,NA,NA,NA,NA,NA,NA,NA
+"1161",1137418,NA,NA,NA,NA,NA,NA,NA
+"1162",1183082,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"1163",1183137,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,"250.00",NA,"1183137"
+"1164",1206808,NA,NA,NA,NA,NA,NA,NA
+"1165",1212096,NA,NA,NA,NA,"250.00",NA,NA
+"1166",1215522,NA,NA,NA,NA,NA,NA,NA
+"1167",1216880,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1168",1224470,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"250.00",NA,NA
+"1169",1319592,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1170",1326533,NA,NA,NA,NA,NA,NA,NA
+"1171",1367303,NA,NA,NA,NA,NA,NA,NA
+"1172",1381819,NA,NA,NA,NA,NA,NA,NA
+"1173",1436669,NA,"Current Some Day Smoker",NA,NA,NA,NA,"1436669"
+"1174",1461221,"Closed fracture of malar and maxillary bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1175",1476186,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1176",1482791,NA,NA,NA,NA,NA,NA,NA
+"1177",1495139,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1178",1521750,NA,NA,NA,NA,"250.40",NA,NA
+"1179",1539053,NA,NA,NA,NA,"250.00",NA,NA
+"1180",1554173,"Closed fracture of astragalus",NA,NA,NA,NA,NA,"1554173"
+"1181",1564786,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1182",1586368,"Pathologic fracture",NA,NA,NA,"250.00",NA,NA
+"1183",1606451,NA,NA,NA,NA,NA,NA,NA
+"1184",1644435,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"1185",1743933,NA,NA,NA,NA,NA,NA,NA
+"1186",1789152,NA,"Current Every Day Smoker",NA,NA,"263.0",NA,"1789152"
+"1187",1800411,NA,NA,NA,NA,NA,NA,NA
+"1188",2060075,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1189",2077447,NA,NA,NA,NA,NA,NA,NA
+"1190",299348,NA,NA,NA,NA,NA,NA,NA
+"1191",367498,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1192",585605,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1193",748144,NA,NA,NA,NA,"262",NA,NA
+"1194",770246,NA,NA,NA,NA,NA,NA,NA
+"1195",777456,NA,NA,NA,NA,NA,NA,NA
+"1196",815114,NA,NA,NA,NA,"250.00",NA,NA
+"1197",836746,NA,NA,NA,NA,NA,NA,NA
+"1198",870639,NA,NA,NA,NA,NA,NA,"870639"
+"1199",954516,NA,NA,NA,NA,NA,NA,NA
+"1200",980881,NA,NA,NA,NA,"250.00",NA,NA
+"1201",995053,NA,NA,NA,NA,"250.00",NA,NA
+"1202",1075601,NA,NA,NA,NA,"242.90",NA,NA
+"1203",1105043,"Personal history of traumatic fracture",NA,NA,NA,"250.00",NA,NA
+"1204",1105978,NA,"Current Every Day Smoker","F10.11",NA,NA,NA,"1105978"
+"1205",1109922,"Aftercare for healing traumatic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"1206",1110667,NA,NA,NA,NA,NA,NA,NA
+"1207",1117115,"Closed fracture of distal phalanx or phalanges of hand",NA,NA,NA,"E10.39",NA,NA
+"1208",1136703,"Unspecified fracture of ankle, closed",NA,"V11.3",NA,NA,NA,NA
+"1209",1139340,NA,NA,NA,NA,NA,NA,NA
+"1210",1141123,NA,NA,NA,NA,"572.3",NA,NA
+"1211",1142265,NA,NA,NA,NA,NA,NA,NA
+"1212",1186225,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,"1186225"
+"1213",1219793,NA,"Current Some Day Smoker",NA,NA,"263.0",NA,"1219793"
+"1214",1245646,NA,NA,NA,NA,"250.00",NA,NA
+"1215",1248155,NA,NA,NA,NA,NA,NA,NA
+"1216",1248876,"Closed fracture of cervical vertebra, unspecified level",NA,NA,NA,"250.00",NA,"1248876"
+"1217",1253956,NA,NA,NA,NA,"250.00",NA,"1253956"
+"1218",1255707,"Closed fracture of unspecified part of ulna (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1219",1287061,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker","V11.3",NA,"250.00",NA,NA
+"1220",1291238,NA,NA,NA,NA,"250.00",NA,NA
+"1221",1310322,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"571.1",NA,NA
+"1222",1315162,"Closed fracture of unspecified part of fibula alone",NA,NA,NA,NA,NA,NA
+"1223",1326981,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1224",1332155,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"1225",1337063,NA,NA,NA,NA,"250.00",NA,NA
+"1226",1339712,NA,NA,NA,NA,NA,NA,NA
+"1227",1354429,NA,NA,NA,NA,"250.00",NA,NA
+"1228",1354439,"Closed fracture of unspecified vertebral column with spinal cord injury",NA,NA,NA,"263.9",NA,NA
+"1229",1367134,"Closed fracture of one rib",NA,NA,NA,"573.8",NA,NA
+"1230",1369932,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1231",1371287,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1232",1373189,NA,NA,NA,NA,"250.00",NA,"1373189"
+"1233",1380376,NA,NA,NA,NA,NA,NA,NA
+"1234",1400694,NA,NA,NA,NA,NA,NA,NA
+"1235",1406799,"Fracture of medial malleolus, closed",NA,NA,NA,"250.00",NA,NA
+"1236",1406973,"Aftercare for healing traumatic fracture of upper arm","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1237",1410467,NA,NA,NA,NA,"262",NA,NA
+"1238",1420438,NA,NA,NA,NA,"250.00",NA,"1420438"
+"1239",1427001,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1240",1430908,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1241",1459882,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,"250.02",NA,"1459882"
+"1242",1464277,"Closed fracture of three ribs",NA,NA,NA,NA,NA,NA
+"1243",1468726,NA,NA,NA,NA,"250.00",NA,NA
+"1244",1472584,NA,NA,NA,NA,NA,NA,NA
+"1245",1482705,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker",NA,NA,NA,NA,"1482705"
+"1246",1494918,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1247",1500950,"Closed fracture of malar and maxillary bones",NA,NA,NA,"579.8",NA,NA
+"1248",1500967,NA,"Current Every Day Smoker",NA,NA,"571.1",NA,"1500967"
+"1249",1510427,NA,NA,NA,"714.9",NA,NA,NA
+"1250",1516973,"Closed fracture of multiple ribs, unspecified","Current Every Day Smoker","V11.3",NA,"571.5",NA,NA
+"1251",1517088,"Closed fracture of neck of metacarpal bone(s)",NA,NA,NA,"571.8",NA,NA
+"1252",1518686,"Closed fracture of unspecified part of upper end of humerus",NA,NA,NA,NA,NA,NA
+"1253",1519557,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1254",1536366,NA,"Current Some Day Smoker",NA,NA,"242.90",NA,NA
+"1255",1537803,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1256",1550947,NA,"Current Every Day Smoker",NA,"714.0","250.20",NA,NA
+"1257",1553667,"Closed fracture of T1-T6 level with unspecified spinal cord injury",NA,"V11.3",NA,"571.2",NA,NA
+"1258",1554833,NA,"Current Every Day Smoker","V11.3",NA,"250.80",NA,NA
+"1259",1562507,NA,NA,NA,NA,NA,NA,NA
+"1260",1567268,NA,NA,NA,NA,"250.02",NA,NA
+"1261",1580081,"Closed fracture of head of radius","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1262",1583269,NA,NA,NA,NA,"250.00",NA,NA
+"1263",1583493,NA,NA,NA,NA,NA,NA,NA
+"1264",1584163,"Closed fracture of metatarsal bone(s)","Current Some Day Smoker",NA,NA,NA,NA,"1584163"
+"1265",1586329,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1266",1589817,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"1267",1600087,"Closed fracture of acromial process of scapula","Current Every Day Smoker",NA,"714.0","250.00",NA,"1600087"
+"1268",1607736,"Closed fracture of astragalus","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1269",1611245,"Closed fracture of rib(s), unspecified",NA,NA,NA,"250.00",NA,NA
+"1270",1612442,"Fracture of medial malleolus, closed",NA,NA,NA,"250.01",NA,NA
+"1271",1651994,NA,NA,NA,NA,NA,NA,NA
+"1272",1714808,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1714808"
+"1273",1735043,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"1274",1742921,"Closed fracture of base of other metacarpal bone(s)",NA,NA,NA,NA,NA,NA
+"1275",1747818,NA,NA,NA,NA,"250.02",NA,"1747818"
+"1276",1784762,NA,NA,NA,NA,"571.5",NA,"1784762"
+"1277",1786269,NA,NA,NA,NA,"263.0",NA,NA
+"1278",1876061,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1279",1931027,NA,NA,NA,NA,NA,NA,NA
+"1280",1932548,"Closed fracture of nasal bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1281",1938240,NA,NA,NA,NA,NA,NA,NA
+"1282",1946185,NA,NA,NA,NA,"250.00",NA,"1946185"
+"1283",1948623,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1284",1960885,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1285",2054718,NA,NA,NA,NA,NA,NA,NA
+"1286",2060137,NA,NA,NA,NA,NA,NA,NA
+"1287",2060223,NA,NA,NA,NA,NA,NA,NA
+"1288",2060225,NA,NA,NA,NA,"250.00",NA,NA
+"1289",2077471,NA,NA,NA,NA,NA,NA,NA
+"1290",2077472,NA,NA,NA,NA,NA,NA,NA
+"1291",154810,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1292",221739,NA,NA,NA,NA,NA,NA,NA
+"1293",258080,"Closed fracture of metacarpal bone(s), site unspecified","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1294",477928,"Pathologic fracture of other specified site",NA,NA,"714.30","250.80",NA,NA
+"1295",497778,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1296",508250,NA,NA,NA,NA,"250.80",NA,NA
+"1297",511872,NA,NA,NA,NA,NA,NA,NA
+"1298",562495,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1299",567975,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1300",581084,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"1301",733660,"Trimalleolar fracture, closed",NA,NA,"714.0",NA,NA,"733660"
+"1302",736323,NA,NA,NA,NA,"250.00",NA,NA
+"1303",776118,"Closed fracture of malar and maxillary bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1304",876776,NA,NA,NA,NA,NA,NA,NA
+"1305",883620,NA,"Current Every Day Smoker",NA,NA,"250.50",NA,NA
+"1306",910417,NA,NA,NA,NA,NA,NA,NA
+"1307",975698,NA,NA,NA,NA,NA,NA,NA
+"1308",1016308,NA,NA,NA,NA,"250.00",NA,NA
+"1309",1041850,NA,NA,NA,NA,"250.00",NA,NA
+"1310",1051296,NA,"Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"1311",1059562,"Closed fracture of one rib","Current Every Day Smoker","V11.3",NA,"571.3",NA,"1059562"
+"1312",1064533,"Closed fracture of sternum","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1313",1091025,"Closed fracture of surgical neck of humerus",NA,NA,NA,"250.00",NA,"1091025"
+"1314",1133539,"Closed fracture of scapula, other",NA,NA,NA,"250.00",NA,NA
+"1315",1140058,NA,NA,NA,NA,"250.00",NA,"1140058"
+"1316",1142526,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"E29.1",NA,"1142526"
+"1317",1144276,NA,NA,NA,NA,NA,NA,"1144276"
+"1318",1159524,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1319",1165191,NA,NA,NA,NA,"250.00",NA,NA
+"1320",1171380,NA,NA,NA,NA,NA,NA,NA
+"1321",1174587,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1322",1178570,NA,NA,NA,NA,"250.00",NA,"1178570"
+"1323",1179806,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1324",1181444,NA,"Current Some Day Smoker",NA,NA,NA,NA,"1181444"
+"1325",1239945,"Stress fracture of other bone","Current Every Day Smoker",NA,NA,NA,NA,"1239945"
+"1326",1257642,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"1327",1276993,NA,NA,NA,NA,NA,NA,NA
+"1328",1294685,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1294685"
+"1329",1295853,NA,"Current Some Day Smoker",NA,NA,"263.0",NA,"1295853"
+"1330",1310266,NA,NA,NA,NA,NA,NA,NA
+"1331",1317563,NA,NA,NA,NA,"573.3",NA,NA
+"1332",1320952,"Open fracture of shaft of fibula alone","Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"1333",1327374,NA,NA,NA,NA,NA,NA,NA
+"1334",1349740,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"1335",1358837,NA,NA,NA,NA,"250.00",NA,NA
+"1336",1369009,"Malunion of fracture","Current Every Day Smoker",NA,NA,NA,NA,"1369009"
+"1337",1378060,NA,NA,NA,NA,"250.80",NA,NA
+"1338",1396172,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1339",1424584,NA,NA,NA,NA,NA,NA,NA
+"1340",1436951,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"1341",1441399,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"1342",1441898,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"1343",1459163,NA,NA,NA,NA,"263.9",NA,"1459163"
+"1344",1473864,NA,NA,NA,NA,"250.00",NA,NA
+"1345",1475514,NA,NA,NA,NA,NA,NA,"1475514"
+"1346",1485837,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1347",1492016,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1348",1493232,NA,NA,NA,NA,"250.00",NA,NA
+"1349",1497774,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"1350",1501200,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,"250.00",NA,NA
+"1351",1503683,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1352",1507078,NA,NA,NA,NA,"250.00",NA,NA
+"1353",1508269,NA,NA,NA,NA,"571.8",NA,NA
+"1354",1512389,NA,"Current Every Day Smoker","V11.3",NA,NA,NA,NA
+"1355",1514749,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1356",1526627,NA,NA,NA,NA,"250.00",NA,NA
+"1357",1537093,"Fracture of lateral malleolus, closed",NA,NA,NA,"M81.0",NA,NA
+"1358",1540357,NA,NA,NA,NA,"263.9",NA,NA
+"1359",1545413,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,NA,"573.8",NA,"1545413"
+"1360",1550934,NA,NA,NA,NA,"250.00",NA,NA
+"1361",1554432,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1362",1554798,"Closed fracture of unspecified part of tibia alone",NA,NA,NA,"250.00",NA,"1554798"
+"1363",1559833,NA,NA,NA,NA,"250.00",NA,"1559833"
+"1364",1568216,"Closed fracture of other facial bones","Current Every Day Smoker",NA,NA,"250.80",NA,"1568216"
+"1365",1590652,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1590652"
+"1366",1591490,NA,NA,NA,NA,NA,NA,"1591490"
+"1367",1608435,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1368",1609602,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1369",1610499,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1370",1706020,NA,NA,NA,NA,"572.0",NA,"1706020"
+"1371",1706835,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1706835"
+"1372",1748489,NA,NA,NA,NA,"250.00",NA,NA
+"1373",1749796,NA,NA,NA,NA,NA,NA,NA
+"1374",1752093,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1375",1762318,"Closed fracture of other facial bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1376",1783394,NA,NA,NA,NA,NA,NA,NA
+"1377",1802903,NA,NA,NA,NA,NA,NA,NA
+"1378",1814237,NA,NA,NA,NA,"250.00",NA,"1814237"
+"1379",1833818,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1380",1839945,NA,NA,NA,NA,NA,NA,"1839945"
+"1381",1842778,NA,NA,NA,NA,NA,NA,NA
+"1382",1908297,NA,NA,NA,NA,NA,NA,NA
+"1383",1917893,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1917893"
+"1384",1949614,NA,NA,NA,NA,NA,NA,"1949614"
+"1385",2060535,NA,NA,NA,NA,NA,NA,NA
+"1386",2060568,NA,NA,NA,NA,NA,NA,NA
+"1387",2077476,NA,NA,NA,NA,NA,NA,NA
+"1388",238350,"Closed fracture of unspecified part of fibula alone",NA,NA,NA,NA,NA,NA
+"1389",302508,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1390",419826,NA,"Current Every Day Smoker",NA,NA,"250.80",NA,NA
+"1391",558446,NA,NA,NA,NA,NA,NA,NA
+"1392",572185,NA,NA,NA,NA,NA,NA,NA
+"1393",868228,NA,NA,NA,NA,"250.00",NA,NA
+"1394",983361,"Fracture of lateral malleolus, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1395",987393,NA,NA,NA,NA,"573.8",NA,NA
+"1396",1065404,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,"250.00",NA,"1065404"
+"1397",1141699,NA,NA,NA,"714.0",NA,"Z82.62","1141699"
+"1398",1193759,NA,NA,NA,NA,NA,NA,"1193759"
+"1399",1221839,"Closed fracture of metacarpal bone(s), site unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1400",1245721,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1401",1286653,NA,"Current Some Day Smoker",NA,NA,"571.5",NA,"1286653"
+"1402",1296507,NA,NA,NA,NA,"250.02",NA,NA
+"1403",1306750,NA,NA,NA,NA,NA,NA,NA
+"1404",1331591,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,"1331591"
+"1405",1336797,NA,NA,NA,NA,"250.02",NA,NA
+"1406",1340516,NA,NA,NA,NA,NA,NA,NA
+"1407",1343341,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"M81.0","V17.81",NA
+"1408",1344981,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1409",1355849,NA,NA,NA,NA,"250.00",NA,NA
+"1410",1371326,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"1411",1373393,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"573.8",NA,"1373393"
+"1412",1377312,NA,NA,NA,NA,NA,NA,NA
+"1413",1406468,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,NA
+"1414",1412008,NA,NA,NA,NA,"250.00",NA,NA
+"1415",1413266,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1416",1415098,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1417",1423267,"Closed fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,"261",NA,NA
+"1418",1425744,NA,NA,NA,NA,"250.00",NA,NA
+"1419",1452309,"Fracture of lateral malleolus, closed",NA,NA,NA,NA,NA,"1452309"
+"1420",1470985,"Closed fracture of middle or proximal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,"250.11",NA,"1470985"
+"1421",1478525,NA,"Current Some Day Smoker",NA,NA,NA,NA,"1478525"
+"1422",1494073,"Closed fracture of one rib",NA,NA,NA,"242.90",NA,NA
+"1423",1494264,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,NA,"250.90",NA,NA
+"1424",1499874,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,"1499874"
+"1425",1510623,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1426",1517204,"Unspecified fracture of ankle, closed",NA,NA,NA,"573.8",NA,NA
+"1427",1521387,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1428",1522831,NA,NA,NA,NA,"250.02",NA,"1522831"
+"1429",1532134,"Closed fracture of rib(s), unspecified",NA,NA,NA,"579.8",NA,NA
+"1430",1540646,NA,NA,NA,NA,"573.8",NA,NA
+"1431",1544851,"Stress fracture of the metatarsals",NA,NA,NA,"573.8",NA,NA
+"1432",1547020,NA,"Current Every Day Smoker","V11.3",NA,"242.90",NA,NA
+"1433",1554303,"Other closed fractures of distal end of radius (alone)","Current Some Day Smoker",NA,"714.0","M81.0",NA,"1554303"
+"1434",1558656,"Aftercare for healing traumatic fracture of other bone","Current Every Day Smoker",NA,NA,"250.00",NA,"1558656"
+"1435",1566067,"Closed fracture of nasal bones",NA,NA,"714.0","250.60",NA,NA
+"1436",1578875,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,NA,NA,"1578875"
+"1437",1579687,"Aftercare for healing traumatic fracture of lower leg",NA,NA,NA,NA,NA,NA
+"1438",1585987,"Fracture of unspecified bone, closed",NA,NA,NA,"573.3",NA,NA
+"1439",1589481,NA,NA,NA,NA,"250.00",NA,NA
+"1440",1591989,NA,NA,NA,NA,NA,NA,NA
+"1441",1595068,"Closed fracture of upper end of fibula alone",NA,NA,NA,"250.00",NA,"1595068"
+"1442",1596827,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"250.02",NA,NA
+"1443",1600620,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1444",1606567,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"1445",1606679,NA,NA,NA,NA,"E29.1",NA,"1606679"
+"1446",1607026,NA,NA,NA,NA,"250.70",NA,NA
+"1447",1607802,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1607802"
+"1448",1607820,"Closed fracture of one rib","Current Every Day Smoker",NA,NA,"250.70",NA,NA
+"1449",1702721,NA,NA,NA,NA,NA,NA,NA
+"1450",1738105,NA,NA,NA,NA,NA,NA,"1738105"
+"1451",1740533,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,NA,"262",NA,NA
+"1452",1792022,NA,NA,NA,NA,NA,NA,NA
+"1453",1835456,NA,NA,NA,NA,"M25.579",NA,NA
+"1454",1956193,NA,NA,NA,NA,NA,NA,NA
+"1455",2055726,NA,NA,NA,NA,NA,NA,"2055726"
+"1456",2056617,"Closed fracture of distal end of ulna (alone)",NA,NA,NA,NA,NA,NA
+"1457",2060706,NA,NA,NA,NA,NA,NA,NA
+"1458",2060708,"Fracture of one rib, right side, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"1459",2060748,"Closed fracture of unspecified vertebral column without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1460",2060754,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1461",2060757,NA,NA,NA,NA,NA,NA,"2060757"
+"1462",2077496,"Unspecified fracture of unspecified thoracic vertebra, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"1463",2077500,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1464",2077501,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"1465",2077503,NA,NA,NA,NA,NA,NA,NA
+"1466",123423,NA,NA,NA,NA,"263.1",NA,NA
+"1467",155346,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1468",243184,NA,NA,NA,NA,NA,NA,"243184"
+"1469",516323,NA,NA,NA,NA,NA,NA,"516323"
+"1470",529848,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1471",601780,NA,NA,NA,NA,"250.00",NA,NA
+"1472",902982,NA,NA,NA,NA,NA,NA,NA
+"1473",903777,"Closed fracture of carpal bone, unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1474",936051,NA,NA,NA,NA,NA,NA,NA
+"1475",993425,NA,NA,NA,NA,"250.00",NA,NA
+"1476",1070594,NA,NA,NA,NA,NA,NA,"1070594"
+"1477",1091478,NA,NA,NA,NA,"263.9",NA,NA
+"1478",1120179,NA,NA,NA,NA,NA,NA,NA
+"1479",1163510,NA,NA,NA,NA,NA,NA,NA
+"1480",1176761,NA,NA,NA,NA,NA,NA,NA
+"1481",1177990,NA,NA,NA,NA,"250.00",NA,NA
+"1482",1179353,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1483",1179672,NA,NA,NA,NA,NA,NA,NA
+"1484",1194497,NA,NA,NA,NA,"250.00",NA,NA
+"1485",1222387,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1486",1244152,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1487",1274721,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1274721"
+"1488",1274907,"Closed fracture of rib(s), unspecified",NA,NA,NA,"E29.1",NA,NA
+"1489",1285908,NA,NA,NA,NA,NA,NA,NA
+"1490",1286587,NA,NA,NA,NA,"242.90",NA,NA
+"1491",1289334,"Closed fracture of cervical vertebra, unspecified level",NA,NA,NA,NA,NA,NA
+"1492",1341710,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker",NA,NA,"250.80",NA,"1341710"
+"1493",1353863,NA,NA,NA,NA,"250.00",NA,NA
+"1494",1384495,NA,NA,NA,NA,"250.00",NA,"1384495"
+"1495",1396103,"Closed fracture of other facial bones",NA,NA,NA,NA,NA,NA
+"1496",1397229,"Trimalleolar fracture, closed",NA,NA,NA,"250.00",NA,"1397229"
+"1497",1439704,NA,NA,NA,NA,"250.00",NA,NA
+"1498",1443166,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"250.00",NA,NA
+"1499",1447520,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,NA,NA
+"1500",1452934,"Fracture of calcaneus, closed",NA,NA,"714.0",NA,NA,NA
+"1501",1459028,"Other closed transcervical fracture of neck of femur","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1502",1460986,NA,NA,NA,NA,"250.00",NA,NA
+"1503",1463345,"Open fracture of distal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1504",1464410,"Fracture of medial malleolus, closed",NA,NA,NA,"579.9",NA,NA
+"1505",1464995,NA,NA,NA,NA,NA,NA,"1464995"
+"1506",1499993,NA,NA,NA,NA,"250.50",NA,NA
+"1507",1523369,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1508",1527925,NA,NA,NA,NA,"250.00",NA,NA
+"1509",1535504,NA,NA,NA,NA,"250.00",NA,NA
+"1510",1539866,NA,"Current Every Day Smoker",NA,NA,"571.40",NA,NA
+"1511",1544015,"Closed fracture of multiple ribs, unspecified","Current Every Day Smoker",NA,NA,NA,NA,"1544015"
+"1512",1553677,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,NA,NA,NA
+"1513",1554089,NA,NA,NA,NA,"250.00",NA,NA
+"1514",1556007,"Closed fracture of mandible, unspecified site","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1515",1559053,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1516",1564768,"Unspecified fracture of ankle, closed",NA,NA,NA,"263.9",NA,"1564768"
+"1517",1593419,"Closed fracture of astragalus","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1518",1593577,NA,NA,NA,NA,"250.00",NA,NA
+"1519",1594098,"Closed fracture of intertrochanteric section of neck of femur","Current Every Day Smoker",NA,NA,NA,NA,"1594098"
+"1520",1599959,NA,NA,NA,NA,"250.00",NA,"1599959"
+"1521",1607732,NA,"Current Every Day Smoker",NA,NA,"573.9",NA,"1607732"
+"1522",1607865,NA,"Current Every Day Smoker",NA,NA,"250.92",NA,NA
+"1523",1726847,NA,NA,NA,NA,"250.51",NA,NA
+"1524",1739375,NA,NA,NA,NA,"573.3",NA,NA
+"1525",1774809,NA,NA,NA,NA,"250.00",NA,NA
+"1526",1814176,"Age-related osteoporosis without current pathological fracture","Current Every Day Smoker",NA,NA,"M81.0",NA,NA
+"1527",1950463,NA,NA,NA,NA,NA,NA,NA
+"1528",1959789,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1529",2028512,NA,NA,NA,NA,NA,NA,NA
+"1530",2060960,NA,NA,NA,NA,NA,NA,NA
+"1531",2060996,NA,NA,NA,NA,NA,NA,NA
+"1532",2061018,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1533",2061022,NA,NA,NA,NA,NA,NA,NA
+"1534",2061075,NA,NA,NA,NA,"573.8",NA,NA
+"1535",2077510,NA,NA,NA,NA,NA,NA,NA
+"1536",2077513,"Open fracture of phalanx or phalanges of hand, unspecified",NA,NA,NA,NA,NA,NA
+"1537",2077518,NA,NA,NA,NA,NA,NA,NA
+"1538",509654,NA,NA,NA,NA,NA,NA,NA
+"1539",518010,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1540",734561,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.80",NA,NA
+"1541",736588,"Closed unspecified fracture of pelvis",NA,NA,NA,"250.00",NA,NA
+"1542",795263,NA,NA,NA,NA,NA,NA,NA
+"1543",797363,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,"797363"
+"1544",1073746,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1545",1130086,NA,NA,NA,NA,"250.00",NA,NA
+"1546",1142581,"Fracture, cause unspecified",NA,NA,NA,NA,NA,"1142581"
+"1547",1164272,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"1548",1191181,"Late effect of intracranial injury without mention of skull fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1549",1193225,NA,NA,NA,NA,NA,NA,"1193225"
+"1550",1216398,NA,NA,NA,NA,"250.90",NA,NA
+"1551",1232191,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"1552",1244858,"Closed fracture of malar and maxillary bones","Current Some Day Smoker",NA,NA,NA,NA,NA
+"1553",1256159,NA,NA,NA,NA,"250.00",NA,NA
+"1554",1288669,NA,NA,NA,NA,"250.00",NA,NA
+"1555",1309890,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"1556",1310867,"Closed fracture of first cervical vertebra","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1557",1313586,NA,NA,NA,NA,"250.70",NA,NA
+"1558",1358712,NA,"Current Every Day Smoker",NA,NA,"573.3",NA,NA
+"1559",1399652,"Closed fracture of intertrochanteric section of neck of femur","Current Every Day Smoker",NA,NA,"262",NA,NA
+"1560",1416996,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1561",1444876,NA,NA,NA,NA,NA,NA,NA
+"1562",1448380,"Trimalleolar fracture, closed","Current Every Day Smoker",NA,NA,"263.9",NA,"1448380"
+"1563",1463971,NA,"Current Every Day Smoker",NA,NA,"263.0",NA,NA
+"1564",1472378,"Aftercare for healing traumatic fracture of other bone",NA,NA,NA,"250.00",NA,"1472378"
+"1565",1504271,"Closed fracture of head of radius",NA,NA,NA,"263.9",NA,NA
+"1566",1512577,NA,NA,NA,NA,"250.00",NA,NA
+"1567",1513198,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,"250.00",NA,NA
+"1568",1517235,NA,"Current Some Day Smoker",NA,"714.0","250.00",NA,NA
+"1569",1531377,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1531377"
+"1570",1538165,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1571",1539076,"Closed fracture of distal end of ulna (alone)",NA,NA,NA,"250.00",NA,NA
+"1572",1544268,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1544268"
+"1573",1560563,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,NA,NA,NA
+"1574",1569428,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1575",1569507,NA,NA,NA,NA,"573.9",NA,NA
+"1576",1572422,"Closed fracture of upper end of fibula alone",NA,NA,NA,"250.00",NA,NA
+"1577",1574763,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,"1574763"
+"1578",1575863,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1579",1579816,NA,NA,NA,NA,NA,NA,NA
+"1580",1584482,NA,NA,NA,NA,NA,NA,NA
+"1581",1592764,NA,NA,NA,NA,NA,NA,NA
+"1582",1600761,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,"1600761"
+"1583",1603095,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1584",1604014,"Closed fracture of navicular [scaphoid] bone of wrist","Current Every Day Smoker",NA,"714.0","250.00",NA,"1604014"
+"1585",1604075,NA,NA,NA,NA,"250.00",NA,NA
+"1586",1605484,"Closed fracture of one rib",NA,NA,NA,"250.81",NA,NA
+"1587",1608652,NA,NA,NA,NA,"250.11",NA,NA
+"1588",1610442,NA,NA,NA,NA,NA,NA,NA
+"1589",1615376,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1590",1655997,NA,NA,NA,"714.0",NA,NA,"1655997"
+"1591",1830902,NA,NA,NA,"714.9",NA,NA,NA
+"1592",1832989,NA,"Smoker, Current Status Unknown",NA,NA,"262",NA,"1832989"
+"1593",1877389,NA,NA,NA,NA,"250.00",NA,"1877389"
+"1594",1956678,NA,NA,NA,NA,NA,NA,NA
+"1595",2034284,NA,NA,NA,NA,NA,NA,NA
+"1596",2054604,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1597",2061168,NA,NA,NA,NA,NA,NA,NA
+"1598",2061219,NA,NA,NA,NA,NA,NA,NA
+"1599",2061270,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1600",2077532,NA,NA,NA,NA,NA,NA,NA
+"1601",2077537,NA,NA,NA,NA,NA,NA,NA
+"1602",2077540,"Closed fracture of unspecified part of tibia alone","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1603",2077544,"Other closed fractures of distal end of radius (alone)","Current Some Day Smoker",NA,NA,NA,NA,NA
+"1604",168991,NA,"Current Every Day Smoker",NA,NA,"M25.579",NA,"168991"
+"1605",260362,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1606",528141,NA,NA,NA,NA,NA,NA,NA
+"1607",723799,NA,NA,NA,NA,NA,NA,NA
+"1608",832918,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"832918"
+"1609",856893,"Bimalleolar fracture, closed",NA,NA,NA,"250.01",NA,NA
+"1610",860980,NA,NA,NA,NA,NA,NA,NA
+"1611",981296,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1612",1064092,NA,NA,NA,NA,NA,NA,NA
+"1613",1064302,NA,"Current Some Day Smoker",NA,NA,"573.8",NA,NA
+"1614",1070231,"Trimalleolar fracture, closed",NA,NA,NA,"250.00",NA,"1070231"
+"1615",1243898,NA,NA,NA,NA,"250.00",NA,NA
+"1616",1265178,NA,NA,NA,NA,"250.00",NA,NA
+"1617",1273234,NA,NA,NA,NA,"250.00",NA,NA
+"1618",1396983,"Closed fracture of carpal bone, unspecified",NA,NA,NA,NA,"V17.81","1396983"
+"1619",1408025,NA,NA,NA,NA,NA,NA,NA
+"1620",1426923,"Closed fracture of base of thumb [first] metacarpal",NA,NA,NA,"242.00",NA,"1426923"
+"1621",1463781,"Unspecified fracture of ankle, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1622",1484026,NA,NA,NA,NA,NA,NA,"1484026"
+"1623",1484563,NA,NA,NA,NA,NA,NA,NA
+"1624",1484798,"Open fracture of unspecified part of fibula with tibia","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1625",1485826,"Closed fracture of acromial process of scapula",NA,NA,NA,"573.3",NA,"1485826"
+"1626",1506684,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,NA
+"1627",1518083,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.20",NA,NA
+"1628",1522570,NA,"Current Every Day Smoker",NA,NA,"573.9",NA,"1522570"
+"1629",1528850,NA,NA,NA,NA,"250.01",NA,"1528850"
+"1630",1541047,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1631",1543538,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1543538"
+"1632",1549381,"Closed fracture of unspecified part of femur","Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"1633",1580192,NA,NA,NA,NA,NA,NA,NA
+"1634",1586716,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,"714.0","250.60",NA,NA
+"1635",1603111,NA,NA,NA,NA,"250.00",NA,"1603111"
+"1636",1716380,NA,NA,NA,NA,NA,NA,NA
+"1637",1772840,NA,NA,NA,NA,"250.02",NA,NA
+"1638",1816898,NA,NA,NA,NA,"263.9",NA,NA
+"1639",1833079,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,NA,NA,NA
+"1640",1840566,NA,NA,NA,NA,NA,NA,NA
+"1641",1972628,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1642",2061400,NA,NA,NA,NA,"250.00",NA,NA
+"1643",2061431,NA,NA,NA,NA,NA,NA,NA
+"1644",2077546,NA,NA,NA,NA,NA,NA,NA
+"1645",2077554,NA,NA,NA,NA,NA,NA,NA
+"1646",24311,NA,NA,NA,NA,NA,NA,NA
+"1647",247360,NA,NA,NA,NA,NA,NA,NA
+"1648",632025,NA,NA,NA,NA,NA,NA,NA
+"1649",814682,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1650",1014329,NA,NA,NA,NA,"250.00",NA,NA
+"1651",1072929,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,NA
+"1652",1126722,NA,NA,NA,NA,"250.00",NA,"1126722"
+"1653",1126742,"Closed fracture of base of skull without mention of intra cranial injury, with loss of consciousness of unspecified duration","Current Every Day Smoker",NA,NA,NA,NA,"1126742"
+"1654",1186544,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1655",1198009,NA,NA,NA,NA,NA,NA,NA
+"1656",1209340,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1657",1220216,NA,NA,NA,NA,NA,NA,NA
+"1658",1238626,NA,NA,NA,NA,"250.83",NA,NA
+"1659",1317673,NA,NA,NA,NA,"250.00",NA,NA
+"1660",1353627,NA,NA,NA,NA,"250.00",NA,NA
+"1661",1409436,"Closed fracture of unspecified part of ulna (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1662",1427964,NA,NA,NA,NA,NA,NA,NA
+"1663",1434007,"Other closed transcervical fracture of neck of femur","Current Some Day Smoker",NA,NA,NA,NA,"1434007"
+"1664",1439361,NA,NA,NA,NA,NA,NA,NA
+"1665",1453197,NA,NA,NA,NA,"263.9",NA,NA
+"1666",1489015,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1667",1502876,NA,NA,NA,NA,"250.02",NA,NA
+"1668",1511270,"Other closed fracture of upper end of humerus","Current Every Day Smoker",NA,NA,"250.00",NA,"1511270"
+"1669",1527121,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1670",1528367,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,"1528367"
+"1671",1542855,"Closed fracture of vault of skull without mention of intracranial injury, with loss of consciousness of unspecified duration",NA,NA,NA,"263.9",NA,"1542855"
+"1672",1563327,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1673",1581779,NA,NA,NA,NA,"250.00",NA,"1581779"
+"1674",1592267,NA,NA,NA,NA,"250.00",NA,"1592267"
+"1675",1610850,"Closed fracture of metacarpal bone(s), site unspecified","Current Every Day Smoker",NA,NA,"E29.1",NA,NA
+"1676",1613775,"Other closed fractures of distal end of radius (alone)","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"1677",1614605,NA,NA,NA,NA,"250.00",NA,"1614605"
+"1678",1761609,NA,NA,NA,NA,"M25.572",NA,"1761609"
+"1679",1920303,NA,NA,NA,NA,NA,NA,NA
+"1680",1942451,NA,NA,NA,NA,NA,NA,NA
+"1681",2061488,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1682",2061497,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1683",2061506,NA,NA,NA,NA,"263.9",NA,NA
+"1684",2061509,NA,NA,NA,NA,NA,NA,"2061509"
+"1685",2061510,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1686",2061531,NA,"Current Every Day Smoker",NA,NA,"250.80",NA,NA
+"1687",2077555,NA,NA,NA,NA,NA,NA,"2077555"
+"1688",2077559,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1689",2077560,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1690",2077561,"Closed fracture of lower end of femur, unspecified part",NA,NA,NA,NA,NA,"2077561"
+"1691",498881,"Closed fracture of triquetral [cuneiform] bone of wrist",NA,NA,NA,NA,NA,NA
+"1692",523291,NA,NA,NA,NA,NA,NA,NA
+"1693",609732,"Closed fracture of cervical vertebra, unspecified level",NA,NA,NA,NA,NA,NA
+"1694",697503,NA,NA,NA,NA,"250.00",NA,NA
+"1695",749291,NA,NA,NA,NA,"250.01",NA,NA
+"1696",779195,NA,"Current Some Day Smoker",NA,NA,NA,NA,"779195"
+"1697",813319,NA,NA,NA,NA,NA,NA,NA
+"1698",956362,NA,NA,NA,NA,NA,NA,NA
+"1699",980597,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1700",1061920,NA,"Current Every Day Smoker",NA,NA,"E29.1",NA,NA
+"1701",1064658,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1702",1066354,NA,NA,NA,"714.0","571.8",NA,NA
+"1703",1068279,NA,NA,NA,NA,NA,NA,"1068279"
+"1704",1072488,"Pathologic fracture of other specified site","Current Every Day Smoker",NA,"714.0","M81.0",NA,"1072488"
+"1705",1096394,NA,NA,NA,NA,NA,NA,NA
+"1706",1123948,NA,NA,NA,NA,"250.00",NA,NA
+"1707",1153197,"Closed fracture of phalanx or phalanges of hand, unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1708",1186147,"Closed fracture of middle or proximal phalanx or phalanges of hand",NA,NA,NA,NA,NA,"1186147"
+"1709",1188437,"Nonunion of fracture",NA,"V11.3",NA,"571.3",NA,NA
+"1710",1193237,NA,NA,NA,NA,"250.00",NA,NA
+"1711",1354448,NA,NA,NA,NA,"250.00",NA,NA
+"1712",1361735,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1713",1379876,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1714",1383287,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"571.8",NA,NA
+"1715",1384443,NA,NA,NA,NA,"250.00",NA,NA
+"1716",1418010,NA,NA,NA,NA,NA,NA,NA
+"1717",1421197,"Fracture of lateral malleolus, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1718",1428489,NA,NA,NA,NA,NA,NA,NA
+"1719",1452473,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,"250.80",NA,NA
+"1720",1455915,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1721",1458392,NA,NA,NA,NA,NA,"V17.81",NA
+"1722",1473042,NA,NA,NA,NA,"250.00",NA,NA
+"1723",1486244,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,NA
+"1724",1496267,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1725",1509502,NA,NA,NA,NA,"250.00",NA,NA
+"1726",1512058,NA,NA,NA,NA,NA,NA,NA
+"1727",1513968,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"250.02",NA,"1513968"
+"1728",1523679,"Closed fracture of scapula, unspecified part","Current Every Day Smoker",NA,NA,NA,NA,"1523679"
+"1729",1524620,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"1730",1537873,"Closed fracture of greater tuberosity of humerus","Current Every Day Smoker",NA,NA,"573.9",NA,NA
+"1731",1541254,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"573.3",NA,NA
+"1732",1547687,NA,NA,NA,NA,NA,NA,NA
+"1733",1552800,NA,NA,NA,NA,NA,NA,NA
+"1734",1555761,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"1735",1568065,"Pathologic fracture of vertebrae",NA,NA,NA,"250.00",NA,"1568065"
+"1736",1578045,"Closed fracture of rib(s), unspecified","Current Every Day Smoker","V11.3",NA,"263.9",NA,"1578045"
+"1737",1589518,"Fracture, cause unspecified","Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"1738",1594541,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1739",1599608,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Some Day Smoker",NA,NA,NA,NA,NA
+"1740",1616363,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1741",1775848,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1742",1790870,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1790870"
+"1743",1832131,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1744",1926041,"Personal history of traumatic fracture",NA,NA,NA,"263.9",NA,NA
+"1745",1949446,NA,NA,NA,NA,"250.00",NA,"1949446"
+"1746",2036635,NA,NA,NA,NA,NA,NA,NA
+"1747",2057862,"Closed fracture of acetabulum",NA,NA,NA,NA,NA,NA
+"1748",2061571,NA,NA,NA,NA,NA,NA,NA
+"1749",2061685,"Closed fracture of unspecified part of femur",NA,NA,NA,NA,NA,NA
+"1750",2061755,NA,NA,NA,NA,NA,NA,NA
+"1751",2061850,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1752",2077566,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1753",2077567,NA,NA,NA,NA,NA,NA,NA
+"1754",51841,"Fracture of unspecified bone, closed","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1755",451127,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1756",723994,NA,"Current Some Day Smoker",NA,NA,"E29.1",NA,"723994"
+"1757",753520,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1758",799838,NA,NA,NA,NA,"250.00",NA,NA
+"1759",849791,NA,NA,NA,NA,"250.00",NA,NA
+"1760",955341,NA,NA,NA,NA,"250.00",NA,"955341"
+"1761",1076201,NA,NA,NA,NA,NA,NA,NA
+"1762",1090728,"Closed fracture of mandible, unspecified site","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"1763",1093766,NA,"Current Some Day Smoker",NA,NA,NA,NA,"1093766"
+"1764",1104155,NA,NA,NA,NA,"250.00",NA,NA
+"1765",1147296,"Closed fracture of sixth cervical vertebra","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1766",1218003,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"M81.0","V17.81",NA
+"1767",1241127,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1768",1260352,NA,NA,NA,NA,NA,NA,NA
+"1769",1284511,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1770",1296982,NA,NA,NA,NA,NA,NA,NA
+"1771",1303384,"Closed fracture of other facial bones",NA,NA,"714.0","250.00",NA,NA
+"1772",1310150,NA,NA,NA,NA,NA,NA,NA
+"1773",1318430,NA,NA,NA,NA,NA,NA,NA
+"1774",1324385,NA,NA,NA,NA,"250.00",NA,"1324385"
+"1775",1334330,NA,NA,NA,NA,NA,NA,NA
+"1776",1374044,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,NA,NA,NA
+"1777",1435777,NA,NA,NA,NA,NA,NA,NA
+"1778",1453982,"Pathologic fracture of vertebrae",NA,NA,NA,NA,NA,"1453982"
+"1779",1461023,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1780",1476017,NA,NA,NA,NA,NA,NA,NA
+"1781",1505366,NA,NA,NA,"714.0","250.00",NA,NA
+"1782",1511405,NA,NA,NA,NA,"250.00",NA,NA
+"1783",1520536,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,"1520536"
+"1784",1527297,NA,NA,NA,NA,NA,NA,NA
+"1785",1551202,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"1786",1551751,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1787",1555352,"Closed fracture of orbital floor (blow-out)","Current Every Day Smoker","V11.3",NA,"263.9",NA,"1555352"
+"1788",1557957,NA,NA,NA,NA,NA,NA,NA
+"1789",1565482,"Fracture, cause unspecified",NA,NA,NA,"250.02",NA,NA
+"1790",1566984,"Closed fracture of unspecified part of fibula with tibia","Current Every Day Smoker",NA,NA,"263.9",NA,"1566984"
+"1791",1576724,"Closed fracture of distal end of ulna (alone)","Current Every Day Smoker","K70.30",NA,"571.2",NA,NA
+"1792",1587368,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1587368"
+"1793",1588471,"Late effect of fracture of upper extremities",NA,NA,NA,"250.00",NA,NA
+"1794",1589271,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1589271"
+"1795",1599856,"Pathologic fracture of other specified site",NA,NA,NA,NA,NA,"1599856"
+"1796",1601203,NA,NA,NA,NA,NA,NA,NA
+"1797",1645898,NA,NA,NA,NA,"250.00",NA,NA
+"1798",1647392,"Displaced fracture of greater trochanter of unspecified femur, initial encounter for closed fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1799",1707487,NA,NA,NA,NA,NA,NA,NA
+"1800",1819259,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"1801",1831221,NA,NA,NA,NA,"250.00",NA,NA
+"1802",1837693,NA,NA,NA,NA,"250.00",NA,NA
+"1803",1840453,NA,NA,NA,NA,"263.9",NA,NA
+"1804",2062000,"Fracture, cause unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1805",2062001,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1806",2062086,NA,NA,NA,NA,NA,NA,NA
+"1807",2077590,NA,NA,NA,NA,NA,NA,NA
+"1808",2077612,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1809",2077616,NA,NA,NA,NA,NA,NA,NA
+"1810",307074,NA,NA,NA,NA,NA,NA,NA
+"1811",669239,"Closed fracture of unspecified part of femur","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1812",724962,NA,NA,NA,NA,NA,NA,NA
+"1813",765491,NA,NA,NA,NA,"250.00",NA,NA
+"1814",770791,NA,NA,NA,NA,NA,NA,NA
+"1815",889232,NA,NA,NA,NA,"573.8",NA,NA
+"1816",969623,NA,NA,NA,NA,"250.00",NA,NA
+"1817",988964,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,"988964"
+"1818",991535,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"991535"
+"1819",1014348,NA,NA,NA,NA,NA,NA,NA
+"1820",1017029,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1821",1100314,"Closed fracture of unspecified part of tibia alone",NA,NA,NA,"250.00",NA,NA
+"1822",1139615,"Closed fracture of nasal bones",NA,NA,NA,"250.01",NA,NA
+"1823",1142569,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1142569"
+"1824",1145822,"Closed fracture of other facial bones",NA,NA,NA,"250.00",NA,NA
+"1825",1163860,"Closed fracture of upper end of tibia alone","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1826",1188737,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1827",1232456,"Closed fracture of malar and maxillary bones",NA,NA,NA,NA,NA,NA
+"1828",1253068,"Closed fracture of two ribs",NA,NA,NA,NA,NA,"1253068"
+"1829",1255206,NA,NA,NA,NA,"250.00",NA,NA
+"1830",1342620,"Closed fracture of base of skull with intracranial injury of other and unspecified nature, with no loss of consciousness","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1831",1381859,"Closed fracture of epiphysis (separation) (upper) of neck of femur",NA,NA,NA,NA,NA,NA
+"1832",1393451,"Closed fracture of rib(s), unspecified",NA,NA,"714.0","250.00",NA,"1393451"
+"1833",1401388,"Closed fracture of mandible, coronoid process",NA,NA,NA,"250.00",NA,NA
+"1834",1427859,NA,NA,NA,NA,"250.00",NA,NA
+"1835",1437273,NA,NA,NA,NA,NA,NA,NA
+"1836",1438952,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1837",1442437,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,"1442437"
+"1838",1447129,NA,NA,NA,NA,"573.8",NA,NA
+"1839",1475233,"Closed fracture of olecranon process of ulna",NA,NA,NA,"262",NA,NA
+"1840",1498744,NA,NA,NA,"714.0","571.8",NA,NA
+"1841",1506461,NA,NA,NA,NA,NA,NA,NA
+"1842",1527456,NA,NA,NA,NA,"250.00",NA,NA
+"1843",1528484,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1844",1531264,NA,NA,NA,NA,NA,NA,NA
+"1845",1532588,"Closed fracture of multiple ribs, unspecified","Current Every Day Smoker","V11.3",NA,"571.1",NA,NA
+"1846",1548136,"Late effect of fracture of skull and face bones","Current Every Day Smoker",NA,NA,"250.51",NA,NA
+"1847",1562292,"Other closed transcervical fracture of neck of femur",NA,"V11.3",NA,"573.8",NA,NA
+"1848",1565699,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,"1565699"
+"1849",1575275,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1850",1577129,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,NA
+"1851",1582190,NA,NA,NA,NA,NA,NA,NA
+"1852",1582424,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,NA
+"1853",1584612,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1584612"
+"1854",1588024,"Closed fracture of upper end of fibula with tibia","Current Some Day Smoker",NA,NA,"250.01",NA,"1588024"
+"1855",1595683,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"573.8",NA,"1595683"
+"1856",1608896,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"1857",1611334,NA,NA,NA,NA,"263.9",NA,NA
+"1858",1612813,"Pathologic fracture of vertebrae","Current Every Day Smoker",NA,NA,"263.9",NA,"1612813"
+"1859",1720581,NA,NA,NA,NA,NA,NA,NA
+"1860",1753643,NA,NA,NA,NA,"250.00",NA,NA
+"1861",1820649,"Closed fracture of surgical neck of humerus",NA,NA,NA,NA,NA,NA
+"1862",2031439,NA,NA,NA,NA,NA,NA,NA
+"1863",2041024,NA,"Current Every Day Smoker",NA,NA,NA,NA,"2041024"
+"1864",2062170,NA,NA,NA,NA,NA,NA,NA
+"1865",2062323,NA,NA,NA,NA,NA,NA,NA
+"1866",2062330,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1867",2062342,NA,NA,NA,NA,NA,NA,NA
+"1868",2062385,NA,NA,NA,NA,NA,NA,NA
+"1869",2077617,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1870",2077635,NA,NA,NA,NA,NA,NA,NA
+"1871",7179,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1872",297370,NA,NA,NA,NA,NA,NA,NA
+"1873",354963,"Unspecified fracture of facial bones, initial encounter for closed fracture",NA,NA,NA,"250.00",NA,NA
+"1874",849865,NA,"Current Every Day Smoker",NA,NA,NA,NA,"849865"
+"1875",974927,NA,NA,NA,NA,NA,NA,NA
+"1876",979315,NA,NA,NA,NA,NA,NA,NA
+"1877",1006394,NA,NA,NA,"714.9","242.90",NA,"1006394"
+"1878",1043028,NA,NA,NA,NA,"573.3",NA,NA
+"1879",1103054,NA,"Current Every Day Smoker",NA,NA,"250.80",NA,NA
+"1880",1117083,NA,NA,NA,NA,NA,NA,NA
+"1881",1152993,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1882",1174517,NA,NA,NA,NA,"250.00",NA,NA
+"1883",1209249,NA,NA,NA,NA,NA,NA,NA
+"1884",1267644,NA,NA,NA,NA,NA,NA,NA
+"1885",1275171,NA,NA,"V11.3",NA,"250.00",NA,NA
+"1886",1311952,"Unspecified fracture of ankle, open","Current Every Day Smoker",NA,NA,"262",NA,NA
+"1887",1324172,NA,NA,NA,NA,"250.00",NA,NA
+"1888",1333483,"Closed fracture of clavicle, unspecified part",NA,NA,NA,NA,NA,"1333483"
+"1889",1333812,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,NA,NA,NA
+"1890",1407619,NA,NA,NA,NA,"250.80",NA,NA
+"1891",1433212,NA,NA,NA,"714.9","250.02",NA,NA
+"1892",1434196,NA,NA,NA,NA,"250.40",NA,NA
+"1893",1442752,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1894",1460051,NA,NA,NA,NA,NA,NA,NA
+"1895",1467445,NA,NA,NA,NA,"263.9",NA,NA
+"1896",1470522,NA,NA,NA,NA,"242.90",NA,NA
+"1897",1472859,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1472859"
+"1898",1491107,"Closed fracture of second cervical vertebra","Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"1899",1493032,NA,NA,NA,NA,NA,NA,NA
+"1900",1498335,NA,NA,NA,NA,"250.82",NA,NA
+"1901",1504263,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.02",NA,NA
+"1902",1505666,NA,NA,NA,NA,NA,NA,NA
+"1903",1513874,NA,NA,NA,"714.0",NA,NA,NA
+"1904",1524631,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"M81.0",NA,NA
+"1905",1540660,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"1906",1549664,"Closed fracture of metacarpal bone(s), site unspecified","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"1907",1556986,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"250.00",NA,"1556986"
+"1908",1568667,"Open fracture of unspecified part of fibula with tibia",NA,NA,NA,NA,NA,NA
+"1909",1577114,NA,NA,NA,NA,"250.00",NA,NA
+"1910",1582036,NA,NA,NA,NA,"250.00",NA,NA
+"1911",1593694,NA,NA,NA,"714.0","250.00",NA,"1593694"
+"1912",1600272,"Open Monteggia's fracture","Current Every Day Smoker",NA,NA,"M25.571",NA,NA
+"1913",1603743,NA,NA,NA,NA,NA,NA,NA
+"1914",1605272,"Closed fracture of pubis",NA,NA,NA,"250.00",NA,NA
+"1915",1607100,NA,NA,NA,"714.9","250.00",NA,"1607100"
+"1916",1607646,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1607646"
+"1917",1610594,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"262",NA,NA
+"1918",1638011,NA,NA,NA,NA,NA,NA,"1638011"
+"1919",1801121,NA,NA,NA,NA,NA,NA,NA
+"1920",1809730,NA,NA,NA,NA,NA,NA,NA
+"1921",1827591,NA,NA,NA,NA,NA,NA,"1827591"
+"1922",1907750,NA,NA,NA,NA,"250.00",NA,NA
+"1923",2062332,NA,NA,NA,NA,NA,NA,NA
+"1924",2062624,NA,NA,NA,NA,"263.9",NA,"2062624"
+"1925",2062635,NA,NA,NA,NA,NA,NA,"2062635"
+"1926",2062710,NA,NA,NA,NA,NA,NA,NA
+"1927",2062721,NA,NA,NA,NA,NA,NA,NA
+"1928",2077636,NA,NA,NA,NA,NA,NA,NA
+"1929",2077640,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,NA,NA,NA
+"1930",2077646,NA,NA,NA,NA,NA,NA,NA
+"1931",50208,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1932",179370,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"M25.571",NA,NA
+"1933",205870,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1934",219113,NA,NA,NA,NA,NA,NA,NA
+"1935",502016,NA,NA,NA,NA,NA,NA,NA
+"1936",627824,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,"250.00",NA,NA
+"1937",733045,NA,NA,NA,NA,"573.8",NA,"733045"
+"1938",785048,NA,NA,NA,NA,NA,NA,"785048"
+"1939",884855,"Fracture of unspecified bone, closed",NA,NA,NA,NA,NA,NA
+"1940",1000162,"Closed fracture of malar and maxillary bones","Current Some Day Smoker",NA,NA,NA,NA,NA
+"1941",1057778,NA,NA,NA,NA,"250.00",NA,NA
+"1942",1146607,NA,NA,NA,NA,NA,NA,NA
+"1943",1180020,NA,NA,NA,NA,NA,NA,NA
+"1944",1190224,"Closed fracture of scapula, unspecified part",NA,NA,"714.0","250.00",NA,"1190224"
+"1945",1238142,NA,NA,NA,NA,NA,NA,NA
+"1946",1244876,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1947",1246550,NA,NA,NA,NA,"571.5",NA,NA
+"1948",1253984,"Closed fracture of one or more phalanges of foot",NA,NA,NA,NA,"V17.81",NA
+"1949",1271618,NA,NA,NA,NA,"250.00",NA,"1271618"
+"1950",1290834,NA,NA,NA,NA,"571.5",NA,NA
+"1951",1316823,NA,NA,NA,NA,"250.00",NA,NA
+"1952",1317035,"Open fracture of unspecified part of ulna (alone)",NA,NA,NA,NA,NA,NA
+"1953",1319421,"Closed fracture of intertrochanteric section of neck of femur",NA,NA,NA,"M81.0",NA,NA
+"1954",1333534,"Stress fracture of other bone",NA,NA,NA,"250.80",NA,"1333534"
+"1955",1379114,NA,NA,NA,NA,NA,NA,NA
+"1956",1395529,NA,NA,NA,NA,NA,NA,NA
+"1957",1399406,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1958",1401700,"Closed fracture of three ribs",NA,NA,NA,"573.3",NA,NA
+"1959",1411275,NA,NA,NA,NA,NA,NA,"1411275"
+"1960",1476700,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1476700"
+"1961",1513787,"Closed fracture of patella",NA,NA,NA,"250.02",NA,NA
+"1962",1519526,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"250.00",NA,"1519526"
+"1963",1531524,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1964",1540262,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"573.9",NA,NA
+"1965",1541827,"Closed fracture of lumbar spine with spinal cord injury","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"1966",1567885,"Closed fracture of carpal bone, unspecified",NA,NA,NA,NA,NA,NA
+"1967",1584293,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,NA,NA,"1584293"
+"1968",1600132,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1969",1612758,"Closed fracture of unspecified part of humerus",NA,NA,NA,"250.00",NA,NA
+"1970",1614301,NA,"Current Every Day Smoker",NA,"714.9","250.00",NA,"1614301"
+"1971",1779116,"Closed fracture of fifth cervical vertebra",NA,NA,NA,NA,NA,NA
+"1972",1835633,NA,NA,NA,NA,NA,NA,NA
+"1973",1919347,NA,NA,NA,NA,NA,NA,NA
+"1974",2027862,NA,NA,NA,NA,NA,NA,NA
+"1975",2054592,NA,"Current Every Day Smoker",NA,NA,NA,NA,"2054592"
+"1976",2062588,NA,NA,NA,NA,NA,NA,NA
+"1977",2062877,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"1978",2062883,NA,NA,NA,NA,NA,NA,NA
+"1979",2062912,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1980",2062922,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1981",2062923,NA,"Current Every Day Smoker",NA,NA,NA,NA,"2062923"
+"1982",2062935,"Closed fracture of unspecified part of humerus",NA,NA,NA,NA,NA,NA
+"1983",2062960,NA,NA,NA,NA,NA,NA,NA
+"1984",2077653,"LeFort I fracture, initial encounter for closed fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"1985",2077672,NA,NA,NA,NA,NA,NA,NA
+"1986",7420,NA,"Current Every Day Smoker",NA,NA,NA,NA,"7420"
+"1987",449785,NA,NA,NA,NA,NA,NA,NA
+"1988",631797,"Closed fracture of unspecified part of femur",NA,NA,NA,NA,NA,NA
+"1989",735637,NA,NA,NA,NA,NA,NA,NA
+"1990",794917,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1991",809169,NA,NA,NA,NA,NA,NA,NA
+"1992",810298,NA,NA,NA,NA,"250.01",NA,NA
+"1993",868638,NA,NA,NA,NA,NA,NA,NA
+"1994",957139,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"1995",1036599,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"1996",1093541,NA,NA,NA,NA,"250.00",NA,NA
+"1997",1250798,"Personal history of traumatic fracture",NA,NA,NA,"250.00",NA,NA
+"1998",1273290,"Malunion of fracture","Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"1999",1280682,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2000",1323010,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"2001",1420200,NA,NA,NA,NA,"250.00",NA,NA
+"2002",1457478,NA,NA,NA,NA,NA,NA,NA
+"2003",1469692,"Pathologic fracture of other specified site",NA,NA,NA,NA,NA,NA
+"2004",1487277,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2005",1487897,NA,NA,NA,NA,NA,NA,NA
+"2006",1510012,NA,NA,NA,NA,"250.00",NA,NA
+"2007",1521583,NA,NA,NA,NA,"250.00",NA,NA
+"2008",1529142,NA,NA,NA,NA,"250.40",NA,"1529142"
+"2009",1542209,NA,NA,NA,NA,NA,NA,"1542209"
+"2010",1574998,"Closed fracture of two ribs",NA,NA,NA,"250.61",NA,"1574998"
+"2011",1575532,NA,NA,NA,NA,"579.8",NA,NA
+"2012",1580677,NA,NA,NA,NA,NA,NA,NA
+"2013",1581012,NA,NA,NA,"714.0","250.60",NA,"1581012"
+"2014",1582917,NA,NA,NA,NA,NA,NA,NA
+"2015",1588758,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2016",1786108,NA,NA,NA,NA,NA,NA,NA
+"2017",1798338,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1798338"
+"2018",2060892,NA,NA,NA,NA,NA,NA,NA
+"2019",2062875,NA,NA,NA,NA,NA,NA,NA
+"2020",2062963,NA,NA,NA,NA,NA,NA,NA
+"2021",2063043,NA,NA,NA,NA,NA,NA,NA
+"2022",2063051,NA,NA,NA,NA,NA,NA,"2063051"
+"2023",2063070,"Closed fracture of second cervical vertebra",NA,NA,NA,NA,NA,NA
+"2024",2063076,NA,NA,NA,NA,NA,NA,NA
+"2025",2063086,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,NA,NA,NA
+"2026",2077679,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"2027",249101,NA,NA,NA,NA,NA,NA,NA
+"2028",325795,NA,NA,NA,NA,NA,NA,NA
+"2029",521295,NA,NA,NA,NA,NA,NA,"521295"
+"2030",791109,NA,NA,NA,NA,NA,NA,NA
+"2031",866231,NA,NA,NA,NA,NA,NA,NA
+"2032",917755,"Malunion of fracture","Current Some Day Smoker",NA,NA,"250.00",NA,"917755"
+"2033",920787,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"2034",1115419,NA,NA,NA,NA,"250.02",NA,"1115419"
+"2035",1122314,NA,NA,NA,NA,NA,NA,NA
+"2036",1132395,"Closed fracture of upper end of tibia alone",NA,NA,NA,"250.90",NA,NA
+"2037",1166435,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2038",1237519,NA,NA,NA,NA,NA,NA,NA
+"2039",1242219,NA,NA,NA,NA,"250.00",NA,NA
+"2040",1291411,NA,NA,NA,NA,"250.00",NA,NA
+"2041",1305234,"Closed fracture of rib(s), unspecified",NA,"F10.11",NA,"263.9",NA,"1305234"
+"2042",1329404,NA,NA,"V11.3",NA,NA,NA,"1329404"
+"2043",1355856,NA,NA,NA,NA,NA,NA,NA
+"2044",1387423,NA,NA,NA,NA,"250.00",NA,"1387423"
+"2045",1388851,NA,NA,NA,NA,"M25.572",NA,NA
+"2046",1418549,NA,NA,NA,NA,NA,NA,NA
+"2047",1481057,NA,NA,NA,NA,"263.0",NA,NA
+"2048",1482291,"Closed fracture of two ribs",NA,NA,NA,"M81.0",NA,NA
+"2049",1490821,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1490821"
+"2050",1498272,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,"1498272"
+"2051",1504095,"Closed Colles' fracture",NA,NA,NA,NA,NA,NA
+"2052",1518694,NA,NA,NA,NA,"250.00",NA,NA
+"2053",1544339,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2054",1554880,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2055",1570958,"Closed fracture of rib(s), unspecified","Current Every Day Smoker",NA,"714.0","250.00",NA,"1570958"
+"2056",1592630,NA,"Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"2057",1593384,NA,NA,NA,NA,"250.00",NA,NA
+"2058",1593720,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2059",1607912,NA,NA,NA,NA,"250.00",NA,"1607912"
+"2060",1658624,NA,"Current Every Day Smoker",NA,NA,"242.90",NA,NA
+"2061",1716076,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,NA,NA,NA
+"2062",1721677,NA,NA,NA,NA,NA,NA,NA
+"2063",1814865,NA,NA,NA,NA,NA,NA,NA
+"2064",1841541,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2065",1936086,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"2066",2063099,NA,NA,NA,NA,NA,NA,NA
+"2067",2063101,NA,NA,NA,NA,NA,NA,NA
+"2068",2063102,"Closed fracture of acetabulum",NA,NA,NA,NA,NA,NA
+"2069",2063106,NA,NA,NA,NA,NA,NA,NA
+"2070",2063121,NA,NA,NA,NA,NA,NA,NA
+"2071",2077694,NA,NA,NA,NA,"250.60",NA,NA
+"2072",274850,NA,NA,NA,NA,NA,NA,NA
+"2073",471552,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2074",786193,NA,"Current Every Day Smoker",NA,NA,NA,NA,"786193"
+"2075",860204,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2076",872506,NA,NA,NA,NA,NA,NA,NA
+"2077",894684,NA,NA,NA,NA,NA,NA,NA
+"2078",926510,NA,"Current Every Day Smoker",NA,"714.0","250.00",NA,NA
+"2079",983524,"Other closed fractures of distal end of radius (alone)","Current Some Day Smoker",NA,NA,"M25.572",NA,NA
+"2080",985253,"Closed fracture of unspecified part of lower end of humerus",NA,NA,NA,NA,NA,NA
+"2081",1000870,"Fracture of unspecified part of scapula, unspecified shoulder, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"2082",1190192,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2083",1221299,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,NA
+"2084",1258322,NA,NA,NA,NA,"573.8",NA,NA
+"2085",1259299,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2086",1276770,NA,NA,NA,NA,NA,NA,NA
+"2087",1280567,"Closed fracture of patella",NA,NA,NA,NA,NA,NA
+"2088",1295415,NA,NA,NA,NA,NA,NA,NA
+"2089",1356677,NA,NA,NA,NA,NA,NA,NA
+"2090",1362188,NA,NA,NA,NA,NA,NA,NA
+"2091",1429434,NA,NA,NA,NA,"250.00",NA,NA
+"2092",1455492,NA,NA,NA,NA,"250.00",NA,"1455492"
+"2093",1474321,NA,NA,NA,NA,NA,NA,NA
+"2094",1513340,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2095",1543713,NA,NA,NA,NA,"250.92",NA,NA
+"2096",1543884,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1543884"
+"2097",1544357,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker","V11.3",NA,"571.1",NA,NA
+"2098",1547875,"Closed fracture of one rib",NA,NA,NA,"250.00",NA,"1547875"
+"2099",1567617,NA,NA,NA,NA,"250.00",NA,"1567617"
+"2100",1588493,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2101",1604331,NA,"Current Every Day Smoker",NA,NA,"242.00",NA,NA
+"2102",1607860,NA,NA,NA,NA,"250.01",NA,"1607860"
+"2103",1608178,NA,NA,NA,NA,"250.00",NA,NA
+"2104",1611657,"Closed fracture of metacarpal bone(s), site unspecified",NA,NA,NA,"250.00",NA,NA
+"2105",1746617,NA,NA,NA,NA,NA,NA,NA
+"2106",1823187,NA,NA,NA,NA,"263.8",NA,"1823187"
+"2107",1877185,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2108",1947136,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2109",2063177,NA,NA,NA,NA,NA,NA,NA
+"2110",2063187,NA,NA,NA,NA,NA,NA,"2063187"
+"2111",2063195,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"2112",2063210,NA,NA,NA,NA,"250.00",NA,NA
+"2113",2077699,NA,NA,NA,NA,NA,NA,NA
+"2114",2077700,NA,NA,NA,NA,NA,NA,"2077700"
+"2115",2077702,NA,NA,NA,NA,NA,NA,NA
+"2116",2077703,NA,NA,NA,NA,NA,NA,NA
+"2117",2077704,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2118",796215,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,"796215"
+"2119",919639,NA,NA,NA,NA,"250.00",NA,NA
+"2120",923779,NA,NA,NA,NA,"250.51",NA,NA
+"2121",975146,"Closed fracture of other facial bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2122",1090044,NA,NA,NA,NA,NA,NA,NA
+"2123",1098353,"Closed fracture of malar and maxillary bones",NA,NA,NA,"250.00",NA,NA
+"2124",1121126,NA,NA,NA,NA,"250.00",NA,NA
+"2125",1157770,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"573.8",NA,NA
+"2126",1205356,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2127",1208172,NA,NA,NA,NA,NA,NA,"1208172"
+"2128",1357403,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"2129",1385263,NA,NA,NA,NA,NA,NA,NA
+"2130",1404634,NA,NA,NA,NA,NA,NA,NA
+"2131",1430526,NA,NA,NA,NA,"250.00",NA,NA
+"2132",1432291,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2133",1437279,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"2134",1470151,NA,NA,NA,NA,"250.00",NA,NA
+"2135",1478588,NA,NA,NA,NA,NA,NA,NA
+"2136",1507854,"Fracture of calcaneus, closed","Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2137",1513507,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"2138",1514247,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,"714.0","250.00",NA,NA
+"2139",1541534,NA,NA,NA,NA,NA,NA,NA
+"2140",1547207,"Age-related osteoporosis without current pathological fracture",NA,NA,"714.0","573.8",NA,NA
+"2141",1554651,NA,NA,NA,NA,"573.8",NA,"1554651"
+"2142",1563547,NA,"Current Some Day Smoker",NA,NA,"263.9",NA,NA
+"2143",1564760,NA,NA,NA,NA,"250.82",NA,NA
+"2144",1574801,"Closed fracture of one rib",NA,NA,"714.0",NA,NA,"1574801"
+"2145",1606735,NA,"Current Some Day Smoker",NA,NA,"263.9",NA,NA
+"2146",1608433,NA,NA,NA,NA,"250.00",NA,NA
+"2147",1609117,"Closed fracture of midcervical section of neck of femur","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2148",1617669,"Closed fracture of multiple ribs, unspecified",NA,NA,NA,"250.90",NA,"1617669"
+"2149",1713287,NA,NA,NA,NA,"250.00",NA,NA
+"2150",1716845,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1716845"
+"2151",1727266,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2152",1880699,NA,NA,NA,NA,NA,NA,NA
+"2153",1931853,NA,NA,NA,NA,NA,NA,"1931853"
+"2154",1936840,NA,NA,NA,NA,NA,NA,NA
+"2155",1939605,NA,NA,NA,NA,NA,NA,NA
+"2156",2063314,NA,"Current Some Day Smoker",NA,NA,"571.5",NA,NA
+"2157",2063316,NA,NA,NA,NA,"571.5",NA,NA
+"2158",2063355,"Closed fracture of unspecified part of forearm",NA,NA,NA,"250.00",NA,NA
+"2159",92204,NA,NA,NA,NA,NA,NA,NA
+"2160",98823,NA,NA,NA,NA,NA,NA,"98823"
+"2161",161373,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"2162",192873,NA,NA,NA,NA,NA,NA,NA
+"2163",269503,NA,NA,NA,NA,NA,NA,NA
+"2164",322462,NA,"Current Every Day Smoker",NA,NA,"263.1",NA,NA
+"2165",335297,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2166",412193,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2167",427701,"Bimalleolar fracture, open","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2168",492175,NA,NA,NA,NA,NA,NA,NA
+"2169",494595,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2170",510630,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2171",959185,NA,NA,NA,NA,NA,NA,NA
+"2172",965371,NA,NA,NA,NA,NA,NA,"965371"
+"2173",1019823,NA,NA,NA,NA,"250.90",NA,NA
+"2174",1048849,NA,NA,NA,NA,NA,NA,"1048849"
+"2175",1070879,"Closed fracture of rib(s), unspecified","Current Every Day Smoker","V11.3",NA,"250.00",NA,"1070879"
+"2176",1158599,NA,NA,NA,NA,"250.00",NA,NA
+"2177",1168190,"Closed fracture of unspecified part of fibula with tibia",NA,NA,NA,NA,NA,NA
+"2178",1205557,NA,NA,NA,NA,"250.00",NA,"1205557"
+"2179",1210138,"Closed fracture of patella",NA,NA,NA,NA,NA,NA
+"2180",1245316,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1245316"
+"2181",1256698,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2182",1258745,NA,NA,NA,NA,NA,NA,NA
+"2183",1275636,NA,NA,NA,NA,"250.00",NA,"1275636"
+"2184",1286991,"Closed fracture of unspecified part of upper end of humerus","Current Some Day Smoker",NA,NA,"250.00",NA,"1286991"
+"2185",1303430,NA,NA,NA,NA,NA,NA,NA
+"2186",1320460,NA,NA,NA,NA,"250.00",NA,NA
+"2187",1345714,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"250.02",NA,NA
+"2188",1356079,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,NA,NA,NA
+"2189",1361026,"Late effect of intracranial injury without mention of skull fracture",NA,NA,"714.0",NA,NA,NA
+"2190",1367659,"Closed fracture of nasal bones",NA,NA,NA,"263.8",NA,NA
+"2191",1375600,NA,NA,NA,NA,NA,NA,NA
+"2192",1380430,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2193",1389701,NA,NA,NA,NA,"M25.579",NA,"1389701"
+"2194",1394256,"Closed fracture of metatarsal bone(s)",NA,NA,NA,"250.00",NA,NA
+"2195",1404448,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"2196",1407094,NA,NA,NA,NA,"250.60",NA,"1407094"
+"2197",1437964,"Follow-up examination, following treatment of healed fracture",NA,NA,NA,"250.00",NA,NA
+"2198",1443276,"Closed fracture of shaft of humerus",NA,NA,NA,"250.00",NA,NA
+"2199",1492409,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"2200",1495151,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,"714.0","250.00",NA,NA
+"2201",1528534,NA,NA,NA,NA,"250.00",NA,NA
+"2202",1554013,"Bimalleolar fracture, closed",NA,NA,NA,NA,NA,NA
+"2203",1559900,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1559900"
+"2204",1572212,"Closed fracture of unspecified part of upper end of humerus",NA,NA,NA,NA,NA,NA
+"2205",1598194,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2206",1601347,NA,NA,NA,NA,NA,NA,NA
+"2207",1603628,NA,NA,NA,NA,NA,NA,NA
+"2208",1605909,"Closed fracture of carpal bone, unspecified","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2209",1612180,"Closed fracture of pubis",NA,NA,NA,"250.00",NA,"1612180"
+"2210",1659466,NA,NA,NA,NA,NA,NA,NA
+"2211",1734204,NA,NA,NA,NA,NA,NA,NA
+"2212",1772448,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2213",1928333,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1928333"
+"2214",2063525,NA,NA,NA,NA,NA,NA,NA
+"2215",2063527,NA,NA,NA,NA,NA,NA,NA
+"2216",2063549,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2217",2063568,"Closed fracture of lumbar vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"2218",2063582,NA,NA,NA,NA,NA,NA,NA
+"2219",2063637,NA,NA,NA,NA,NA,NA,NA
+"2220",2063641,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2221",2063735,"Closed fracture of rib(s), unspecified",NA,NA,NA,NA,NA,NA
+"2222",455665,NA,NA,NA,NA,NA,NA,NA
+"2223",494941,NA,NA,NA,NA,NA,NA,NA
+"2224",664086,"Closed fracture of surgical neck of humerus",NA,NA,NA,NA,NA,NA
+"2225",809397,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2226",911147,NA,NA,NA,NA,NA,NA,NA
+"2227",957058,NA,NA,NA,NA,NA,NA,NA
+"2228",1031814,"Other closed fracture of upper end of humerus",NA,NA,NA,NA,NA,NA
+"2229",1032530,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2230",1038359,NA,NA,NA,NA,"250.00",NA,NA
+"2231",1054011,"Nonunion of fracture",NA,NA,NA,NA,NA,NA
+"2232",1121987,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"2233",1134278,"Aftercare for healing traumatic fracture of lower leg","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2234",1160820,NA,NA,NA,NA,NA,NA,"1160820"
+"2235",1163844,"Unspecified fracture of ankle, closed",NA,NA,NA,NA,NA,NA
+"2236",1184682,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2237",1203784,NA,NA,NA,NA,NA,NA,"1203784"
+"2238",1204244,NA,NA,NA,NA,NA,NA,NA
+"2239",1235293,NA,NA,NA,NA,NA,NA,"1235293"
+"2240",1291184,NA,NA,NA,NA,NA,NA,"1291184"
+"2241",1294903,NA,NA,NA,NA,NA,NA,NA
+"2242",1297680,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1297680"
+"2243",1310840,"Closed fracture of second cervical vertebra",NA,NA,NA,"263.9",NA,NA
+"2244",1311881,"Other closed transcervical fracture of neck of femur",NA,NA,NA,"250.00",NA,NA
+"2245",1395358,NA,NA,NA,NA,NA,NA,NA
+"2246",1398863,NA,NA,NA,NA,NA,NA,NA
+"2247",1455104,"Closed fracture of base of skull with subarachnoid, subdural, and extradural hemorrhage, with loss of consciousness of unspecified duration","Current Every Day Smoker",NA,NA,"573.8",NA,"1455104"
+"2248",1469965,NA,"Current Every Day Smoker",NA,"714.0",NA,NA,NA
+"2249",1476025,NA,NA,NA,NA,NA,NA,NA
+"2250",1484895,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury","Current Some Day Smoker",NA,NA,"263.0",NA,"1484895"
+"2251",1486259,NA,NA,NA,NA,"571.8",NA,"1486259"
+"2252",1522262,"Closed fracture of one or more phalanges of foot","Current Every Day Smoker",NA,NA,"250.01",NA,NA
+"2253",1524148,NA,NA,NA,NA,NA,NA,NA
+"2254",1555757,NA,NA,NA,NA,NA,NA,NA
+"2255",1557808,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2256",1560362,NA,NA,NA,NA,"250.00",NA,"1560362"
+"2257",1582385,NA,NA,NA,NA,"250.03",NA,"1582385"
+"2258",1614677,NA,"Current Every Day Smoker",NA,NA,NA,NA,"1614677"
+"2259",1637825,"Multiple fractures of ribs, right side, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"2260",1746802,"Closed fracture of one rib","Current Every Day Smoker",NA,"714.9","573.3",NA,NA
+"2261",1748556,"Other closed transcervical fracture of neck of femur","Current Every Day Smoker",NA,NA,"263.9",NA,"1748556"
+"2262",1778428,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2263",1781783,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1781783"
+"2264",1912774,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2265",2058755,NA,NA,NA,NA,NA,NA,NA
+"2266",2063920,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2267",2064917,NA,NA,NA,NA,NA,NA,NA
+"2268",2077768,NA,NA,NA,NA,NA,NA,NA
+"2269",2077784,NA,NA,NA,NA,NA,NA,NA
+"2270",2077786,NA,NA,NA,NA,NA,NA,NA
+"2271",739597,NA,NA,NA,NA,"250.00",NA,NA
+"2272",951064,NA,NA,NA,NA,NA,NA,NA
+"2273",1004007,"Fracture of medial malleolus, closed",NA,NA,NA,"250.90",NA,NA
+"2274",1273920,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"263.9",NA,NA
+"2275",1293759,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2276",1294802,"Closed fracture of glenoid cavity and neck of scapula",NA,NA,NA,"250.00",NA,NA
+"2277",1403469,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"250.00",NA,"1403469"
+"2278",1484115,NA,"Current Every Day Smoker",NA,NA,"573.9",NA,NA
+"2279",1551317,"Closed fracture of seventh cervical vertebra","Current Every Day Smoker","K70.30",NA,"571.2",NA,NA
+"2280",1562880,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2281",1571489,"Closed fracture of orbital floor (blow-out)","Current Every Day Smoker",NA,NA,"573.3",NA,NA
+"2282",1606565,NA,NA,NA,NA,NA,NA,NA
+"2283",1607685,"Open fracture of distal phalanx or phalanges of hand",NA,NA,NA,"250.00",NA,NA
+"2284",1613007,"Late effect of intracranial injury without mention of skull fracture","Current Every Day Smoker","V11.3",NA,"250.00",NA,NA
+"2285",1744879,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2286",2055655,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2287",1583606,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2288",671038,NA,NA,NA,NA,NA,NA,NA
+"2289",761348,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"2290",1408446,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,"1408446"
+"2291",1577304,NA,NA,NA,NA,"250.02",NA,NA
+"2292",1594258,NA,NA,NA,NA,"263.0",NA,NA
+"2293",1713988,NA,NA,NA,NA,NA,NA,NA
+"2294",1720558,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,"1720558"
+"2295",1737437,NA,NA,NA,NA,NA,NA,NA
+"2296",2032162,NA,NA,NA,NA,NA,NA,NA
+"2297",663903,NA,"Current Every Day Smoker",NA,NA,NA,NA,"663903"
+"2298",1405877,NA,NA,NA,NA,"250.02",NA,NA
+"2299",1434897,NA,NA,NA,NA,"242.90",NA,NA
+"2300",1442630,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2301",1515545,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2302",1843199,"Closed fracture of unspecified part of upper end of humerus","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2303",29633,"Closed fracture of unspecified part of upper end of humerus",NA,NA,NA,NA,NA,NA
+"2304",1610153,NA,NA,NA,NA,NA,NA,NA
+"2305",818205,"Closed fracture of greater tuberosity of humerus",NA,NA,NA,NA,NA,NA
+"2306",1235870,NA,NA,NA,NA,"250.02",NA,NA
+"2307",1266959,NA,NA,NA,NA,NA,NA,NA
+"2308",1522145,NA,NA,NA,NA,"250.00",NA,NA
+"2309",1999645,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"2310",2062904,NA,NA,NA,NA,NA,NA,NA
+"2311",133382,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2312",1253029,"Follow-up examination, following treatment of healed fracture","Current Every Day Smoker",NA,NA,NA,NA,"1253029"
+"2313",1356241,"Fracture of lateral malleolus, closed",NA,NA,NA,NA,NA,NA
+"2314",1589558,NA,NA,NA,NA,NA,NA,NA
+"2315",2063135,NA,NA,NA,NA,NA,NA,NA
+"2316",1807694,NA,NA,NA,NA,NA,NA,NA
+"2317",1200989,NA,"Current Some Day Smoker",NA,NA,"M25.572",NA,"1200989"
+"2318",240840,"Closed fracture of shaft of fibula with tibia","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2319",829882,NA,NA,NA,NA,"250.03",NA,NA
+"2320",839508,NA,"Current Every Day Smoker",NA,NA,"250.02",NA,NA
+"2321",1406805,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2322",1832900,NA,NA,NA,NA,NA,NA,NA
+"2323",1838682,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2324",1131458,NA,NA,NA,NA,NA,NA,NA
+"2325",1266690,NA,NA,NA,NA,"250.00",NA,NA
+"2326",1421791,"Closed fracture of one or more phalanges of foot","Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"2327",1759907,NA,NA,NA,NA,NA,NA,NA
+"2328",1782256,NA,NA,NA,NA,NA,NA,NA
+"2329",2058005,NA,NA,NA,NA,NA,NA,NA
+"2330",1257100,NA,NA,NA,"714.0",NA,NA,NA
+"2331",1279806,NA,NA,NA,NA,NA,NA,"1279806"
+"2332",1302457,NA,NA,NA,"714.0","250.00","V17.81",NA
+"2333",1531448,NA,NA,NA,NA,"263.9",NA,NA
+"2334",1627206,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2335",1718526,NA,NA,NA,NA,"250.00",NA,NA
+"2336",617540,"Unspecified fracture of the lower end of right radius, initial encounter for closed fracture",NA,NA,NA,"571.8",NA,NA
+"2337",878499,NA,NA,NA,NA,NA,NA,NA
+"2338",1130747,NA,NA,NA,NA,"250.00",NA,NA
+"2339",1625681,"Closed fracture of upper end of fibula alone",NA,NA,NA,NA,NA,NA
+"2340",1649835,NA,NA,NA,NA,"250.00",NA,NA
+"2341",66940,NA,NA,NA,NA,"250.00",NA,NA
+"2342",184079,"Closed Colles' fracture",NA,NA,NA,NA,NA,NA
+"2343",532792,"Fracture of neck, unspecified, initial encounter",NA,NA,NA,"250.00",NA,NA
+"2344",1484793,NA,NA,NA,NA,"250.00",NA,NA
+"2345",1564549,"Other closed fracture of upper end of humerus","Current Some Day Smoker","S42.291A",NA,NA,NA,NA
+"2346",2060969,"Colles' fracture of left radius, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"2347",76619,"Closed fracture of lumbar vertebra without mention of spinal cord injury","Current Every Day Smoker",NA,NA,"571.5",NA,NA
+"2348",1598315,"Closed fracture of two ribs",NA,"V11.3",NA,"250.11",NA,"1598315"
+"2349",2031135,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2350",1452705,NA,"Current Every Day Smoker",NA,NA,"573.8",NA,NA
+"2351",1722728,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2352",1740122,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"2353",1918471,NA,NA,NA,NA,NA,NA,NA
+"2354",901318,"Fracture of lateral malleolus, closed",NA,NA,NA,"250.50",NA,NA
+"2355",1727274,NA,NA,NA,NA,"250.00",NA,NA
+"2356",1993325,"Closed fracture of metatarsal bone(s)",NA,NA,NA,NA,NA,NA
+"2357",1059025,"Closed fracture of sacrum and coccyx without mention of spinal cord injury","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2358",1561251,NA,NA,"K70.10",NA,"250.00",NA,NA
+"2359",97068,"Displaced bimalleolar fracture of left lower leg, initial encounter for closed fracture","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2360",285807,NA,NA,NA,NA,NA,NA,"285807"
+"2361",1346482,NA,"Current Every Day Smoker",NA,NA,"250.90",NA,NA
+"2362",1770684,"Closed fracture of dorsal [thoracic] vertebra without mention of spinal cord injury",NA,NA,NA,NA,NA,NA
+"2363",244547,NA,NA,NA,NA,NA,NA,NA
+"2364",1336826,NA,"Current Every Day Smoker",NA,NA,"250.41",NA,NA
+"2365",1607543,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2366",1709640,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2367",1957104,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2368",1460780,NA,"Current Every Day Smoker","V11.3",NA,"250.00",NA,"1460780"
+"2369",1549146,NA,NA,NA,NA,NA,NA,NA
+"2370",1752107,NA,NA,NA,NA,NA,NA,NA
+"2371",337873,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"2372",515285,NA,"Current Every Day Smoker",NA,NA,NA,NA,"515285"
+"2373",1126628,NA,NA,NA,NA,NA,NA,NA
+"2374",1158334,NA,NA,NA,NA,NA,NA,NA
+"2375",1163703,"Closed fracture of distal phalanx or phalanges of hand",NA,NA,NA,NA,NA,NA
+"2376",1334030,NA,"Current Every Day Smoker",NA,NA,"573.3",NA,NA
+"2377",1408383,NA,NA,NA,NA,"250.93",NA,NA
+"2378",1602463,"Closed fracture of acromial end of clavicle",NA,NA,NA,NA,NA,NA
+"2379",1877775,"Fracture of lateral malleolus, closed",NA,NA,NA,"M25.579",NA,NA
+"2380",301299,NA,NA,NA,NA,NA,NA,NA
+"2381",360390,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2382",1600271,NA,NA,NA,NA,NA,NA,"1600271"
+"2383",1909734,NA,NA,NA,NA,NA,NA,NA
+"2384",1477175,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2385",644018,"Closed fracture of unspecified part of neck of femur",NA,NA,NA,"250.00",NA,NA
+"2386",1730560,NA,NA,NA,NA,NA,NA,NA
+"2387",1733627,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2388",952474,NA,NA,NA,NA,"250.00",NA,NA
+"2389",1397341,NA,NA,NA,NA,NA,NA,NA
+"2390",724297,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2391",1730205,NA,NA,NA,NA,"250.00",NA,NA
+"2392",1756023,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2393",1793854,"Age-related osteoporosis without current pathological fracture",NA,NA,NA,"M81.0",NA,"1793854"
+"2394",211810,"Fracture, cause unspecified","Current Every Day Smoker",NA,NA,NA,NA,"211810"
+"2395",1051139,NA,NA,NA,NA,NA,NA,"1051139"
+"2396",1516367,"Closed fracture of base of other metacarpal bone(s)",NA,NA,NA,NA,NA,NA
+"2397",626198,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2398",1230353,NA,NA,NA,NA,"250.00",NA,"1230353"
+"2399",1395798,NA,NA,NA,NA,"250.01",NA,NA
+"2400",1400768,"Open fracture of other specified part of pelvis","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2401",1560350,NA,NA,NA,NA,NA,NA,NA
+"2402",1790182,NA,NA,NA,NA,NA,NA,NA
+"2403",1825733,NA,NA,NA,NA,NA,NA,NA
+"2404",39535,NA,NA,NA,NA,NA,NA,NA
+"2405",502567,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2406",622049,NA,NA,NA,NA,NA,NA,NA
+"2407",1487413,NA,"Current Every Day Smoker",NA,NA,"250.80",NA,NA
+"2408",1289094,NA,NA,NA,NA,NA,NA,NA
+"2409",930174,"Closed fracture of six ribs","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2410",1482247,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication","Current Every Day Smoker",NA,NA,"573.3",NA,NA
+"2411",2061286,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2412",792047,NA,NA,NA,NA,"250.00",NA,NA
+"2413",1609610,"Closed fracture of base of other metacarpal bone(s)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2414",1284303,NA,NA,NA,NA,NA,NA,NA
+"2415",1081513,"Closed fracture of pubis",NA,NA,NA,NA,NA,NA
+"2416",1283595,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2417",1803760,NA,NA,NA,NA,NA,NA,NA
+"2418",1605837,NA,NA,NA,NA,NA,NA,NA
+"2419",1559612,NA,"Current Some Day Smoker",NA,NA,"250.00",NA,NA
+"2420",1612440,NA,"Current Every Day Smoker","K70.10",NA,"571.5",NA,NA
+"2421",1909089,NA,NA,NA,NA,NA,NA,NA
+"2422",159065,NA,NA,NA,NA,NA,NA,NA
+"2423",737810,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2424",883343,NA,NA,NA,NA,NA,NA,"883343"
+"2425",1950919,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2426",1948200,NA,NA,NA,NA,NA,NA,NA
+"2427",1069723,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2428",1482874,NA,NA,NA,NA,NA,NA,NA
+"2429",1500748,NA,NA,NA,NA,"M25.579",NA,NA
+"2430",1588798,"Unspecified fracture of ankle, closed",NA,NA,NA,"250.00",NA,"1588798"
+"2431",1607770,"Other closed fractures of distal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2432",961124,NA,"Current Some Day Smoker",NA,NA,NA,NA,NA
+"2433",276113,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2434",1184265,NA,NA,NA,NA,NA,NA,NA
+"2435",1508378,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2436",674765,NA,NA,NA,NA,NA,NA,NA
+"2437",1660468,NA,NA,NA,NA,"250.00",NA,NA
+"2438",1107696,NA,NA,NA,NA,NA,NA,NA
+"2439",1604693,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2440",877774,"Closed fracture of one or more phalanges of foot",NA,NA,NA,"242.00",NA,NA
+"2441",1343197,"Closed fracture of malar and maxillary bones","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2442",1448097,NA,NA,NA,NA,NA,NA,NA
+"2443",1913985,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2444",1922598,NA,NA,NA,NA,"250.00",NA,NA
+"2445",1500977,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2446",1589521,NA,"Current Every Day Smoker",NA,NA,"242.80",NA,NA
+"2447",1747213,NA,NA,NA,NA,"250.00",NA,NA
+"2448",1133899,NA,NA,NA,NA,"250.00",NA,NA
+"2449",1177474,NA,NA,NA,NA,NA,NA,NA
+"2450",1780228,NA,NA,NA,NA,NA,NA,NA
+"2451",2063206,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2452",1378078,"Closed fracture of metacarpal bone(s), site unspecified","Current Every Day Smoker","V11.3",NA,"573.3",NA,NA
+"2453",2060090,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2454",642886,NA,NA,NA,NA,NA,NA,NA
+"2455",638041,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2456",1303405,"Other and unspecified closed fractures of proximal end of radius (alone)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2457",1407871,NA,NA,NA,NA,NA,NA,NA
+"2458",946352,"Closed fracture of middle or proximal phalanx or phalanges of hand","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2459",1200476,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2460",1740723,NA,NA,NA,NA,NA,NA,NA
+"2461",179921,NA,NA,NA,NA,NA,NA,NA
+"2462",1736063,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,"573.3",NA,"1736063"
+"2463",872460,NA,NA,NA,NA,"571.5",NA,NA
+"2464",343847,NA,NA,NA,NA,NA,NA,NA
+"2465",1258771,NA,NA,NA,NA,"250.00",NA,NA
+"2466",1875376,NA,NA,NA,NA,NA,NA,NA
+"2467",1031948,NA,NA,NA,NA,NA,NA,NA
+"2468",1311956,"Closed fracture of C5-C7 level with unspecified spinal cord injury",NA,NA,NA,"263.9",NA,NA
+"2469",1027115,NA,NA,NA,NA,NA,NA,NA
+"2470",1092061,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.00",NA,NA
+"2471",1193334,NA,NA,NA,NA,"250.00",NA,NA
+"2472",882141,NA,NA,NA,NA,"250.40",NA,NA
+"2473",1612780,"Closed fracture of trochanteric section of neck of femur","Current Every Day Smoker","V11.3",NA,NA,NA,NA
+"2474",740002,"Pathologic fracture of vertebrae",NA,NA,NA,NA,NA,NA
+"2475",1010144,NA,NA,NA,NA,NA,NA,NA
+"2476",1948338,NA,"Current Every Day Smoker",NA,NA,"250.00",NA,NA
+"2477",1905168,NA,NA,NA,NA,NA,NA,NA
+"2478",1960103,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2479",338015,NA,NA,NA,NA,NA,NA,NA
+"2480",1279050,NA,NA,NA,NA,NA,NA,NA
+"2481",1761682,NA,NA,NA,NA,NA,NA,NA
+"2482",325000,NA,NA,NA,NA,"250.00",NA,NA
+"2483",1609175,"Closed fracture of metatarsal bone(s)","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2484",1016088,NA,NA,NA,NA,"242.90",NA,NA
+"2485",1620344,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2486",1826206,NA,NA,NA,NA,NA,NA,"1826206"
+"2487",1270333,NA,NA,NA,"714.0",NA,NA,NA
+"2488",1936837,NA,NA,NA,NA,NA,NA,NA
+"2489",1626650,NA,NA,NA,NA,"250.00",NA,NA
+"2490",850704,"Late effect of intracranial injury without mention of skull fracture",NA,NA,NA,NA,NA,"850704"
+"2491",1781285,NA,NA,NA,NA,NA,NA,NA
+"2492",673095,NA,NA,NA,NA,"250.00",NA,NA
+"2493",1317934,NA,NA,NA,"714.9",NA,NA,"1317934"
+"2494",738867,NA,NA,NA,NA,"250.00",NA,"738867"
+"2495",2044366,NA,NA,NA,NA,NA,NA,NA
+"2496",63652,NA,NA,NA,NA,NA,NA,NA
+"2497",592831,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2498",1740532,NA,NA,NA,NA,NA,NA,NA
+"2499",1510369,NA,NA,NA,NA,NA,NA,NA
+"2500",1607972,"Closed fracture of nasal bones",NA,NA,NA,"571.5",NA,NA
+"2501",1917068,NA,NA,NA,NA,NA,NA,NA
+"2502",1018728,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2503",1599027,"Closed fracture of unspecified part of fibula with tibia","Current Every Day Smoker",NA,NA,NA,NA,NA
+"2504",1654775,NA,NA,NA,NA,NA,NA,NA
+"2505",1453923,NA,NA,NA,NA,NA,NA,"1453923"
+"2506",2058480,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2507",1110918,"Other closed fractures of distal end of radius (alone)",NA,NA,NA,NA,NA,NA
+"2508",935981,"Open wound of tooth (broken) (fractured) (due to trauma), without mention of complication",NA,NA,NA,"250.10",NA,NA
+"2509",1927334,NA,NA,NA,NA,NA,NA,NA
+"2510",684921,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2511",254645,NA,NA,NA,NA,NA,NA,NA
+"2512",1788000,NA,NA,NA,NA,NA,NA,"1788000"
+"2513",794000,NA,NA,NA,NA,NA,NA,"794000"
+"2514",1504068,"Closed fracture of one rib",NA,NA,"714.89","250.00",NA,NA
+"2515",1365231,"Open fracture of malar and maxillary bones",NA,NA,NA,NA,NA,NA
+"2516",1828769,NA,NA,NA,NA,NA,NA,NA
+"2517",1080982,NA,NA,NA,NA,NA,NA,NA
+"2518",765539,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2519",2060384,NA,NA,NA,NA,NA,NA,NA
+"2520",177769,NA,NA,NA,NA,NA,NA,NA
+"2521",1293318,"Closed fracture of nasal bones",NA,NA,NA,NA,NA,NA
+"2522",966222,NA,"Current Every Day Smoker",NA,NA,"263.9",NA,NA
+"2523",1202731,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2524",1723887,NA,NA,NA,NA,"250.02",NA,NA
+"2525",1947938,NA,NA,NA,NA,NA,NA,NA
+"2526",98540,"Displaced trimalleolar fracture of left lower leg, initial encounter for closed fracture",NA,NA,NA,NA,NA,NA
+"2527",96400,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2528",194428,NA,NA,NA,NA,NA,NA,NA
+"2529",1990122,NA,NA,NA,NA,NA,NA,NA
+"2530",1391706,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
+"2531",1842127,NA,NA,NA,NA,NA,NA,"1842127"
+"2532",657497,NA,NA,NA,NA,NA,NA,NA
+"2533",581665,NA,"Current Every Day Smoker",NA,NA,NA,NA,"581665"
+"2534",1987841,NA,"Current Every Day Smoker",NA,NA,NA,NA,NA
