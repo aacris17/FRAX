@@ -678,10 +678,10 @@ Osteo_Meds <- tibble(
   osteo_med_name = character()
 )
 
-for (i in 1:nrow(Fracture_Dates_fx)){
-  id <- as.double(Fracture_Dates_fx$ID[i])
+for (i in 1:nrow(EM_Dates_ed)){
+  id <- as.double(EM_Dates_ed$ID[i])
 
-date <- (Fracture_Dates_fx %>% 
+date <- (EM_Dates_ed %>% 
     filter(ID == id) %>%
     select(ID, DATE))[[1,2]]
   
@@ -704,5 +704,5 @@ rm(osteo_med)
 }
 
 Osteo_Meds <- na.omit(Osteo_Meds)
-write.csv(Osteo_Meds, "C:\\Users\\acriscit\\Documents\\Osteo_Meds.csv")
+write.csv(Osteo_Meds, "C:\\Users\\acriscit\\Documents\\Osteo_Meds_ed.csv")
 rm(Osteo_Meds)
