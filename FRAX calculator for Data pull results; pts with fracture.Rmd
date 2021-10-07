@@ -457,19 +457,10 @@ write.csv(CRF, "C:\\Users\\acriscit\\Documents\\CRF_fx.csv")
 
 percent_complete_cases <- (nrow(fx)/nrow(Fracture_Dates))*100
 percent_missing_FRAX <- ((nrow(fx)-nrow(Fracture_Dates_fx))/percent_complete_cases)*100
-percent_missing_HT <- (nrow(is.na(Fracture_Dates_fx$HT.in))/nrow(Fracture_Dates_fx))*100
-percent_missing_WT <- (nrow(is.na(Fracture_Dates_fx$WT.in))/nrow(Fracture_Dates_fx))*100
+percent_missing_HT <- (sum(is.na(Fracture_Dates_fx$HT.in))/nrow(Fracture_Dates_fx))*100
+percent_missing_WT <- (sum(is.na(Fracture_Dates_fx$WT.in))/nrow(Fracture_Dates_fx))*100
 
 Flow <- tibble(
-  percent_complete_cases = numeric(),
-  number_excluded_frac = numeric(),
-  number_excluded_hip = numeric(),
-  percent_missing_FRAX = numeric(),
-  percent_missing_WT = numeric(),
-  percent_missing_HT = numeric()
-)
-
-Flow <- Flow %>% add_row(
   percent_complete_cases = as.double(percent_complete_cases),
   number_excluded_frac = as.double(number_excluded_frac),
   number_excluded_hip = as.double(number_excluded_frac),
@@ -479,9 +470,7 @@ Flow <- Flow %>% add_row(
 )
 write.csv(Flow, "C:\\Users\\acriscit\\Documents\\Flow.csv")
 
-rm(px)
-rm(fx)
-rm(Fracture_Dates)
+rm(px, fx, Fracture_Dates)
 ```
 #FOR HIP FRACTURE ONLY
 #Ensure that patients from Fracture_Dates_fx actually had a hip fracture first
@@ -522,16 +511,16 @@ ID_DM <- ID_DM %>% mutate(
   DM_Dx_postvisit = ifelse(days_before_fracture < 0, "TRUE", "FALSE"))
 
 #Pre-loop
-Insulin <- x %>%
+Insulin <- tibble_names$Meds %>%
   filter(grepl('[Ii]nsulin', DESC)) %>%
   group_by(ID) %>%
   arrange(desc(DATE), .group_by = TRUE)
-BG <- x %>%
+BG <- tibble_names$Labs %>%
   filter(grepl('GLU', CODE)) %>%
   filter(grepl('mg/dl|MG/DL', UNITS)) %>%
   filter(NUMERIC_VALUE != 0 & !is.na(NUMERIC_VALUE)) %>%
   arrange(desc(DATE))
-HBA1C <- x %>%
+HBA1C <- tibble_names$Labs %>%
   filter(grepl('HBA1C', CODE)) %>%
   filter(UNITS == '%') %>%
   arrange(desc(DATE))
