@@ -41,6 +41,8 @@ Visit_Dates_ed <- Visit_Dates_ed %>% rename(num_visits_before = num_visits_befor
 Fracture_Dates_fx <- Fracture_Dates_fx %>% rename(ageatindex = ageatfracture)
 EM_Dates_ed <- EM_Dates_ed %>% rename(ageatindex = ageatEM)
 
+#add ageatindex to DM_Dates as well
+
 #Bind the corresponding control and experimental data
 Fracture_Dates_fx <- bind_rows(Fracture_Dates_fx, EM_Dates_ed)
 DM_Dates_fx <- bind_rows(DM_Dates_fx, DM_Dates_ed)
@@ -282,7 +284,7 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 #Mean age Male
 G_v_Risk <- test %>% filter(GENDER == 'M') %>%
-  {t.test(.$AGE ~ .$Control, alternative = c("two.sided"),
+  {t.test(.$ageatindex ~ .$Control, alternative = c("two.sided"),
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95)}
 
@@ -299,7 +301,7 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 #Mean age female
 G_v_Risk <- test %>% filter(GENDER == 'F') %>%
-  {t.test(.$AGE ~ .$Control, alternative = c("two.sided"),
+  {t.test(.$ageatindex ~ .$Control, alternative = c("two.sided"),
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95)}
 
