@@ -15,9 +15,34 @@ library(tibble)
 library(purrr)
 library(stringr)
 
-DM_Dates_fx <- read_csv("C:/Users/acriscit/Documents/R/Hip Fracture Data/DM_Dates_fx.csv")
-Fracture_Dates_fx <- read_csv("C:/Users/acriscit/Documents/R/Hip Fracture Data/Fracture_Dates_fx.csv")
-Visit_Dates <- read_csv("C:/Users/acriscit/Documents/R/Hip Fracture Data/Visit_Dates.csv")
+DM_Dates_fx <- read_csv("C:/Users/acriscit/Documents/Results/DM_Dates_fx.csv")
+Fracture_Dates_fx <- read_csv("C:/Users/acriscit/Documents/Results/Fracture_Dates_fx.csv")
+Visit_Dates_fx <- read_csv("C:/Users/acriscit/Documents/Results/Visit_Dates_fx.csv")
+
+#Load control data
+DM_Dates_ed <- read_csv("C:/Users/acriscit/Documents/Results/DM_Dates_ed.csv")
+EM_Dates_ed <- read_csv("C:/Users/acriscit/Documents/Results/EM_Dates_ed.csv")
+Visit_Dates_ed <- read_csv("C:/Users/acriscit/Documents/Results/Visit_Dates_ed.csv")
+#Create a new column in each tibble that specifies whether the individual is a control or fracture patient
+DM_Dates_fx <- DM_Dates_fx %>% mutate(Control = "FALSE")
+Fracture_Dates_fx <- Fracture_Dates_fx %>% mutate(Control = "FALSE")
+Visit_Dates_fx <- Visit_Dates_fx %>% mutate(Control = "FALSE")
+DM_Dates_ed <- DM_Dates_ed %>% mutate(Control = "TRUE")
+EM_Dates_ed <- EM_Dates_ed %>% mutate(Control = "TRUE")
+Visit_Dates_ed <- Visit_Dates_ed %>% mutate(Control = "TRUE")
+
+#Rename some columns
+Visit_Dates_fx <- Visit_Dates_fx %>% rename(num_visits_before = num_visits_before_frac, num_visits_after = num_visits_after_frac)
+Visit_Dates_ed <- Visit_Dates_ed %>% rename(num_visits_before = num_visits_before_ed, num_visits_after = num_visits_after_ed)
+
+#Bind the corresponding control and experimental data
+Fracture_Dates_fx <- bind_rows(Fracture_Dates_fx, EM_Dates_ed)
+DM_Dates_fx <- bind_rows(DM_Dates_fx, DM_Dates_ed)
+Visit_Dates <- bind_rows(Visit_Dates_fx, Visit_Dates_ed)
+
+#Need a line to remove duplicate IDs, be sure to select the fracture ID
+
+rm(EM_Dates_ed, DM_Dates_ed, Visit_Dates_ed, Visit_Dates_fx)
 
 #be sure to load Fracture_Dates_fx, Visit_Dates and DM_Dates_fx
 #remove the first column
@@ -34,27 +59,34 @@ rm(test)
 ```
 #Remove patients who fractured prior to 2013
 ```{r 1}
-date <- ymd_hms("2013-01-01 UTC 00:00:00")
-Fracture_Dates_fx <- Fracture_Dates_fx %>% filter(DATE > date)
-numberafter2013 <-  nrow(Fracture_Dates_fx) - nrow(Fracture_Dates_fx)
-percentafter2013 <- (nrow(Fracture_Dates_fx )/nrow(Fracture_Dates_fx))*100
+#date <- ymd_hms("2013-01-01 UTC 00:00:00")
+#Fracture_Dates_fx <- Fracture_Dates_fx %>% filter(DATE > date)
+#numberafter2013 <-  nrow(Fracture_Dates_fx) - nrow(Fracture_Dates_fx)
+#percentafter2013 <- (nrow(Fracture_Dates_fx )/nrow(Fracture_Dates_fx))*100
 
 ```
 #Remove all patients with less than 3 prior visits and all patients without at least 1 follow-up
 #Note that this is being applied to the tibble created above
 ```{r 2}
+test <- Fracture_Dates_fx
+x <- nrow(Fracture_Dates_fx)
+
 Fracture_Dates_fx <- Visit_Dates %>%
-  filter(num_visits_before_frac >= 3 & num_visits_after_frac >= 1) %>%
+  filter(num_visits_before >= 3 & num_visits_after >= 1) %>%
+  select(ID) %>%
   inner_join(Fracture_Dates_fx, by = 'ID', keep = FALSE)
-nrow(Fracture_Dates_fx) - nrow(Fracture_Dates_fx)
+
+num_without_visit_crit <- x - nrow(Fracture_Dates_fx)
 nrow(Fracture_Dates_fx)
+Excluded_by_visit <- test %>% anti_join(Fracture_Dates_fx, by = 'ID')
+rm(test)
 ```
 Create a tibble that does not include patients with DM
 ```{r 3}
 #Fracture_Dates_sum contains all patients with fractures
 Fracture_Dates_sum <- Fracture_Dates_fx
 
-#Use this to select patients with DM who fractured prior to 2013
+#Apply the prior criteria to DM_Dates_fx
 #DM_Dates_fx will hold this data
 test <- Fracture_Dates_fx %>% filter(DM == "TRUE") %>% select(ID)
 DM_Dates_fx <- DM_Dates_fx %>% inner_join(test, by = 'ID')
@@ -63,11 +95,13 @@ rm(test)
 Fracture_Dates_fx <- Fracture_Dates_fx %>% filter(DM == "FALSE")
 nrow(Fracture_Dates_fx)
 nrow(DM_Dates_fx)
-nrow(DM_Dates_fx) + nrow(Fracture_Dates_fx)
+patients_left <- nrow(DM_Dates_fx) + nrow(Fracture_Dates_fx)
+#Find out why this number is different from nrow(Fracture_Dates_sum), we should not have lost any patients in this process.
 ```
 #Output some basic descriptive stats
 ```{r 4}
-Desc <- summary(Fracture_Dates_fx)
+#Change Control == ... to TRUE or FALSE depending on which cohort you want to see
+Desc <- Fracture_Dates_fx %>% filter(Control == "FALSE") %>% summary()
 names(dimnames(Desc)) <- c("x", "y")
 Desc <- as.tibble(Desc)
 Desc <- Desc[-1]
@@ -84,15 +118,16 @@ Desc_noDM <- separate(
     values_from = n
               )
 
-write.csv(Desc, "C:\\Users\\acriscit\\Documents\\Descriptors_no_DM.csv")
+write.csv(Desc, "C:\\Users\\acriscit\\Documents\\Exp Descriptors_no_DM.csv")
 ```
 Descriptive stats for DM, same code as above
 ```{r 5}
-Desc <- summary(DM_Dates_fx)
+#Change Control == ... to TRUE or FALSE depending on which cohort you want to see
+Desc <- DM_Dates_fx %>% filter(Control == "FALSE") %>% summary()
 names(dimnames(Desc)) <- c("x", "y")
 Desc <- as.tibble(Desc)
 Desc <- Desc[-1]
-Desc_DM <- separate(
+Desc <- separate(
   Desc, 
   "n",
   c("m", "n"),
@@ -104,15 +139,16 @@ Desc_DM <- separate(
     names_from = m, 
     values_from = n
               )
-rm(Desc)
 
-write.csv(Desc_DM, "C:\\Users\\acriscit\\Documents\\Descriptors_DM.csv")
+write.csv(Desc, "C:\\Users\\acriscit\\Documents\\Exp Descriptors_DM.csv")
+
+rm(Desc)
 ```
 ID missing data
 #Change true, false or non to select the population who is missing data
 #Change the tibble to determine what data you want to work with
 ```{r missing_data}
-test <- Fracture_Dates_sum %>% filter(DM == "FALSE")
+test <- Fracture_Dates_sum %>% filter(Control == "TRUE")
 
 tot_na <- (test %>% filter(is.na(Risk)) %>% nrow())/nrow(test)
 CODE_na <- (test %>% filter(is.na(CODE)) %>% nrow())/nrow(test)
@@ -131,7 +167,7 @@ missing_data <- tibble(
   Sex = as.double(GENDER_na),
   Race = as.double(Og_RACE_na)
 )
-write.csv(missing_data, "C:\\Users\\acriscit\\Downloads\\missing_data.csv")
+write.csv(missing_data, "C:\\Users\\acriscit\\Documents\\Control missing_data.csv")
 rm(missing_data)
 rm(test)
 
@@ -156,6 +192,7 @@ Risk_v <- tibble(
 ```{r stats}
 test <- Fracture_Dates_sum %>% filter(!is.na(Risk))
 
+#New values will be added to this tibble as you ask statistical questions
 Desc_tibble <- tibble(
   Descriptor = character(),
   non.DM = numeric(),
