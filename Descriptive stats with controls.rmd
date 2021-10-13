@@ -912,7 +912,7 @@ ROC
 ```{r ROC}
 library(pROC)
 
-#ROC Control vs FRAX (substitute fracture for Control)
+#ROC Control vs FRAX (fracture for Control)
 roc <- test %>%
   roc(Control, Risk, levels=c("TRUE", "FALSE")) 
 roc %>% ggroc()
@@ -1043,6 +1043,7 @@ plot_tibble <- plot_tibble %>% add_row(
 )
 
 #In the control group, people fractured after being seen in the ED. The below graph depicts the correlation between "time to fracture" and FRAX score
+#select patients who fractured after ED visit
 lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1))
 summary <- summary(lm_FRAX)
 n <- nrow(lm_FRAX$model)
@@ -1054,6 +1055,26 @@ ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
   ylab("FRAX score") +
   theme_bw() +
   ggtitle("Time from index date to fracture") +
+  geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=60, x=2000))
+
+plot_tibble <- plot_tibble %>% add_row(
+    Descriptor = "time to fx, R ->",
+    Control = n,
+    p.value = summary$r.squared
+)
+
+#Same as above but further selected for patients with pathologic fracture
+lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1 ) %>% filter(grepl('[Ff]racture', dx_DESC)))
+summary <- summary(lm_FRAX)
+n <- nrow(lm_FRAX$model)
+
+ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
+  geom_point(size = 0.25)+
+  geom_smooth(method="lm", color = "#9D7C2F") +
+  xlab("Time to fracture (days)") +
+  ylab("FRAX score") +
+  theme_bw() +
+  ggtitle("Time from index date to pathologic fracture") +
   geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=60, x=2000))
 
 plot_tibble <- plot_tibble %>% add_row(
