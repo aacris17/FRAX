@@ -1064,7 +1064,7 @@ plot_tibble <- plot_tibble %>% add_row(
 )
 
 #Same as above but further selected for patients with pathologic fracture
-lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1 ) %>% filter(grepl('[Ff]racture', dx_DESC)))
+lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1 ) %>% filter(grepl('[Pp]athologic fracture', dx_DESC)))
 summary <- summary(lm_FRAX)
 n <- nrow(lm_FRAX$model)
 
