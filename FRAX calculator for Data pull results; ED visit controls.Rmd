@@ -32,7 +32,7 @@ FRAX <-  read_csv("H:/Functional Data/Hip fracture/FRAX.csv", col_types = "dccdd
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
-thirteen <- ("H:/Health Control (Hip fx)/2013_acriscit.xlsx")
+thirteen <- ("H:/Health Control (Hip fx)/2013/2013_acriscit.xlsx")
 
 #Function to import excel data with multiple tabs as a list
 read_excel_allsheets <- function(filename, tibble = TRUE) {
@@ -72,7 +72,7 @@ for (i in 1:length(tibble_titles)) {
  test2 <- append(test2, list(x))
 }
 names(test2) <- tibble_titles
-thirteen <- test2
+tibble_names <- test2
 
 rm(test2, x)
 
@@ -108,8 +108,120 @@ names(Patients) <- col_names[1:ncol(Patients)]
   Patients <- Patients %>%
     mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE) %>% as.Date()) %>%
     mutate(DEATH_DATE = mdy_hm(DEATH_DATE) %>% as.Date())
+```
+If files are in sepearate docs use this to load
+```{r other}
+FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
+FRAX <- FRAX[-c(1)]
+names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
+
+Diagnoses <- ("H:/raw data/Health Control (Hip fx)/2014/Diagnoses_acriscit.xlsx")
+History <- ("H:/raw data/Health Control (Hip fx)/2014/Smoking_acriscit.xlsx")
+Labs <- ("H:/raw data/Health Control (Hip fx)/2014/Labs_acriscit.xlsx")
+Meds <- ("H:/raw data/Health Control (Hip fx)/2014/Meds_acriscit.xlsx")
+Patients <- ("H:/raw data/Health Control (Hip fx)/2014/Patients_acriscit.xlsx")
+Procedures <- ("H:/raw data/Health Control (Hip fx)/2014/Procedures_acriscit.xlsx")
+Vitals <- ("H:/raw data/Health Control (Hip fx)/2014/Vitals_acriscit.xlsx")
+
+#Function to import excel data with multiple tabs as a list
+read_excel_allsheets <- function(filename, tibble = TRUE) {
+  tab_names <- excel_sheets(path = filename)
+  #Below is the slow line
+  filename <- map(tab_names, ~read_excel(path = filename, sheet = .x, col_types = "text"))
+  filename <- filename %>% set_names(tab_names) %>% bind_rows ()
+}
+
+#The function above will convert each file below into a list that is easy to work with
+filename <- Diagnoses
+Diagnosis <- read_excel_allsheets(filename)
+
+filename <- History
+History <- read_excel_allsheets(filename)
+
+filename <- Meds
+Meds <- read_excel_allsheets(filename)
+
+filename <- Patients
+Patients <- read_excel_allsheets(filename)
+
+filename <- Procedures
+Procedures <- read_excel_allsheets(filename)
+
+filename <- Vitals
+Vitals <- read_excel_allsheets(filename)
   
-tibble_names <- thirteen
+filename <- Labs
+Lab <- read_excel_allsheets(filename)
+
+
+#In this chunk we are organizing data so that relevant information can be more easily collected
+#- All the documents we imported above will be combined into one large tibble
+#- We will create an empty tibble that will be filled with info to calculate FRAX score at the time of fracture for each patient
+
+#Accumulate data tibbles as a list
+tibble_names <- list(
+  Vitals, 
+  Meds, 
+  Lab, 
+  Procedures, 
+  Diagnosis,
+  History
+  )
+#Title each list element appropriately
+tibble_titles <- c(
+  "Vitals", 
+  "Meds", 
+  "Lab", 
+  "Procedures",
+  "Diagnosis",
+  "History"
+  )
+names(tibble_names) <- tibble_titles
+
+#rename columns and remove spaces from column names
+col_names <- c(
+  "ID", 
+  "VISIT", 
+  "DATE",
+  "CODE",
+  "DESC", 
+  "TEXT_VALUE", 
+  "NUMERIC_VALUE", 
+  "UNITS",
+  "MODIFIER"
+)
+#This loop applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
+for (i in 1:length(tibble_names)){
+  names(tibble_names[[i]]) <- col_names[1:ncol(tibble_names[[i]])]
+  tibble_names[[i]]$DATE <- mdy_hm(
+    tibble_names[[i]]$DATE, 
+    quiet = TRUE
+    )
+}
+
+#remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
+rm(Diagnoses, Labs, Meds, Vitals, History)
+
+#Do the same process for demographic data
+col_names <- c(
+  "ID", 
+  "AGE_NOW", 
+  "AGE_AT_DEATH",
+  "BIRTH_DATE",
+  "DEATH_DATE",
+  "MATCH",
+  "GENDER", 
+  "RACE", 
+  "MIXED RACE", 
+  "ETHNICITY"
+)
+names(Patients) <- col_names[1:ncol(Patients)]
+
+  Patients <- Patients %>%
+    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
+  
+ Patients <- Patients %>%
+    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
 ```
 Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
@@ -404,7 +516,7 @@ non_MOF <-  tibble_names$Diagnoses %>%
 ```{r MOF}
 #Select anyone with MOF: hip fracture M84.359, M84.459, M84.659, Vertebral: 805|806|733.13|S12|M48.50|M80.08, Humerus (distal and shaft): 812.01|812.23|733.11|S42.2|M84.429A, Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
 MOF <- tibble_names$Diagnoses %>%
-  #filter(grepl('[Ff]racture', DESC)) %>%
+  filter(grepl('[Ff]racture', DESC)) %>%
   filter(grepl('M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA|805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
   group_by(ID) %>%
   arrange(DATE, .by_group = TRUE) %>% 

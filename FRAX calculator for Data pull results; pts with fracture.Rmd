@@ -30,7 +30,7 @@ FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 
-Diagnosis <- ("H:/Hip fracture/Diagnosis_acriscit.xlsx")
+Diagnoses <- ("H:/Hip fracture/Diagnosis_acriscit.xlsx")
 History <- ("H:/Hip fracture/History_acriscit.xlsx")
 Lab <- ("H:/Hip fracture/Lab_acriscit.xlsx")
 Meds <- ("H:/Hip fracture/Meds_acriscit.xlsx")
@@ -47,8 +47,8 @@ read_excel_allsheets <- function(filename, tibble = TRUE) {
 }
 
 #The function above will convert each file below into a list that is easy to work with
-filename <- Diagnosis
-Diagnosis <- read_excel_allsheets(filename)
+filename <- Diagnoses
+Diagnoses <- read_excel_allsheets(filename)
 
 filename <- History
 History <- read_excel_allsheets(filename)
@@ -79,7 +79,7 @@ tibble_names <- list(
   Meds, 
   Lab, 
   Procedures, 
-  Diagnosis,
+  Diagnoses,
   History
   )
 #Title each list element appropriately
@@ -88,7 +88,7 @@ tibble_titles <- c(
   "Meds", 
   "Lab", 
   "Procedures",
-  "Diagnosis",
+  "Diagnoses",
   "History"
   )
 names(tibble_names) <- tibble_titles
@@ -118,7 +118,7 @@ x <- tibble_names %>%
   bind_rows()
 
 #remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
-rm(Diagnosis)
+rm(Diagnoses)
 rm(Lab)
 rm(Meds)
 rm(Patients)
@@ -151,9 +151,9 @@ y <- Patients
 #Now that the patient data is more readable, we will create a tibble that contains data needed to calculate a FRAX score for each patient. This will primarily be accomplished with the use of a loop.
 
 #The below lines will select patients with fracture then remove instances with traumatic fracture or fractures of the hands, feet, face or skull (non major osteoporotic fractures). It is assumed that all other fractures in this >50 y/o population are major osteoporotic fractures. Like the below lines it will then group fracture events by patient ID, arrange them by date and exclude all but the first fracture event using 'distinct ()'
-#Note that this does not exclude patients who have had a non-MOF but excludes that diagnosis from analysis
+#Note that this does not exclude patients who have had a non-MOF but excludes that Diagnoses from analysis
 
-ID_fracs <- tibble_names$Diagnosis %>%
+ID_fracs <- tibble_names$Diagnoses %>%
   filter(grepl('[Ff]racture', DESC)) %>%
   #Exclude S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
   filter(!grepl('S62|S92|S99|M88|S02|V|Y04|C79.5', CODE)) %>%
@@ -166,7 +166,7 @@ ID_fracs <- tibble_names$Diagnosis %>%
 number_excluded_frac <- nrow(y) - nrow(ID_fracs)
 
 #The below line will select patients with hip fracture
-Hip_fracs <- tibble_names$Diagnosis %>%
+Hip_fracs <- tibble_names$Diagnoses %>%
   #filter for ICD code M84.359, M84.459, M84.659 which indicates a hip fracture
   filter((grepl('M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA', CODE))) %>%
   group_by(ID) %>% 
@@ -191,13 +191,13 @@ Smoker <- x %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+#A Diagnoses of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse, K70 alcoholic liver disease), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
 EToH <- x %>% 
      filter(grepl('F10|3050|291|303|V11.3|K70', CODE)) %>%
   group_by(ID) %>% 
   arrange(DATE, .by_group = TRUE)
 
-#RA diagnosis of Rheumatoid Arthritis 
+#RA Diagnoses of Rheumatoid Arthritis 
 RA <- x %>% 
      filter(grepl('M05|M06|714', CODE)) %>%
   group_by(ID) %>% 
@@ -329,12 +329,12 @@ Smoker_loop <- as.character(
   (filter(Smoker, id == ID & DATE <= date & DATE >= date-years(2)) %>% 
      select(DESC))[1,2]
   )
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+#A Diagnoses of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
 EToH_loop <- as.character(
   (filter(EToH, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
   )
-#A diagnosis of Rheumatoid Arthritis 
+#A Diagnoses of Rheumatoid Arthritis 
 RA_loop <- as.character(
   (filter(RA, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
@@ -479,7 +479,7 @@ rm(px, fx, Fracture_Dates)
 - Forearm: 813.45|813.8|733.12|813.0|S52|M84.429A
 ```{r hip}
 #Collect the ID's of patients with MOF. MOF_ID contains the date of MOF, Dx code and patient ID
-MOF_ID <- tibble_names$Diagnosis %>% 
+MOF_ID <- tibble_names$Diagnoses %>% 
      filter(grepl('805|806|733.13|S12|M48.50|M80.08|812.01|812.23|733.11|S42.2|M84.429A|813.45|813.8|733.12|813.0|S52|M84.429A', CODE)) %>%
   group_by(ID) %>%
   arrange(DATE, .by_group = TRUE) %>%
@@ -494,7 +494,7 @@ Were they well controlled?
 #Select patients with type 2 DM using ICD-10/9 code 'E11' or '250'
 All_DM <- x %>% 
   filter((grepl('E11|250', CODE))) %>% 
-  #Select the ID and Date of first DM diagnosis in the record
+  #Select the ID and Date of first DM Diagnoses in the record
   select(ID, DATE) %>% group_by(ID) %>%
   arrange(DATE, .by_group = TRUE) %>%
   distinct(ID, .keep_all = TRUE) %>%
@@ -504,7 +504,7 @@ fx <- Fracture_Dates_fx %>% filter(!is.na(Risk))
 ID_DM <- inner_join(All_DM, fx, by = 'ID')
 rm(All_DM)
 
-#calculate the time different between fracture and diagnosis of DM. A negative value indicates that the diagnosis was made after this visit
+#calculate the time different between fracture and Diagnoses of DM. A negative value indicates that the Diagnoses was made after this visit
 ID_DM <- ID_DM %>% mutate(
   days_before_fracture = difftime(DATE.y, DATE.x, units = "days"))
 ID_DM <- ID_DM %>% mutate(
@@ -821,7 +821,7 @@ CRF <- tibble(
 )
 
 #ID_fracs_5 and Hip_fracs_5 will set the date as 5 years prior to fracture
-ID_fracs_5 <- tibble_names$Diagnosis %>%
+ID_fracs_5 <- tibble_names$Diagnoses %>%
   filter(grepl('[Ff]racture', DESC)) %>%
   #Exclude S62 hand, S92, S99 foot, M88 Osteodeformans/Paget's disease of bone, S02 Face/skull, V trauma due to a collision, Y04 assault by bodily force, C79.5 metastatic disease to bone
   filter(!grepl('S62|S92|S99|M88|S02|V|Y04|C79.5', CODE)) %>%
@@ -833,7 +833,7 @@ ID_fracs_5 <- tibble_names$Diagnosis %>%
   mutate(DATE = DATE - years(5))
 
 #The below line will select patients with hip fracture
-Hip_fracs_5 <- tibble_names$Diagnosis %>%
+Hip_fracs_5 <- tibble_names$Diagnoses %>%
   #filter for ICD code M84.359, M84.459, M84.659 which indicates a hip fracture
   filter((grepl('M84.359|M84.459|M84.659|820|S72.0|S72.90XA|S72.91XA|S72.92XA', CODE))) %>%
   group_by(ID) %>% 
@@ -928,12 +928,12 @@ Smoker_loop <- as.character(
   (filter(Smoker, id == ID & DATE <= date & DATE >= date-years(2)) %>% 
      select(DESC))[1,2]
   )
-#A diagnosis of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
+#A Diagnoses of alcohol use (ICD-10 codes containing F10 or corresponding ICD-9 codes (303 alcohol dependance, 291 alcohol induced mental disorder, 3050 alcohol abuse), which encompasses alcohol abuse, alcohol dependence and alcohol use, unspecified) is used as a surrogate for "3 or more units of alcohol per day" as specified by FRAX
 EToH_loop <- as.character(
   (filter(EToH, id == ID & DATE <= date) %>%
      select(CODE))[1,2]
   )
-#A diagnosis of Rheumatoid Arthritis 
+#A Diagnoses of Rheumatoid Arthritis 
 RA_loop <- as.character(
   (filter(RA, id == ID & DATE <= date) %>%
      select(CODE))[1,2]

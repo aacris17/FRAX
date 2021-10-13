@@ -1,0 +1,23 @@
+---
+title: "Comorbidities puller"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Pull comorbidities from fracture patients
+
+```{r start}
+#Retinopathy
+retinopathy <- tibble_names$Diagnosis %>% filter(grepl('E11.3|250.50|250.52|360.20', CODE)) %>% select(ID, DATE, DESC, CODE)
+retinopathy <- retinopathy %>% mutate(severe = ifelse(grepl('E11.34', CODE), "TRUE", "FALSE"))
+#Neuropathy
+neuropathy <- tibble_names$Diagnosis %>% filter(grepl('E11.4|250.60|250.62|357.2', CODE)) %>% select(ID, DATE, DESC, CODE)
+#Nephropathy
+nephropathy <- tibble_names$Diagnosis %>% filter(grepl('E11.2|250.42|250.40', CODE)) %>% select(ID, DATE, DESC, CODE)
+#Cornary artery disease
+CAD <- tibble_names$Diagnosis %>% filter(grepl('I25.1|414.00|414.01', CODE)) %>% select(ID, DATE, DESC, CODE)
+#Perferal aretery disease
+PAD <- tibble_names$Diagnosis %>% filter(grepl('I73.9|443.9', CODE)) %>% select(ID, DATE, DESC, CODE)
