@@ -235,9 +235,10 @@ Desc_tibble <- Desc_tibble %>% add_row(
   Exp = nExp)
 
 #%men
-chi <- chisq.test(table(test$GENDER, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+test2 <- test %>% filter(GENDER == 'M')
+chi <- chisq.test(table(test2$GENDER, test2$Control))
+Exp <- chi$observed[1]/nrow(test %>% filter(Control == "FALSE"))*100
+Control <- chi$observed[2]/nrow(test %>% filter(Control == "TRUE"))*100
 p.value <- chi$p.value[1]
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -247,12 +248,25 @@ Desc_tibble <- Desc_tibble %>% add_row(
   CI = as.character(chi$statistic),
   p.value = p.value)
 
+#%Women
+test2 <- test %>% filter(GENDER == 'F')
+chi <- chisq.test(table(test2$GENDER, test2$Control))
+Exp <- chi$observed[1]/nrow(test %>% filter(Control == "FALSE"))*100
+Control <- chi$observed[2]/nrow(test %>% filter(Control == "TRUE"))*100
+p.value <- chi$p.value[1]
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "% Female",
+  Exp = Exp,
+  Control = Control,
+  CI = as.character(chi$statistic),
+  p.value = p.value)
+
 #%White
-test2 <- test %>% filter(Og_RACE == 'B'| Og_RACE == 'W')
+test2 <- test %>% filter(Og_RACE == 'W')
 chi <- chisq.test(table(test2$Og_RACE, test2$Control))
-rm(test2)
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[1]/nrow(test %>% filter(Control == "FALSE"))*100
+Control <- chi$observed[2]/nrow(test %>% filter(Control == "TRUE"))*100
 p.value <- chi$p.value[1]
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -263,8 +277,10 @@ Desc_tibble <- Desc_tibble %>% add_row(
   p.value = p.value)
 
 #%Black
+test2 <- test %>% filter(Og_RACE == 'B')
+chi <- chisq.test(table(test2$Og_RACE, test2$Control))
 Exp <- chi$observed[1]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[3]/nrow(test %>% filter(Control == "TRUE"))*100
+Control <- chi$observed[2]/nrow(test %>% filter(Control == "TRUE"))*100
 
 Desc_tibble <- Desc_tibble %>% add_row(
   Descriptor = "% Black",
@@ -423,8 +439,25 @@ Desc_tibble <- Desc_tibble %>% add_row(
   p.value = G_v_Risk$p.value,
   CI = CI)
 
+#Mean FRAX Male
+G_v_Risk <- test %>% filter(GENDER == "M") %>%
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Men Mean FRAX Risk",
+  Exp = G_v_Risk$estimate[1],
+  Control = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
 #Mean FRAX Controls Male
-G_v_Risk <- test %>% filter(Control == "TRUE") %>%
+G_v_Risk <- test %>% filter(Control == "TRUE" & GENDER == "M") %>%
   {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95)}
@@ -440,11 +473,28 @@ Desc_tibble <- Desc_tibble %>% add_row(
   p.value = G_v_Risk$p.value,
   CI = CI)
 
+#Mean FRAX Fracture Male
+G_v_Risk <- test %>% filter(Control == "FALSE" & GENDER == "M") %>%
+  {t.test(.$Risk ~ .$DM, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+
+CI1 <- round(as.double(G_v_Risk$conf.int[1]), digits = 2)
+CI2 <- round(as.double(G_v_Risk$conf.int[2]), digits = 2)
+CI <- toString(c(CI1, CI2))
+
+Desc_tibble <- Desc_tibble %>% add_row(
+  Descriptor = "Fracture, Men Mean FRAX Risk",
+  Exp = G_v_Risk$estimate[1],
+  Control = G_v_Risk$estimate[2],
+  p.value = G_v_Risk$p.value,
+  CI = CI)
+
 #FRAX>20
 test <- test %>% mutate(threshold = ifelse(Risk > 20, "TRUE", "FALSE"))
 chi <- chisq.test(table(test$threshold, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -457,8 +507,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Diabetics FRAX>20
 test2 <- test %>% filter(DM == "TRUE")
 chi <- chisq.test(table(test2$threshold, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -471,8 +521,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #nonDiabetic FRAX>20
 test2 <- test %>% filter(DM == "FALSE")
 chi <- chisq.test(table(test2$threshold, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -485,8 +535,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #FRAX_lower>20
 test <- test %>% mutate(threshold = ifelse(Range_lower > 20, "TRUE", "FALSE"))
 chi <- chisq.test(table(test$threshold, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -516,8 +566,8 @@ test <- test %>% mutate(true_med = ifelse(med_before > 0, "TRUE", "FALSE"))
 test$true_med <- ifelse(is.na(test$true_med), "FALSE", test$true_med)
 
 chi <- chisq.test(table(test$true_med, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -530,8 +580,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Anti-osteo meds DM vs not
 test2 <- test %>% filter(Control == "TRUE")
 chi <- chisq.test(table(test2$true_med, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "TRUE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "FALSE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -542,8 +592,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 test2 <- test %>% filter(Control == "FALSE")
 chi <- chisq.test(table(test2$true_med, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "TRUE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "FALSE"))*100
+Exp <- chi$observed[2]/(chi$observed[2]+chi$observed[1])*100
+Control <- chi$observed[4]/(chi$observed[3]+chi$observed[4])*100
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -654,8 +704,8 @@ test$Death1 <- ifelse(is.na(test$Death1), "FALSE", test$Death1)
 test$Death5 <- ifelse(is.na(test$Death5), "FALSE", test$Death5)
 
 chi <- chisq.test(table(test$Death1, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -668,8 +718,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Diabetics risk of within 1 year
 test2 <- test %>% filter(DM == "TRUE")
 chi <- chisq.test(table(test2$Death1, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -682,8 +732,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #nonDiabetics risk of within 1 year
 test2 <- test %>% filter(DM == "FALSE")
 chi <- chisq.test(table(test2$Death1, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -695,8 +745,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 #Risk of death 5 years after fx
 chi <- chisq.test(table(test$Death5, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -709,8 +759,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Diabetics risk of within 5 year
 test2 <- test %>% filter(DM == "TRUE")
 chi <- chisq.test(table(test2$Death5, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -723,8 +773,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #nonDiabetics risk of within 5 year
 test2 <- test %>% filter(DM == "FALSE")
 chi <- chisq.test(table(test2$Death5, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -736,10 +786,9 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 #Risk of death overall
 test <- test %>% mutate(Death = ifelse(is.na(ageatdeath), "FALSE", "TRUE"))
-
 chi <- chisq.test(table(test$Death, test$Control))
-Exp <- chi$observed[2]/nrow(test %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -768,8 +817,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 #Long term insulin vs fracture
 chi <- chisq.test(table(DM_Dates_fx$long_term_insulin, DM_Dates_fx$Control))
-Exp <- chi$observed[2]/nrow(DM_Dates_fx %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(DM_Dates_fx %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -851,8 +900,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Diabetics sex vs fracture
 test2 <- test %>% filter(DM == "TRUE")
 chi <- chisq.test(table(test2$GENDER, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -865,8 +914,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #nonDiabetics sex vs fracture
 test2 <- test %>% filter(DM == "FALSE")
 chi <- chisq.test(table(test2$GENDER, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -879,8 +928,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Controls sex vs DM
 test2 <- test %>% filter(Control == "TRUE")
 chi <- chisq.test(table(test2$GENDER, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -892,8 +941,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Fracture sex vs DM
 test2 <- test %>% filter(Control == "FALSE")
 chi <- chisq.test(table(test2$GENDER, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -907,8 +956,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Diabetics race vs fracture
 test2 <- test %>% filter(DM == "TRUE" & Og_RACE == "W"|Og_RACE == "B")
 chi <- chisq.test(table(test2$Og_RACE, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -921,8 +970,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Nondiabetics race vs fracture
 test2 <- test %>% filter(DM == "FALSE" & Og_RACE == "W"|Og_RACE == "B")
 chi <- chisq.test(table(test2$Og_RACE, test2$Control))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(Control == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(Control == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -935,8 +984,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Controls RACE vs DM
 test2 <- test %>% filter(Control == "TRUE" & Og_RACE == "W"|Og_RACE == "B")
 chi <- chisq.test(table(test2$Og_RACE, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -951,8 +1000,8 @@ Desc_tibble <- Desc_tibble %>% add_row(
 #Fracture Race vs DM
 test2 <- test %>% filter(Control == "FALSE" & Og_RACE == "W"|Og_RACE == "B")
 chi <- chisq.test(table(test2$Og_RACE, test2$DM))
-Exp <- chi$observed[2]/nrow(test2 %>% filter(DM == "FALSE"))*100
-Control <- chi$observed[4]/nrow(test2 %>% filter(DM == "TRUE"))*100
+Exp <- chi$observed[2]/(chi$observed[2] + chi$observed[1])
+Control <- chi$observed[4]/(chi$observed[3] + chi$observed[4])
 p.value <- chi$p.value
 
 Desc_tibble <- Desc_tibble %>% add_row(
@@ -982,6 +1031,27 @@ Desc_tibble <- Desc_tibble %>% add_row(
 
 write.csv(Desc_tibble, "C:\\Users\\acriscit\\Documents\\Desc_tibble.csv")
 ```
+Below are scripts for chisq_test and Turkey test which are not working. The chi test would allow a data-table to be created for multiple pairwise tests. The Turkey test is a way to make many comparisons after an anova
+```{r trying}
+stat.test <- test %>%
+  anova_test(Risk ~ Fracture + DM) %>%
+  adjust_pvalue(method = "bonferroni") %>%
+  add_significance("p.adj")
+stat.test <- stat.test %>% add_xy_position(x = "Fracture")
+#Turkey https://www.scribbr.com/statistics/anova-in-r/
+aov <- aov(Risk ~ DM_Control, data = smooth)
+turkey<-TukeyHSD(aov)
+#Plot it
+plot(turkey, las = 1)
+
+#Doesnt work
+Prop <- Prop %>% unite("Match", c(GENDER, Fracture, DM), remove = TRUE) %>% select(!(Percent))
+stat.test <- Prop %>%
+  chisq_test() %>%
+  adjust_pvalue(method = "bonferroni") %>%
+  add_significance("p.adj")
+stat.test <- stat.test %>% add_xy_position(x = "Fracture")
+```
 Histogram
 ```{r histogram}
 ggplot(data = test, aes(x=Risk, fill=Control)) + 
@@ -991,7 +1061,12 @@ ggplot(data = test, aes(x=Risk, fill=Control)) +
 
 ggplot(data = test, aes(x=ageatindex, fill=Control)) + 
   geom_histogram() +
-  labs(title = "FRAX Risk Score", x="Age", y="Count") +
+  labs(title = "Age at index date", x="Age", y="Count") +
+  scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("Fracture","Control"))
+
+ggplot(data = smooth, aes(x=Risk, fill=c(DM_Control))) + 
+  geom_histogram() +
+  labs(title = "FRAX vs DM and Control", x="Age", y="Count") +
   scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("Fracture","Control"))
 ```
 Kolmogrov-Smirnov test for normality on above data
@@ -1037,51 +1112,43 @@ plot_tibble <- tibble(
 )
 
 #PLOT1: Control vs Frax score box plot (Chnage Control to fracture vs no fracture)
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT1")
-  
+
+library(rstatix)
+library(ggpubr)
+stat.test <- test %>%
+  select(Fracture, Risk) %>%
+  t_test(Risk ~ Fracture) %>%
+  adjust_pvalue(method = "bonferroni") %>%
+  add_significance("p.adj")
+stat.test <- stat.test %>% add_xy_position(x = "Fracture")
+
 ggplot(data = test, aes(Control, Risk)) +
-geom_jitter(width=.3,
-                 col="black", 
-                 fill="dodgerblue", 
-                 alpha = .5) +
+geom_violin(width=1, col="black",  fill="dodgerblue", alpha = 0.1) +
 geom_boxplot(col="blue", alpha = .5) +
   labs(title = "Fracture vs FRAX score", x="", y="FRAX") +
-  scale_x_discrete(labels=c("Fracture", "Control"))
+  scale_x_discrete(labels=c("Fracture", "Control")) +
+  stat_pvalue_manual(stat.test, label = "p.adj.signif")
 
 #Make 4 plots based on Control and sex
 test <- test %>% mutate(Fracture = ifelse(Control == "TRUE", "Control", "Fracture"))
-
 smooth <- test %>% unite('SEX_Control', c(Control, GENDER), remove = FALSE) %>%
   unite('DM_Control', c(Fracture,DM), remove = FALSE) %>%
   unite('Race_Control', c(Fracture,Og_RACE), remove =  FALSE) %>%
   unite('DM_SEX', c(DM, GENDER), remove =  FALSE) %>%
-  filter (!is.na(Risk))
+  filter (!is.na(Risk)) %>%
+  mutate(Decade = floor(ageatindex/10)*10)
 
-#PLOT2
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT2")
-  
-ggplot(data = smooth, aes(SEX_Control,Risk)) +
-geom_boxplot() +
-  labs(title = "Sex vs FRAX score", x="", y="FRAX") +
-  scale_x_discrete(labels=c("F Fracture","M Fracture","F Control","M Control"))
+ # unite('Match', c(GENDER,Og_RACE,Decade), sep = "", remove = FALSE) %>% arrange(Match)
 
-#PLOT3
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT3")
-
+#Plot 2: Diabetic Status vs FRAX score
 ggplot(data = smooth, aes(DM_Control, Risk, fill = Fracture)) +
 geom_boxplot() +
   labs(title = "Diabetic Status vs FRAX score", x="", y="FRAX") +
   scale_x_discrete(labels=c("Healthy Control","Diabetic Control", "Healthy Fracture","Diabetic Fracture"), guide = guide_axis(n.dodge=2))
 
-#PLOT4
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT4")
-
+#PLOT3: Age stratified by DM and Fracture
 ggplot(data = smooth, aes(DM_Control,ageatindex, fill = Fracture)) +
-  geom_jitter(width=.3,
+  geom_violin(width=1,
                  col="dodgerblue", 
                  fill="dodgerblue", 
                  alpha = .5) +
@@ -1089,50 +1156,33 @@ geom_boxplot(alpha = .5) +
   labs(title = "Age at Index Date", x="", y="Age") +
   scale_x_discrete(labels=c("Healthy Control", "Diabetic Control", "Healthy Fracture","Diabetic Fracture"), guide = guide_axis(n.dodge=2))
 
-#PLOT5
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT5")
-  
-ggplot(data = smooth, aes(DM_Control,ageatindex)) +
-geom_boxplot() +
-  labs(title = "Diabetic Status vs Age at Index Date", x="", y="Age") +
-  scale_x_discrete(labels=c("Fracture nonDiabetic","Fracture Diabetic","Control nonDiabetic","Control Diabetic"), guide = guide_axis(n.dodge=2))
-
 #PLOT6: Sex and DM as a %
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT6")
-
-Prop <- smooth %>% count(Fracture, DM_SEX, DM_Control, DM, GENDER)
+Prop <- test %>% count(GENDER, Fracture, DM)
 Prop <- Prop %>% mutate(Percent = (n/sum(Prop$n))*100)
 
-ggplot(Prop, aes(x = DM_Control, y = Percent, fill = GENDER)) +  
+ggplot(Prop, aes(x = Fracture, y = Percent, fill = DM)) +  
   geom_bar(position="dodge", stat="identity") +
-  labs(title = "Distribution of Sex and Diabetes", x="", y="Percent (%)", fill= "Sex") +
-  scale_x_discrete(labels=c("Healthy Control","Diabetic Control","Healthy Fracture","Diabetic Fracture"), guide = guide_axis(n.dodge=2))
+  labs(title = "Distribution of Sex and Diabetes", x="", y="Percent (%)", fill= "DM") +
+  scale_x_discrete(guide = guide_axis(n.dodge=4)) +
+  facet_wrap(~GENDER)
 
 #PLOT7: Race and DM as a %
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT7")
-
-Prop <- smooth %>% filter(Og_RACE == "W" | Og_RACE == "B") %>% count(Fracture, DM_SEX, DM_Control, DM, Og_RACE)
+Prop <- test %>% filter(Og_RACE == "W" | Og_RACE == "B") %>% count(Og_RACE, Fracture, DM)
 Prop <- Prop %>% mutate(Percent = (n/sum(Prop$n))*100)
 
-ggplot(Prop, aes(x = DM_Control, y = Percent, fill = Og_RACE)) +  
+ggplot(Prop, aes(x = Fracture, y = Percent, fill = DM)) +  
   geom_bar(position="dodge", stat="identity") +
-  labs(title = "Distribution of Race and Diabetes", x="", y="Percent (%)", fill= "RACE") +
-  scale_x_discrete(labels=c("Healthy Control","Diabetic Control","Healthy Fracture","Diabetic Fracture"), guide = guide_axis(n.dodge=2))
+  labs(title = "Distribution of Race and Diabetes", x="", y="Percent (%)", fill= "DM") +
+  scale_x_discrete(guide = guide_axis(n.dodge=2))+
+  facet_wrap(~Og_RACE)
 
 #PLOT8: DM and Fracture
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT8")
-
-Prop <- smooth %>% count(Fracture, DM)
+Prop <- test %>% count(Fracture, DM)
 Prop <- Prop %>% mutate(Percent = (n/sum(Prop$n))*100)
 
-ggplot(Prop, aes(x = DM, y = Percent, fill = Fracture)) +  
+ggplot(Prop, aes(x = Fracture, y = Percent, fill = DM)) +  
   geom_bar(position="dodge", stat="identity") +
-  labs(title = "Distribution of Diabetes", x="", y="Percent (%)", fill= "Fracture") +
-  scale_x_discrete(labels=c("Healthy","Diabetic"))
+  labs(title = "Distribution of Diabetes", x="", y="Percent (%)", fill= "DM")
 
 #PLOT9: FRAX vs DM, Sex and Fracture
 plot_tibble <- plot_tibble %>% add_row(
@@ -1156,61 +1206,133 @@ geom_boxplot() +
 rm(smooth2)
 
 #PLOT11: Age vs FRAX by diabets and fracture
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "PLOT11")
-
+#Figure out how to create a line of boxplots to represent this data
 ggplot(data = smooth, aes(ageatindex, Risk, colour = DM_Control)) +
-#geom_point(alpha = 0.2) +
 geom_smooth(method = 'gam') +
 xlab("Age (Years)") +
 ylab("FRAX") +
 ggtitle("Age vs FRAX")
 
-#PLOT12: Age by decade vs Frax by diabetes
-smooth <- smooth %>% mutate(Decade = floor(ageatindex/10)*10)
+#Age (5 years), sex and race matched control
 
-ggplot(data = smooth) +
-  geom_bar(aes(x = Decade, y = Risk, fill = DM_Control), position="dodge", stat="identity") +
-  labs(title = "Age vs FRAX", x="Age by Decade", y="FRAX", fill= "RACE") +
-  geom_errorbar(aes(x = Decade, ymin = Range_lower, ymax = Range_upper))
-  
+x <- smooth %>% filter(Five <= 80) %>%
+  filter(Og_RACE == "B" | Og_RACE == "W") %>%
+  #filter(Fracture == "Fracture") %>%
+  select(Risk, Match, Fracture, DM)
+
+library(rstatix)
+library(ggpubr)
+stat.test <- x %>%
+  t_test(Risk ~ Fracture) %>%
+  adjust_pvalue(method = "bonferroni") %>%
+  add_significance("p.adj")
+view(stat.test)
+
+myplot <- ggboxplot(
+  x, x = "Fracture", y = "Risk",
+  fill = "Fracture", palette = "npg", legend = "none",
+  ggtheme = theme_pubr(border = TRUE)
+  ) +
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+  theme(axis.text.y = element_blank(),
+        axis.text.x = element_text(size=8)) +
+  labs(title = "DM, Sex and race matched", x="", y="FRAX") +
+  facet_wrap(~Match)
+stat.test <- stat.test %>% add_xy_position(x = "Fracture")
+myplot + stat_pvalue_manual(stat.test, label = "p.adj.signif")
+
+rm(stat.test, myplot, x)
 ```
 ROC
 ```{r ROC}
 library(pROC)
-
 #ROC Control vs FRAX (fracture for Control)
 roc <- test %>%
-  roc(Control, Risk, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
+  roc("Fracture", "Risk",
+      level=c("Control", "Fracture"),
+      direction='<', #means that observations are positive when greater than the threshold
+      thresholds=100, auc = TRUE, ci = TRUE)
 
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "ROCs")
+#sens and spec for threshold of 20, "all" for all thresholds, "best" for best thresholds
+coords(roc, "best", ret=c("threshold", "specificity", "sensitivity", "accuracy", "precision", "recall"), transpose = FALSE)
 
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "FRAX vs fracture, AUC ->",
-  Control = as.double(roc$auc)
+#sensitivity of 50%
+coords(roc=roc, x=50, input="sensitivity", transpose = FALSE)
+
+#Plot the thresholds, can also put "best" or "all"
+plot(roc, print.thres=20)
+#Another way to plot ROC
+ggroc(roc) +
+  ggtitle ("FRAX score ROC, Control vs Fracture")
+#plot sensitivity and specificity vs threshold
+plot(specificity + sensitivity ~ threshold, 
+      coords(roc, "all", transpose = FALSE), 
+      type = "l", log="x", 
+      subset = is.finite(threshold))
+#percision recall plot
+plot(precision ~ recall, #Percision is TRUE pos/ALL pos. Recall is the same as sensitivity
+      coords(roc, "all", ret = c("recall", "precision"), transpose = FALSE),
+      type="l")
+#tpr/fpr
+plot(tpr ~ fpr, 
+     coords(roc, "all", ret = c("tpr", "fpr"), transpose = FALSE),
+     type="l")
+
+#ROC, DM vs noDM
+rocNDM <- test %>%
+  filter(DM == "FALSE") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+rocDM <- test %>% filter(DM == "TRUE") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+roc.test(rocNDM, rocDM, reuse.auc=FALSE,#ensures that auc from the prior operations are not used
+         method="delong") #D=(AUC1-AUC2)/s
+#method="bootstrap", boot.stratified=FALSE
+#Plot
+plot(rocNDM, print.thres=20)
+plot(rocDM, print.thres=20)
+#Evaluate the thresholds
+best <- function(x){coords(x, "best", ret=c("threshold", "specificity", "sensitivity"), transpose = FALSE)}
+#threshold of 20
+twenty <- function(x){coords(roc=rocDM, x=20, input="threshold", transpose = FALSE)}
+ROC_tibble <- tibble(
+  Desc = character(),
+  Best_sens = numeric(),
+  Best_spec = numeric(),
+  Twenty_sens = numeric(),
+  Twenty_spec = numeric(),
 )
 
-#ROC, no DM
-roc <- test %>% filter(DM == "FALSE") %>%
-  roc(Control, Risk, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
-
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "no DM, FRAX vs fracture, AUC ->",
-  Control = as.double(roc$auc)
+best <- best(rocDM)
+twenty <- twenty(rocDM)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "DM",
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+best <- best(rocNDM)
+twenty <- twenty(rocNDM)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "nDM",
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
 )
 
-#ROC DM
-roc <- test %>% filter(DM == "TRUE") %>%
-  roc(Control, Risk, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
+#ROC, Sex
+rocM <- test %>%
+  filter(GENDER == "M") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+rocF <- test %>% filter(GENDER == "F") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+roc.test(rocM, rocF, reuse.auc=FALSE,#ensures that auc from the prior operations are not used
+         method="delong") #D=(AUC1-AUC2)/s
+#plot
+plot(rocM, print.thres=20, print.auc=TRUE)
+plot(rocF, print.thres=20)
 
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "DM, FRAX vs fracture, AUC ->",
-  Control = as.double(roc$auc)
-)
 
 #ROC range_upper (heaviest weighting)
 roc <- test %>%
@@ -1256,18 +1378,21 @@ Linear regression
 ```{r regression}
 #Implement multiple regression
 #Regress FRAX vs comorbidities
-#Age vs FRAX Risk score
-lm_FRAX <- lm(Risk ~ ageatindex, data = test)
+#time to death vs FRAX Risk score
+test2 <-  test %>% filter(time_to_death > 0)
+lm_FRAX <- lm(Risk ~ time_to_death, data = test2)
 summary <- summary(lm_FRAX)
 
-ggplot(lm_FRAX, aes(x=ageatindex, y=Risk)) +
+ggplot(lm_FRAX, aes(x=time_to_death, y=Risk)) +
   geom_point(size = 0.25)+
   geom_smooth(method="lm", color = "#9D7C2F") +
-  xlab("Age (years)") +
+  xlab("Time (years)") +
   ylab("FRAX score") +
   theme_bw() +
-  ggtitle("Age vs FRAX score") +
-  geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=80, x=90))
+  ggtitle("Time to Death vs FRAX score") +
+  geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=80, x=10))
+
+rm(test2)
 
 plot_tibble <- plot_tibble %>% add_row(
   Descriptor = "Age vs FRAX, R ->",
@@ -1311,7 +1436,7 @@ plot_tibble <- plot_tibble %>% add_row(
 
 #In the control group, people fractured after being seen in the ED. The below graph depicts the correlation between "time to fracture" and FRAX score
 #select patients who fractured after ED visit
-lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1))
+lm_FRAX <- lm(fx_time ~ Risk , data = Controls_with_MOF %>% filter(fx_time >= 1))
 summary <- summary(lm_FRAX)
 n <- nrow(lm_FRAX$model)
 
