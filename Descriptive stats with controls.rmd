@@ -214,6 +214,27 @@ Risk_v <- tibble(
 ```{r stats}
 #Change test to all, non-dm or only dm then hit run for all comparisons
 test <- Fracture_Dates_sum %>% filter(!is.na(Risk))
+test <- test %>% mutate(Fracture = ifelse(Control == "TRUE", "Control", "Fracture"))
+#Add column Fracture
+
+#Make match controls and cases by age so that there is not a significant difference in age between the cohorts
+#Think of a way to match the proportions of each 5 year increment, for example 10% of the fracture population is 50 years old, make this selection for the controls
+test <- test %>% mutate(Decade = floor(ageatindex/10)*10)
+Prop <- test %>%
+  count(Fracture, Decade) %>%
+  filter(Fracture == "Fracture") %>%
+  mutate(Percent = (n/sum(n))*100)
+#Select randomly from the control population based on these proportions.
+
+G_v_Risk <- test %>% 
+  {t.test(.$ageatindex ~ .$Control, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+ggplot(data = test, aes(x=ageatindex, fill=Control)) + 
+  geom_histogram() +
+  labs(title = "Age at index date", x="Age", y="Count") +
+  scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("Fracture","Control")) +
+geom_text(aes(label=paste0("t.test p-value  ",round(G_v_Risk$p.value)), y=250, x=50))
 
 #New values will be added to this tibble as you ask statistical questions
 Desc_tibble <- tibble(
@@ -1058,12 +1079,14 @@ ggplot(data = test, aes(x=Risk, fill=Control)) +
   geom_histogram() +
   labs(title = "FRAX Risk Score", x="FRAX score", y="Count") +
   scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("Fracture","Control"))
-
+#Age vs count
 ggplot(data = test, aes(x=ageatindex, fill=Control)) + 
   geom_histogram() +
   labs(title = "Age at index date", x="Age", y="Count") +
   scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("Fracture","Control"))
 
+
+#Smooth is characterized lower down
 ggplot(data = smooth, aes(x=Risk, fill=c(DM_Control))) + 
   geom_histogram() +
   labs(title = "FRAX vs DM and Control", x="Age", y="Count") +
@@ -1130,7 +1153,6 @@ geom_boxplot(col="blue", alpha = .5) +
   stat_pvalue_manual(stat.test, label = "p.adj.signif")
 
 #Make 4 plots based on Control and sex
-test <- test %>% mutate(Fracture = ifelse(Control == "TRUE", "Control", "Fracture"))
 smooth <- test %>% unite('SEX_Control', c(Control, GENDER), remove = FALSE) %>%
   unite('DM_Control', c(Fracture,DM), remove = FALSE) %>%
   unite('Race_Control', c(Fracture,Og_RACE), remove =  FALSE) %>%
@@ -1290,38 +1312,9 @@ roc.test(rocNDM, rocDM, reuse.auc=FALSE,#ensures that auc from the prior operati
 #Plot
 plot(rocNDM, print.thres=20)
 plot(rocDM, print.thres=20)
-#Evaluate the thresholds
-best <- function(x){coords(x, "best", ret=c("threshold", "specificity", "sensitivity"), transpose = FALSE)}
-#threshold of 20
-twenty <- function(x){coords(roc=rocDM, x=20, input="threshold", transpose = FALSE)}
-ROC_tibble <- tibble(
-  Desc = character(),
-  Best_sens = numeric(),
-  Best_spec = numeric(),
-  Twenty_sens = numeric(),
-  Twenty_spec = numeric(),
-)
-
-best <- best(rocDM)
-twenty <- twenty(rocDM)
-ROC_tibble <- ROC_tibble %>% add_row(
-  Desc = "DM",
-  Best_sens = best$sensitivity,
-  Best_spec = best$specificity,
-  Twenty_sens = twenty$sensitivity,
-  Twenty_spec = twenty$specificity,
-)
-best <- best(rocNDM)
-twenty <- twenty(rocNDM)
-ROC_tibble <- ROC_tibble %>% add_row(
-  Desc = "nDM",
-  Best_sens = best$sensitivity,
-  Best_spec = best$specificity,
-  Twenty_sens = twenty$sensitivity,
-  Twenty_spec = twenty$specificity,
-)
 
 #ROC, Sex
+#Automatically sets Controls < cases (meaning it makes the group with lower mean FRAX the controls. In this case, these are actually our controls)
 rocM <- test %>%
   filter(GENDER == "M") %>%
   roc(Fracture, Risk, levels=c("Control", "Fracture"))
@@ -1333,38 +1326,144 @@ roc.test(rocM, rocF, reuse.auc=FALSE,#ensures that auc from the prior operations
 plot(rocM, print.thres=20, print.auc=TRUE)
 plot(rocF, print.thres=20)
 
+#ROC, Race
+rocB <- test %>%
+  filter(Og_RACE == "B") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+rocW <- test %>% filter(Og_RACE == "W") %>%
+  roc(Fracture, Risk, levels=c("Control", "Fracture"))
+roc.test(rocB, rocW, reuse.auc=FALSE,#ensures that auc from the prior operations are not used
+         method="delong") #D=(AUC1-AUC2)/s
+#plot
+plot(rocB, print.thres=20, print.auc=TRUE)
+plot(rocW, print.thres=20)
+
+#record thresholds
+best_f <- function(x){coords(x, "best", ret=c("threshold", "specificity", "sensitivity"), transpose = FALSE)}
+#threshold of 20
+twenty_f <- function(x){coords(roc=x, x=20, input="threshold", transpose = FALSE)}
+ROC_tibble <- tibble(
+  Desc = character(),
+  auc = numeric(),
+  Best_sens = numeric(),
+  Best_spec = numeric(),
+  Best_thres = numeric(),
+  Twenty_sens = numeric(),
+  Twenty_spec = numeric(),
+)
+
+best <- best_f(rocDM)
+twenty <- twenty_f(rocDM)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "DM",
+  auc = as.double(rocDM$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+best <- best_f(rocNDM)
+twenty <- twenty_f(rocNDM)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "nDM",
+  auc = as.double(rocNDM$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+best <- best_f(rocM)
+twenty <- twenty_f(rocM)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "Male",
+  auc = as.double(rocM$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+best <- best_f(rocF)
+twenty <- twenty_f(rocF)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "Female",
+  auc = as.double(rocM$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+
+best <- best_f(rocB)
+twenty <- twenty_f(rocB)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "Black",
+  auc = as.double(rocB$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+
+best <- best_f(rocW)
+twenty <- twenty_f(rocW)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "White",
+  auc = as.double(rocW$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
+)
+
 
 #ROC range_upper (heaviest weighting)
-roc <- test %>%
+roc_upper <- test %>% filter(GENDER == "F") %>%
   roc(Control, Range_upper, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
+coords(roc, "best", ret=c("threshold", "sensitivity", "specificity"))
 
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "Upper range vs fracture, AUC ->",
-  Control = as.double(roc$auc)
-)
-
-roc <- DM_Dates_fx %>% filter(HBA1C_max > 6.5) %>%
+roc6.5 <- DM_Dates_fx %>% filter(HBA1C_max > 6.5) %>%
   roc(Control, Risk, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
-
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "HBA1c > 6.5, FRAX vs fracture, AUC ->",
-  Control = length(roc$controls),
-  Exp = length(roc$cases),
-  p.value = as.double(roc$auc)
+roc.test(roc6.5,roc, reuse.auc=FALSE,#ensures that auc from the prior operations are not used
+         method="delong") #D=(AUC1-AUC2)/s
+best <- best_f(roc6.5)
+twenty <- twenty_f(roc6.5)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "HBA1C 6.5",
+  auc = as.double(roc6.5$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
 )
 
-roc <- DM_Dates_fx %>% filter(HBA1C_max > 8) %>%
-  roc(Control, Risk, levels=c("TRUE", "FALSE")) 
-roc %>% ggroc()
-
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "HBA1c > 8, FRAX vs fracture, AUC ->",
-  Control = length(roc$controls),
-  Exp = length(roc$cases),
-  p.value = as.double(roc$auc)
+roc8 <- DM_Dates_fx %>% filter(HBA1C_max > 8) %>%
+  roc(Control, Risk, levels=c("TRUE", "FALSE"))
+coords(roc8, "best", ret=c("threshold", "sensitivity", "specificity"))
+roc.test(roc8,roc, reuse.auc=FALSE,#ensures that auc from the prior operations are not used
+         method="delong", #D=(AUC1-AUC2)/s
+         #alternative="less" #can add alternative to specify the direction of the comparison. for example "less" means the alternative hypothesis is that AUC1 is less than AUC2 or that FRAX is a poorer predictor of Fracture in group 1 than 2
+         )
+best <- best_f(roc8)
+twenty <- twenty_f(roc8)
+ROC_tibble <- ROC_tibble %>% add_row(
+  Desc = "HBA1C 8",
+  auc = as.double(roc8$auc),
+  Best_sens = best$sensitivity,
+  Best_spec = best$specificity,
+  Best_thres = best$threshold,
+  Twenty_sens = twenty$sensitivity,
+  Twenty_spec = twenty$specificity,
 )
+
+view(ROC_tibble)
+
 
 #ROC Control vs FRAX -5 years (substitute fracture for Control)
 #You can do this for each year leading up to fracture and determine the predictive value of FRAX for each year
@@ -1391,13 +1490,7 @@ ggplot(lm_FRAX, aes(x=time_to_death, y=Risk)) +
   theme_bw() +
   ggtitle("Time to Death vs FRAX score") +
   geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=80, x=10))
-
 rm(test2)
-
-plot_tibble <- plot_tibble %>% add_row(
-  Descriptor = "Age vs FRAX, R ->",
-  p.value = summary$r.squared
-)
 
 #FRAX Score vs time to death
 lm_FRAX <- lm(time_to_death ~ Risk , data = test %>% filter(time_to_death >= 0 & Control == "FALSE" & DM == "FALSE"))
@@ -1411,28 +1504,6 @@ ggplot(lm_FRAX, aes(x=time_to_death, y=Risk)) +
   theme_bw() +
   ggtitle("Patients with Fracture, not DM, Time to death vs FRAX score") +
   geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=80, x=20))
-
-plot_tibble <- plot_tibble %>% add_row(
-    Descriptor = "Patients with Fracture, not DM, Time to death vs FRAX score R ->",
-    p.value = summary$r.squared
-)
-
-lm_FRAX <- lm(time_to_death ~ Risk , data = test %>% filter(time_to_death >= 0 & Control == "FALSE" & DM == "TRUE"))
-summary <- summary(lm_FRAX)
-
-ggplot(lm_FRAX, aes(x=time_to_death, y=Risk)) +
-  geom_point(size = 0.25)+
-  geom_smooth(method="lm", color = "#9D7C2F") +
-  xlab("Time to death (years)") +
-  ylab("FRAX score") +
-  theme_bw() +
-  ggtitle("Patients with Fracture and DM, Time to death vs FRAX score") +
-  geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=80, x=20))
-
-plot_tibble <- plot_tibble %>% add_row(
-    Descriptor = "Patients with Fracture and DM, Time to death vs FRAX score, R ->",
-    p.value = summary$r.squared
-)
 
 #In the control group, people fractured after being seen in the ED. The below graph depicts the correlation between "time to fracture" and FRAX score
 #select patients who fractured after ED visit
@@ -1449,18 +1520,12 @@ ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
   ggtitle("Time from index date to fracture") +
   geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=60, x=2000))
 
-plot_tibble <- plot_tibble %>% add_row(
-    Descriptor = "time to fx, R ->",
-    Control = n,
-    p.value = summary$r.squared
-)
-
 #Same as above but further selected for patients with pathologic fracture
-lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1 ) %>% filter(grepl('[Pp]athologic fracture', dx_DESC)))
+lm_FRAX <- lm(fx_time ~ Risk , data = test %>% filter(fx_time >= 1) %>% filter(grepl('[Pp]athologic fracture', dx_DESC)))
 summary <- summary(lm_FRAX)
 n <- nrow(lm_FRAX$model)
 
-ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
+fx_plot <- ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
   geom_point(size = 0.25)+
   geom_smooth(method="lm", color = "#9D7C2F") +
   xlab("Time to fracture (days)") +
@@ -1469,14 +1534,22 @@ ggplot(lm_FRAX, aes(x=fx_time, y=Risk)) +
   ggtitle("Time from index date to pathologic fracture") +
   geom_text(aes(label=paste0("R^2:  ",round(summary$r.squared, digits = 3)), y=60, x=2000))
 
-plot_tibble <- plot_tibble %>% add_row(
-    Descriptor = "time to fx, R ->",
-    Control = n,
-    p.value = summary$r.squared
-)
+#FRAX vs Fracture among control patients
+test <- test %>% mutate(fx = ifelse(is.na(fx_DESC), "FALSE", "TRUE"))
+test2 <- test %>% filter(Control == TRUE)
+ttest <- test2 %>% 
+  {t.test(.$Risk ~ .$fx, alternative = c("two.sided"),
+       mu = 0, paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)}
+chi <- chisq.test(table(test2$threshold, test2$fx))
 
-rm(summary, lm_FRAX, G_v_Risk, roc)
+fx_plot + geom_text(aes(label=paste0("t.test p-value  ",round(ttest$p.value)), y=30, x=2000))
 
+#Plot a histogram of controls who did and did not fracture
+ggplot(data = test2, aes(x=Risk, fill=fx)) + 
+  geom_histogram() +
+  labs(title = "FRAX Risk Score", x="FRAX score", y="Count") +
+  scale_fill_manual(name="Legend",values=c("salmon","lightblue"),labels=c("No Fracture","Fracture"))
 
 #Finally, use your cohort of non-fractured diabetics to assess the predictive value of FRAX with
   #1) A survival curve (where fracture is supplemented for survicval)
