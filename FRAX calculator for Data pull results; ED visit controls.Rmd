@@ -28,11 +28,11 @@ library(stringr)
 ##Introduction
 ```{r load FRAX ppr charts and patient data}
 #load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
-FRAX <-  read_csv("H:/Functional Data/Hip fracture/FRAX.csv", col_types = "dccdddddd")
+FRAX <-  read_csv("H:/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
-thirteen <- ("H:/Health Control (Hip fx)/2013/2013_acriscit.xlsx")
+tibble_names <- ("H:/Health Control (Hip fx)/2015_acriscit.xlsx")
 
 #Function to import excel data with multiple tabs as a list
 read_excel_allsheets <- function(filename, tibble = TRUE) {
@@ -45,14 +45,14 @@ filename <- filename %>% set_names(tab_names)
 #filename_visits <- filename$Visits
 #filename <- within(filename, rm(Patients, Visits))
 }
-filename <- thirteen
-thirteen <- read_excel_allsheets(filename)
+filename <- tibble_names
+tibble_names <- read_excel_allsheets(filename)
 #Patients <- filename_patients
-#thirteen_visits <- filename_visits
+#tibble_names_visits <- filename_visits
 
-Patients <- thirteen$Patients
-Visits <- thirteen$Visits
-thirteen <- within(thirteen, rm(Patients, Visits))
+Patients <- tibble_names$Patients
+Visits <- tibble_names$Visits
+tibble_names <- within(tibble_names, rm(Patients, Visits))
 
 #Break the tibble down into components rather than conglomerate into a large tibble. This will significantly speed up the filter function used to search for specific data elements later in this code
 #put this into the function above
@@ -66,17 +66,20 @@ tibble_titles <- c(
   )
  test2 <- list()
 tab_names <- excel_sheets(path = "H:/Health Control (Hip fx)/2013_acriscit.xlsx")
+#The below lines combines tabs of the same type, for example all the Meds tabs or all the Labs tabs and forms a new list
 for (i in 1:length(tibble_titles)) {
  tab_names_x <- tab_names %>% as_tibble() %>% filter(grepl(tibble_titles[i], value))
- x <- thirteen[tab_names_x$value] %>% bind_rows()
+ x <- tibble_names[tab_names_x$value] %>% bind_rows()
  test2 <- append(test2, list(x))
 }
+#Be sure that the order in tibble_titles actually corresponds to the info in test2
 names(test2) <- tibble_titles
+#replace tibble names
 tibble_names <- test2
 
 rm(test2, x)
 
-#Rename all the columns in thirteen and change DATE to a date format
+#Rename all the columns in each list element of tibble_names and change DATE to a date format
 col_names <- c(
   "ID", 
   "VISIT", 
@@ -88,11 +91,15 @@ col_names <- c(
   "UNITS",
   "MODIFIER"
 )
-for (i in 1:length(thirteen)){
-  names(thirteen[[i]]) <- col_names[1:ncol(thirteen[[i]])]
-  thirteen[[i]]$DATE <- thirteen[[i]]$DATE %>% mdy_hm(quiet = TRUE) %>% as.Date()
+for (i in 1:length(tibble_names)){
+  names(tibble_names[[i]]) <- col_names[1:ncol(tibble_names[[i]])]
+   tibble_names[[i]]$DATE <- mdy_hm(
+    tibble_names[[i]]$DATE, 
+    quiet = TRUE
+    )
 }
 
+#Rename the columns in 'Patients'
 col_names <- c(
   "ID", 
   "AGE_NOW", 
@@ -105,12 +112,35 @@ col_names <- c(
   "MIXED RACE"
 )
 names(Patients) <- col_names[1:ncol(Patients)]
+#Make DATE column into date format
   Patients <- Patients %>%
     mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE) %>% as.Date()) %>%
     mutate(DEATH_DATE = mdy_hm(DEATH_DATE) %>% as.Date())
+
+#Does the same for visits
+  col_names <- c(
+  "ID", 
+  "VISIT", 
+  "START_DATE",
+  "END_DATE",
+  "AGE_AT_VISIT",
+  "LOS",
+  "ENCOUNTER_TYPE",
+  "CCI"
+)
+#Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
+  names(Visits) <- col_names[1:ncol(Visits)]
+  
+  #Convert visits dates to dates and use as.Date to remove the time element
+  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
+  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
+
+  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
+  Visits <- Visits %>%
+    distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
 ```
 If files are in sepearate docs use this to load
-```{r other}
+
 FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
@@ -222,14 +252,33 @@ names(Patients) <- col_names[1:ncol(Patients)]
   
  Patients <- Patients %>%
     mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
+ 
+ #Do the same for Visits
+ col_names <- c(
+  "ID", 
+  "", 
+  "AGE_AT_DEATH",
+  "BIRTH_DATE",
+  "DEATH_DATE",
+  "MATCH",
+  "GENDER", 
+  "RACE", 
+  "MIXED RACE", 
+  "ETHNICITY"
+)
+names(Patients) <- col_names[1:ncol(Patients)]
+
+  Patients <- Patients %>%
+    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
+  
+ Patients <- Patients %>%
+    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
 ```
 Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
 date_lower <- mdy("5/1/2013")
 date_upper <- mdy("5/31/2014")
 ID_EM <- tibble_names$Diagnoses %>% filter(TEXT_VALUE == "Primary" & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
-```
-Remove patients that do not meet visit criteria: 3 prior visits, one follow-up
 ```
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
 ```{r risk_factors}
@@ -591,7 +640,7 @@ DM_Dates_ed <- tibble (
 for(i in 1:nrow(ID_DM)) {
   id <- as.double(ID_DM$ID[i])
   
-  #Date of patients first fracture
+#Date of ED visit
   ed_date <- ID_DM$DATE.y[i]
 
   #date <- ID_DM$DATE.x[i]
@@ -614,7 +663,7 @@ HBA1C_avg <- HBA1C_loop$NUMERIC_VALUE %>% as.double() %>% mean()
 #Insulin and BG
 Insulin_dates <- Insulin %>%
   filter(id == ID) %>%
-  filter(DATE < fracture_date)
+  filter(DATE < ed_date)
 Insulin_start <- Insulin_dates$DATE[1]
 #Long term insulin use noted in problem list
 long_term_insulin <- (Insulin_dates %>%
@@ -622,11 +671,11 @@ long_term_insulin <- (Insulin_dates %>%
   
 BGgen <- BG %>%
   filter(ID == id) %>%
-  filter(DATE < fracture_date)
+  filter(DATE < ed_date)
 BG_date <- BGgen$DATE[1]
 BGnow <- as.double(BGgen$NUMERIC_VALUE)[1]
 #BG averaged over 1 year prior to fracture if there are 2 or more values recorded
-BG1yr <- BGgen %>% filter(DATE >= fracture_date - years(1))
+BG1yr <- BGgen %>% filter(DATE >= ed_date - years(1))
 BG1yr_num_values <- BG1yr %>% nrow()
 BG1yavg <- ifelse(BG1yr_num_values > 1, BG1yr$NUMERIC_VALUE %>% as.double() %>% mean(), NA)
 
@@ -669,30 +718,6 @@ rm(Insulin)
 rm(HBA1C)
 ```
 Visits
-```{r Visits}
-#Ensure that the column names listed below match the column names in your actual data (ie the tibble 'Visits')
-col_names <- c(
-  "ID", 
-  "VISIT", 
-  "START_DATE",
-  "END_DATE",
-  "AGE_AT_VISIT",
-  "LOS",
-  "ENCOUTER_TYPE",
-  "CCI"
-)
-#Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
-  names(Visits) <- col_names[1:ncol(Visits)]
-  
-  #Convert visits dates to dates and use as.Date to remove the time element
-  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
-  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
-
-  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
-  Visits <- Visits %>%
-    distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
-  
-```
 run the loop below
 ```{r visit_loop}
 
