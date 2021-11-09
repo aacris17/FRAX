@@ -139,9 +139,10 @@ names(Patients) <- col_names[1:ncol(Patients)]
   Visits <- Visits %>%
     distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
 ```
-If files are in sepearate docs use this to load
+#If files are in separate docs use this to load
 
-FRAX <-  read_csv("H:/Hip fracture/FRAX.csv", col_types = "dccdddddd")
+#load FRAX paper charts (10-year risk of major osteoporotic fracture based on BMI)
+FRAX <-  read_csv("H:/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 
@@ -232,7 +233,7 @@ for (i in 1:length(tibble_names)){
 #remove the xl files. Note that if you want to search one of these files rather than x (because it is faster) you can search tibble_names$...
 rm(Diagnoses, Labs, Meds, Vitals, History)
 
-#Do the same process for demographic data
+#Rename the columns in 'Patients'
 col_names <- c(
   "ID", 
   "AGE_NOW", 
@@ -242,37 +243,35 @@ col_names <- c(
   "MATCH",
   "GENDER", 
   "RACE", 
-  "MIXED RACE", 
-  "ETHNICITY"
+  "MIXED RACE"
 )
 names(Patients) <- col_names[1:ncol(Patients)]
-
+#Make DATE column into date format
   Patients <- Patients %>%
-    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
-  
- Patients <- Patients %>%
-    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
- 
- #Do the same for Visits
- col_names <- c(
+    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE) %>% as.Date()) %>%
+    mutate(DEATH_DATE = mdy_hm(DEATH_DATE) %>% as.Date())
+
+#Does the same for visits
+  col_names <- c(
   "ID", 
-  "", 
-  "AGE_AT_DEATH",
-  "BIRTH_DATE",
-  "DEATH_DATE",
-  "MATCH",
-  "GENDER", 
-  "RACE", 
-  "MIXED RACE", 
-  "ETHNICITY"
+  "VISIT", 
+  "START_DATE",
+  "END_DATE",
+  "AGE_AT_VISIT",
+  "LOS",
+  "ENCOUNTER_TYPE",
+  "CCI"
 )
-names(Patients) <- col_names[1:ncol(Patients)]
-
-  Patients <- Patients %>%
-    mutate(BIRTH_DATE = mdy_hm(BIRTH_DATE))
+#Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
+  names(Visits) <- col_names[1:ncol(Visits)]
   
- Patients <- Patients %>%
-    mutate(DEATH_DATE = mdy_hm(DEATH_DATE))
+  #Convert visits dates to dates and use as.Date to remove the time element
+  Visits <- Visits %>% mutate(START_DATE = as.Date(mdy_hm(START_DATE)))
+  Visits <- Visits %>% mutate(END_DATE = as.Date(mdy_hm(END_DATE)))
+
+  #One visit is often tracked as multiple visits on the same date. Remove duplicate visits
+  Visits <- Visits %>%
+    distinct(ID, START_DATE, .keep_all = TRUE) %>% group_by(ID) %>% arrange(START_DATE, .by_group = TRUE)
 ```
 Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
@@ -843,3 +842,12 @@ rm(osteo_med)
 Osteo_Meds <- na.omit(Osteo_Meds)
 write.csv(Osteo_Meds, "C:\\Users\\acriscit\\Documents\\Osteo_Meds_ed.csv")
 rm(Osteo_Meds)
+```
+DXA
+```{r DXA}
+DXA <- tibble_names$Procedures %>%
+  filter(grepl('DXA', DESC)) %>%
+  select(ID, DESC, DATE) %>%
+  mutate(DXA = "TRUE")
+
+write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA.csv")
