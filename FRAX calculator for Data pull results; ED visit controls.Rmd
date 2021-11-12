@@ -32,7 +32,7 @@ FRAX <-  read_csv("H:/FRAX.csv", col_types = "dccdddddd")
 FRAX <- FRAX[-c(1)]
 names(FRAX)<- c("GENDER", "RACE", "AGE","CRF","BMI","Risk", "Range_lower", "Range_upper")
 #Note that unlike prior data, one excel file contains all information for all patients seen in the ED over the course of one month
-tibble_names <- ("H:/Health Control (Hip fx)/2015_acriscit.xlsx")
+tibble_names <- ("H:/Health Control (Hip fx)/2016_acriscit.xlsx")
 
 #Function to import excel data with multiple tabs as a list
 read_excel_allsheets <- function(filename, tibble = TRUE) {
@@ -51,7 +51,10 @@ tibble_names <- read_excel_allsheets(filename)
 #tibble_names_visits <- filename_visits
 
 Patients <- tibble_names$Patients
-Visits <- tibble_names$Visits
+#Visits <- tibble_names$Visits
+filename <- ("H:/Health Control (Hip fx)/Visits2016_acriscit.xlsx")
+filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
+Visits <- filename %>% set_names(tab_names)
 tibble_names <- within(tibble_names, rm(Patients, Visits))
 
 #Break the tibble down into components rather than conglomerate into a large tibble. This will significantly speed up the filter function used to search for specific data elements later in this code
@@ -125,7 +128,7 @@ names(Patients) <- col_names[1:ncol(Patients)]
   "END_DATE",
   "AGE_AT_VISIT",
   "LOS",
-  "ENCOUNTER_TYPE",
+  "SERVICE_LINE",
   "CCI"
 )
 #Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
@@ -259,7 +262,7 @@ names(Patients) <- col_names[1:ncol(Patients)]
   "END_DATE",
   "AGE_AT_VISIT",
   "LOS",
-  "ENCOUNTER_TYPE",
+  "SERVICE_LINE",
   "CCI"
 )
 #Applies the new column names to each list element in 'tibble_names' and converts dates to mdy_hms
@@ -275,9 +278,20 @@ names(Patients) <- col_names[1:ncol(Patients)]
 ```
 Create a tibble with a row for each patient with the date of their ED visit and Diagnoses at visit
 ```{r ED}
-date_lower <- mdy("5/1/2013")
-date_upper <- mdy("5/31/2014")
+# #########MAKE SURE YOU UPDATE THE DATES BELOW############################
+date_lower <- mdy("5/1/2016")
+date_upper <- mdy("5/31/2016")
+#Service Line '105' = Emergency medicine
+#The below lines search for the ED visit in the timeframe above then match that visit number to the primary diagnosis
+ID_EM <- Visits %>% filter(SERVICE_LINE == '105' & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
+Dx <- tibble_names$Diagnoses %>% filter(TEXT_VALUE == "Primary")
+ID_EM <- ID_EM %>% left_join(Dx, by = 'VISIT') %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
+rm(Dx)
+## OR ##
+#These lines just search for a primary diagnosis made within the above timeframe whether it was made in the ED or not
 ID_EM <- tibble_names$Diagnoses %>% filter(TEXT_VALUE == "Primary" & DATE > date_lower & DATE < date_upper) %>% group_by('ID') %>% arrange(DATE, .group_by = TRUE) %>% distinct(ID, .keep_all = TRUE)
+
+
 ```
 #The below chunk will create a tibble for each FRAX risk factor that includes all patients. For example 'Smoker' is a tibble that contains smoking information on all patients with a history of smoking. An individual patient will be selected from this tibble within the loop. This was done to increase the efficiency of the loop by minimizing the number of functions within the loop
 ```{r risk_factors}
