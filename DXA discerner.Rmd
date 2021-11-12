@@ -1,0 +1,84 @@
+---
+title: "DXA puller"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(readr)
+library(lubridate)
+library(tibble)
+library(purrr)
+library(stringr)
+```
+DXA info
+``` {r DXA}
+tibble_names <- ("H:/Health Control (Hip fx)/2017_acriscit.xlsx")
+
+#Function to import excel data with multiple tabs as a list
+read_excel_allsheets <- function(filename, tibble = TRUE) {
+  tab_names <- excel_sheets(path = filename)
+filename <- map(tab_names, ~read_excel(path = filename, sheet = .x))
+filename <- filename %>% set_names(tab_names)
+}
+filename <- tibble_names
+tibble_names <- read_excel_allsheets(filename)
+
+tibble_names <- within(tibble_names, rm(Patients, Visits))
+
+#Break the tibble down into components rather than conglomerate into a large tibble. This will significantly speed up the filter function used to search for specific data elements later in this code
+#put this into the function above
+tibble_titles <- c(
+  "Procedures",
+  "Diagnoses",
+  "Labs",
+  "Meds",
+  "Vitals", 
+  "Smoking"
+  )
+ test2 <- list()
+tab_names <- excel_sheets(path = "H:/Health Control (Hip fx)/2013_acriscit.xlsx")
+#The below lines combines tabs of the same type, for example all the Meds tabs or all the Labs tabs and forms a new list
+for (i in 1:length(tibble_titles)) {
+ tab_names_x <- tab_names %>% as_tibble() %>% filter(grepl(tibble_titles[i], value))
+ x <- tibble_names[tab_names_x$value] %>% bind_rows()
+ test2 <- append(test2, list(x))
+}
+#Be sure that the order in tibble_titles actually corresponds to the info in test2
+names(test2) <- tibble_titles
+#replace tibble names
+tibble_names <- test2
+
+rm(test2, x)
+
+#Rename all the columns in each list element of tibble_names and change DATE to a date format
+col_names <- c(
+  "ID", 
+  "VISIT", 
+  "DATE",
+  "CODE",
+  "DESC", 
+  "TEXT_VALUE", 
+  "NUMERIC_VALUE", 
+  "UNITS",
+  "MODIFIER"
+)
+for (i in 1:length(tibble_names)){
+  names(tibble_names[[i]]) <- col_names[1:ncol(tibble_names[[i]])]
+   tibble_names[[i]]$DATE <- mdy_hm(
+    tibble_names[[i]]$DATE, 
+    quiet = TRUE
+    )
+}
+
+```
+This will create a tibble for each group of patients
+```{r DXA}
+
+DXA <- tibble_names$Procedures %>%
+  filter(grepl('DXA', DESC))
+write.csv(DXA, "C:\\Users\\acriscit\\Documents\\DXA2017.csv")
+rm(DXA)
+```
